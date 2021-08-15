@@ -1,14 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:sawa/signup.dart';
+import 'package:sawa/screens/auth/auth.dart';
 
 void main() async{
-  //アプリ起動時に処理したいので追記
   WidgetsFlutterBinding.ensureInitialized();
-//Firebaseの初期化（同期）
+  //Firebaseの初期化（同期）
   await Firebase.initializeApp();
-//MyApp()をProviderScopeでラップして、アプリ内のどこからでも全てのプロバイダーにアクセスできるようにする。
-  runApp(ProviderScope(child:MyApp()));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -16,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SignUp(),
+      home: AuthScreen(),
     );
   }
 }
@@ -34,7 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('サンプル'),
+        title: const Text('ページ遷移後'),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.close),
