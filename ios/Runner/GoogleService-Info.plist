@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>515517241783-qff8i5ppkek0r9nm87ms4fikfh1lpdld.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.515517241783-qff8i5ppkek0r9nm87ms4fikfh1lpdld</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAMIUPYK7qbIGMU_qRb-coRi6DJqU_NFNg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>515517241783</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.sawa</string>
+	<key>PROJECT_ID</key>
+	<string>summerhackathon2021-23986</string>
+	<key>STORAGE_BUCKET</key>
+	<string>summerhackathon2021-23986.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:515517241783:ios:0ef83481a424ecd66cb032</string>
+</dict>
+</plist>

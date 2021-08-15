@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "515517241783",
+    "project_id": "summerhackathon2021-23986",
+    "storage_bucket": "summerhackathon2021-23986.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:515517241783:android:692894ffa0c3602d6cb032",
+        "android_client_info": {
+          "package_name": "com.example.sawa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "515517241783-k34f38acj20m6en9ike9o7aqc9hr64d2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZ9k51HlqK1VaWicryeNbh7qRARwV24Mk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "515517241783-k34f38acj20m6en9ike9o7aqc9hr64d2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "515517241783-qff8i5ppkek0r9nm87ms4fikfh1lpdld.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.sawa"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
