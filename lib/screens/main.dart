@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'form_questions.dart';
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-
+      debugShowCheckedModeBanner: false,
 
       theme: ThemeData(
         // This is the theme of your application.
@@ -51,6 +52,25 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text('大学生のための質問教室'),
       ),
+      body: StreamBuilder<QuerySnapshot>(
+    stream: FirebaseFirestore.instance.collection("posts").snapshots(),
+    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+    return Center(child: CircularProgressIndicator());
+    }
+    return ListView(
+    children: snapshot.data.docs.map((DocumentSnapshot document) {
+    return Card(
+    child: ListTile(
+    title: Text(document.data()['content']),
+    ),
+    );
+    }).toList(),
+    );
+    },
+    ),
+
+
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
@@ -69,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => NextPage()),
+            MaterialPageRoute(builder: (context) => PostPage()),
           );
         },
         child: const Icon(Icons.add),
