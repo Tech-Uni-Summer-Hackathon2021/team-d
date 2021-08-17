@@ -53,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text('大学生のための質問教室'),
       ),
       body: StreamBuilder<QuerySnapshot>(
-    stream: FirebaseFirestore.instance.collection("posts").snapshots(),
+    stream: FirebaseFirestore.instance.collection("forms").snapshots(),
     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
     if (snapshot.connectionState == ConnectionState.waiting) {
     return Center(child: CircularProgressIndicator());
@@ -63,6 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Card(
     child: ListTile(
     title: Text(document.data()['content']),
+      subtitle: Text(document.data()['title']),
       //ここに名前かジャンルを入れる
     ),
     );
