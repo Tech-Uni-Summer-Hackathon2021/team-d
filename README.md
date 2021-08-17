@@ -4,9 +4,9 @@
 
 
 
-## プロダクト名
+## questions class for university student(pre)
 
-## プロダクト説明
+## questions forms for student
 
-## 使用技術
+## flutter dart firebase
 
