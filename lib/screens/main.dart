@@ -63,6 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Card(
     child: ListTile(
     title: Text(document.data()['content']),
+      //ここに名前かジャンルを入れる
     ),
     );
     }).toList(),
