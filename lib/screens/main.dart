@@ -41,10 +41,14 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
+  var _label = '';
+  var _titles = ['投稿', 'ユーザー', '設定'];
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      _label = _titles[index];
     });
+    currentIndex: var selectedIndex = _selectedIndex;
   }
 
   @override
@@ -98,9 +102,18 @@ class _MyHomePageState extends State<MyHomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),
             title: Text('ユーザー'),
+
+          ),
+
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.build_sharp),
+            title: Text('設定'),
           ),
         ],
+
       ),
+
 
       floatingActionButton: FloatingActionButton(
         onPressed: () {
