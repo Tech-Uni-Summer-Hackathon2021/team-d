@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import 'content.dart';
 import 'form_questions.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -52,19 +53,34 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text('大学生のための質問教室'),
       ),
+
       body: StreamBuilder<QuerySnapshot>(
-    stream: FirebaseFirestore.instance.collection("posts").snapshots(),
+    stream: FirebaseFirestore.instance.collection("forms").snapshots(),
     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
     if (snapshot.connectionState == ConnectionState.waiting) {
     return Center(child: CircularProgressIndicator());
     }
     return ListView(
     children: snapshot.data.docs.map((DocumentSnapshot document) {
+
     return Card(
+      //tapの処理
+      child:GestureDetector(
+        //質問内容等
     child: ListTile(
     title: Text(document.data()['content']),
       //ここに名前かジャンルを入れる
+      subtitle: Text(document.data()['title']),
     ),
+        onTap: () {
+      print("a");
+      Navigator.push(
+        //画面遷移
+        context,
+        MaterialPageRoute(builder: (context) => ContentPage()),
+      );
+        },
+      )
     );
     }).toList(),
     );

@@ -11,20 +11,10 @@ class PostPage extends StatefulWidget {
 }
 
 class _PostPagePageState extends State<PostPage> {
-  // _onSubmitted(String content){
-  //   CollectionReference posts = FirebaseFirestore.instance.collection('posts');
-  //   posts.add({
-  //     "content": content
-  //   });
-  //
-  //   /// 入力欄をクリアにする
-  //   _textEditingController.clear();
-  //   _textEditingControllerTitle.clear();
-  // }
   TextEditingController _textEditingController = TextEditingController();
   TextEditingController _textEditingControllerTitle = TextEditingController();
 
-
+  final _firestore = FirebaseFirestore.instance;
   final myFocusNode = FocusNode();
   String questions_title;
   String questions_content;
@@ -44,7 +34,7 @@ class _PostPagePageState extends State<PostPage> {
         onFieldSubmitted: (value) {
           print(value);
         },
-            onSaved: (value) {
+            onSaved: (value) async{
               questions_title = value;
             },
             enabled: true,
@@ -66,7 +56,7 @@ class _PostPagePageState extends State<PostPage> {
             onFieldSubmitted: (value) {
               print(value);
             },
-            onSaved: (value) {
+            onSaved: (value) async{
               questions_content = value;
             },
             decoration: const InputDecoration(
@@ -81,6 +71,9 @@ class _PostPagePageState extends State<PostPage> {
               _form.currentState.save();
               print(questions_title);
               print(questions_content);
+              _firestore.collection("forms").add(
+                {"title": questions_title, "content": questions_content},
+              );
               Navigator.pop(
                 context,
                 MaterialPageRoute(builder: (context) => PostPage()),
