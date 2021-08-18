@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import 'content.dart';
 import 'form_questions.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -77,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
       Navigator.push(
         //画面遷移
         context,
-        MaterialPageRoute(builder: (context) => ContentPage()),
+        MaterialPageRoute(builder: (context) => ContentPage(document.data()['content'])),
       );
         },
       )
@@ -118,4 +117,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
 }
+
+
 
