@@ -11,20 +11,6 @@ class PostPage extends StatefulWidget {
 }
 
 class _PostPagePageState extends State<PostPage> {
-  // onFieldSubmitted(String content,title){
-  //   CollectionReference posts = FirebaseFirestore.instance.collection('posts');
-  //   posts.add({
-  //     "content": content
-  //
-  //   });
-  //   title.add({
-  //     "title": content
-  //
-  //   });
-  //   /// 入力欄をクリアにする
-  //   _textEditingController.clear();
-  //   _textEditingControllerTitle.clear();
-  // }
   TextEditingController _textEditingController = TextEditingController();
   TextEditingController _textEditingControllerTitle = TextEditingController();
 
