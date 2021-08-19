@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
+import 'package:firebase_core/firebase_core.dart';
 
 class ContentPage extends StatefulWidget {
   @override
@@ -38,17 +38,49 @@ class _ContentPagePageState extends State<ContentPage> {
 
     ]
       ),
-      body: Stack(
+      body:Column(
           key: _reply,
-          children: [
-          Card(
+            children:[
+
+         Card(
           child: ListTile(
             subtitle: Text("  yoshiki"),
               title: Text(widget.content),
-          //ここに名前かジャンルを入れる
           ),
               ),
-    SafeArea(child:Column(
+Container(
+  width: double.infinity,
+child:Text("　回答",
+  style: TextStyle(
+    fontSize: 20,
+    ),
+  textAlign: TextAlign.left,
+  ),
+),
+              Flexible(
+           child: StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance.collection("replies").snapshots(),
+              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                return ListView(
+                  children: snapshot.data.docs.map((DocumentSnapshot document) {
+                    return Card(
+                      //tapの処理
+                      //質問内容等
+                      child: ListTile(
+                        title: Text(document.data()['reply']),
+                        //ここに名前かジャンルを入れる
+                      ),
+                    );
+                  }).toList(),
+                );
+              },
+            ),
+              ),
+
+     SafeArea(child:Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children:[
           TextFormField(
@@ -73,10 +105,13 @@ class _ContentPagePageState extends State<ContentPage> {
             ),
           ),
         ]
+
     ) ,)
 
           ]
         ),
+
+
       );
   }
 }
