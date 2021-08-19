@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:sawa/screens/main.dart';
+
 
 class ContentPage extends StatefulWidget {
   @override
@@ -12,11 +11,14 @@ class ContentPage extends StatefulWidget {
   _ContentPagePageState createState() => _ContentPagePageState();
 }
 
-String reply_content;
-final _firestore = FirebaseFirestore.instance;
-final _reply = GlobalKey<FormState>();
-TextEditingController _textEditingControllerReply = TextEditingController();
+
+
+
 class _ContentPagePageState extends State<ContentPage> {
+  TextEditingController _textEditingControllerReply = TextEditingController();
+  String reply_content;
+  final _firestore = FirebaseFirestore.instance;
+  final _reply = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,14 +27,15 @@ class _ContentPagePageState extends State<ContentPage> {
           actions: <Widget>[
       IconButton(
       icon: Text("投稿"),
-      onPressed: () => setState(() async{
-        _reply.currentState.save();
+      onPressed: () async{
+        _textEditingControllerReply.clear();
+        print(reply_content);
         _firestore.collection("replies").add(
-          {"reply": reply_content},
+          {"reply":reply_content},
         );
         //ここに処理
       }),
-    ),
+
     ]
       ),
       body: Stack(
@@ -46,19 +49,22 @@ class _ContentPagePageState extends State<ContentPage> {
           ),
               ),
     SafeArea(child:Column(
-
         mainAxisAlignment: MainAxisAlignment.end,
         children:[
           TextFormField(
             autofocus: true,
-            onSaved: (value) async{
-              reply_content = value;
-            },
+            enabled: true,
+            controller: _textEditingControllerReply,
             style: new TextStyle(
               fontSize: 20.0,
               color: Colors.black,
             ),
-            controller: _textEditingControllerReply,
+            onFieldSubmitted: (value) {
+              print(value);
+            },
+            onChanged: (value) async{
+              reply_content = value;
+            },
             decoration: new InputDecoration(
               border: OutlineInputBorder(),
              hintText: ('回答する'),
