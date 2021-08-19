@@ -54,37 +54,37 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
 
       body: StreamBuilder<QuerySnapshot>(
-    stream: FirebaseFirestore.instance.collection("forms").snapshots(),
-    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-    if (snapshot.connectionState == ConnectionState.waiting) {
-    return Center(child: CircularProgressIndicator());
-    }
-    return ListView(
-    children: snapshot.data.docs.map((DocumentSnapshot document) {
+        stream: FirebaseFirestore.instance.collection("forms").snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+          return ListView(
+            children: snapshot.data.docs.map((DocumentSnapshot document) {
 
-    return Card(
-      //tapの処理
-      child:GestureDetector(
-        //質問内容等
-    child: ListTile(
-    title: Text(document.data()['content']),
-      //ここに名前かジャンルを入れる
-      subtitle: Text(document.data()['title']),
-    ),
-        onTap: () {
-      print("a");
-      Navigator.push(
-        //画面遷移
-        context,
-        MaterialPageRoute(builder: (context) => ContentPage(document.data()['content'])),
-      );
+              return Card(
+                //tapの処理
+                  child:GestureDetector(
+                    //質問内容等
+                    child: ListTile(
+                      title: Text(document.data()['content']),
+                      //ここに名前かジャンルを入れる
+                      subtitle: Text(document.data()['title']),
+                    ),
+                    onTap: () {
+                      print("a");
+                      Navigator.push(
+                        //画面遷移
+                        context,
+                        MaterialPageRoute(builder: (context) => ContentPage(document.data()['content'])),
+                      );
+                    },
+                  )
+              );
+            }).toList(),
+          );
         },
-      )
-    );
-    }).toList(),
-    );
-    },
-    ),
+      ),
 
 
       bottomNavigationBar: BottomNavigationBar(
@@ -114,9 +114,4 @@ class _MyHomePageState extends State<MyHomePage> {
       // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
-
-
 }
-
-
-
