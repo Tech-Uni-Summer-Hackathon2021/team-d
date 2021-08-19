@@ -115,17 +115,3 @@ child:Text("　回答",
       );
   }
 }
-
-
-// return TextField(
-// autofocus: true,
-// style: new TextStyle(
-// fontSize: 20.0,
-// color: Colors.black,
-// ),
-// controller: _controller,
-// decoration: new InputDecoration(
-// border: InputBorder.none,
-// hintText: 'コメントを追加',
-// ),
-// ),
