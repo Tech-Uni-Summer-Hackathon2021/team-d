@@ -8,11 +8,13 @@ class ContentPage extends StatefulWidget {
 
   ContentPage(this.content);
   final String content;
+
   _ContentPagePageState createState() => _ContentPagePageState();
 }
 
-
+String reply_content;
 final _firestore = FirebaseFirestore.instance;
+final _reply = GlobalKey<FormState>();
 TextEditingController _textEditingControllerReply = TextEditingController();
 class _ContentPagePageState extends State<ContentPage> {
   @override
@@ -23,12 +25,18 @@ class _ContentPagePageState extends State<ContentPage> {
           actions: <Widget>[
       IconButton(
       icon: Text("投稿"),
-      onPressed: () => setState(() {
+      onPressed: () => setState(() async{
+        _reply.currentState.save();
+        _firestore.collection("replies").add(
+          {"reply": reply_content},
+        );
+        //ここに処理
       }),
     ),
     ]
       ),
       body: Stack(
+          key: _reply,
           children: [
           Card(
           child: ListTile(
@@ -38,14 +46,17 @@ class _ContentPagePageState extends State<ContentPage> {
           ),
               ),
     SafeArea(child:Column(
+
         mainAxisAlignment: MainAxisAlignment.end,
         children:[
           TextFormField(
             autofocus: true,
+            onSaved: (value) async{
+              reply_content = value;
+            },
             style: new TextStyle(
               fontSize: 20.0,
               color: Colors.black,
-
             ),
             controller: _textEditingControllerReply,
             decoration: new InputDecoration(
