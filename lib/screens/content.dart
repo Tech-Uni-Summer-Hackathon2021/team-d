@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:sawa/screens/main.dart';
+import 'package:sawa/main.dart';
 
 
 class ContentPage extends StatefulWidget {

@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import 'content.dart';
-import 'form_questions.dart';
+import 'screens/content.dart';
+import 'screens/form_questions.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sawa/screens/auth/auth.dart';
@@ -41,10 +41,14 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
+  var _label = '';
+  var _titles = ['投稿', 'ユーザー', '設定'];
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      _label = _titles[index];
     });
+    currentIndex: var selectedIndex = _selectedIndex;
   }
 
   @override
@@ -55,37 +59,37 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
 
       body: StreamBuilder<QuerySnapshot>(
-    stream: FirebaseFirestore.instance.collection("forms").snapshots(),
-    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-    if (snapshot.connectionState == ConnectionState.waiting) {
-    return Center(child: CircularProgressIndicator());
-    }
-    return ListView(
-    children: snapshot.data.docs.map((DocumentSnapshot document) {
+        stream: FirebaseFirestore.instance.collection("forms").snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+          return ListView(
+            children: snapshot.data.docs.map((DocumentSnapshot document) {
 
-    return Card(
-      //tapの処理
-      child:GestureDetector(
-        //質問内容等
-    child: ListTile(
-    title: Text(document.data()['content']),
-      //ここに名前かジャンルを入れる
-      subtitle: Text(document.data()['title']),
-    ),
-        onTap: () {
-      print("a");
-      Navigator.push(
-        //画面遷移
-        context,
-        MaterialPageRoute(builder: (context) => ContentPage()),
-      );
+              return Card(
+                //tapの処理
+                  child:GestureDetector(
+                    //質問内容等
+                    child: ListTile(
+                      title: Text(document.data()['content']),
+                      //ここに名前かジャンルを入れる
+                      subtitle: Text(document.data()['title']),
+                    ),
+                    onTap: () {
+                      print("a");
+                      Navigator.push(
+                        //画面遷移
+                        context,
+                        MaterialPageRoute(builder: (context) => ContentPage()),
+                      );
+                    },
+                  )
+              );
+            }).toList(),
+          );
         },
-      )
-    );
-    }).toList(),
-    );
-    },
-    ),
+      ),
 
 
       bottomNavigationBar: BottomNavigationBar(
@@ -98,9 +102,18 @@ class _MyHomePageState extends State<MyHomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),
             title: Text('ユーザー'),
+
+          ),
+
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.build_sharp),
+            title: Text('設定'),
           ),
         ],
+
       ),
+
 
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -118,4 +131,3 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
 }
-
