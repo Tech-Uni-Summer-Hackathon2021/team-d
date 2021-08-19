@@ -20,12 +20,22 @@ class _ContentPagePageState extends State<ContentPage> {
   String questions_content;
   final _form = GlobalKey<FormState>();
 
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("投稿フォーム"),
+        title: Text("Q & A"),
       ),
-     
-          );
+        body: Card(
+    child: Column(
+    mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          const ListTile(
+            title: Text('ここに質問タイトルっっっっじゃあああああああああああああああああああああ'),
+          ),
+        ],
+    ),
+    ),
+    );
   }
 }
