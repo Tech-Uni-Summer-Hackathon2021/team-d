@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class PostPage extends StatefulWidget {
@@ -13,11 +13,40 @@ class PostPage extends StatefulWidget {
 class _PostPagePageState extends State<PostPage> {
   TextEditingController _textEditingController = TextEditingController();
   TextEditingController _textEditingControllerTitle = TextEditingController();
-
   final _firestore = FirebaseFirestore.instance;
   final myFocusNode = FocusNode();
   String questions_title;
   String questions_content;
+  // _incrementCounter() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   int counter = (prefs.getInt('counter') ?? 0) + 1;
+  //   print('Pressed $counter times.');
+  //   await prefs.setInt('counter', counter);
+  // }
+  int forms_id=0;
+  void _incrementCounter(){
+    setState(() {
+      forms_id++;
+      _setCounterValue();
+    });
+  }
+  void initState() {
+    super.initState();
+    _getCounterValue();
+  }
+
+  void _getCounterValue() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      forms_id = prefs.getInt('id');
+    });
+  }
+
+  void _setCounterValue() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt('id', forms_id);
+  }
+
   final _form = GlobalKey<FormState>();
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,12 +96,16 @@ class _PostPagePageState extends State<PostPage> {
           FlatButton(
             //投稿ボタン
             child: Text('投稿'),
+
             onPressed: () async{
+            _incrementCounter();
+
               _form.currentState.save();
               print(questions_title);
               print(questions_content);
+              print(forms_id);
               _firestore.collection("forms").add(
-                {"title": questions_title, "content": questions_content},
+                {"title": questions_title, "content": questions_content,"id": forms_id},
               );
               Navigator.pop(
                 context,

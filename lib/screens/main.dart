@@ -76,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
       Navigator.push(
         //画面遷移
         context,
-        MaterialPageRoute(builder: (context) => ContentPage(document.data()['content'])),
+        MaterialPageRoute(builder: (context) => ContentPage(document.data()['content']),),
       );
         },
       )
