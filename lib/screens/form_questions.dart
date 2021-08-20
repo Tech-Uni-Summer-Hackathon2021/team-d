@@ -17,12 +17,6 @@ class _PostPagePageState extends State<PostPage> {
   final myFocusNode = FocusNode();
   String questions_title;
   String questions_content;
-  // _incrementCounter() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   int counter = (prefs.getInt('counter') ?? 0) + 1;
-  //   print('Pressed $counter times.');
-  //   await prefs.setInt('counter', counter);
-  // }
   int forms_id=0;
   void _incrementCounter(){
     setState(() {

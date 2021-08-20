@@ -4,8 +4,9 @@ import 'package:firebase_core/firebase_core.dart';
 class ContentPage extends StatefulWidget {
   @override
 
-  ContentPage(this.content);
+  ContentPage(this.content, this.id);
   final String content;
+  final int id;
 
   _ContentPagePageState createState() => _ContentPagePageState();
 }
@@ -30,7 +31,7 @@ class _ContentPagePageState extends State<ContentPage> {
         _textEditingControllerReply.clear();
         print(reply_content);
         _firestore.collection("replies").add(
-          {"reply":reply_content},
+          {"reply":reply_content,"reply_id":widget.id},
         );
         //ここに処理
       }),
@@ -58,23 +59,25 @@ child:Text("　回答",
 ),
               Flexible(
            child: StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance.collection("replies").snapshots(),
+              stream: FirebaseFirestore.instance.collection("replies").where('reply_id', isEqualTo:widget.id).snapshots(),
               builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
                 }
                 return ListView(
                   children: snapshot.data.docs.map((DocumentSnapshot document) {
-                    return Card(
-                      //tapの処理
-                      //質問内容等
-                      child: ListTile(
-                        title: Text(document.data()['reply']),
-                        //ここに名前かジャンルを入れる
-                      ),
-                    );
+                      return Card(
+                        //tapの処理
+                        //質問内容等
+                        child: ListTile(
+                          title: Text(document.data()['reply']),
+                          //ここに名前かジャンルを入れる
+                        ),
+                      );
+
                   }).toList(),
                 );
+
               },
             ),
               ),

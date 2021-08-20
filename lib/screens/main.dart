@@ -72,11 +72,15 @@ class _MyHomePageState extends State<MyHomePage> {
       subtitle: Text(document.data()['title']),
     ),
         onTap: () {
-      print("a");
+      print(document.data()['id']);
       Navigator.push(
         //画面遷移
         context,
-        MaterialPageRoute(builder: (context) => ContentPage(document.data()['content']),),
+        MaterialPageRoute(builder: (context) => ContentPage(
+            document.data()['content'],
+            document.data()['id'],
+        )
+        ),
       );
         },
       )
