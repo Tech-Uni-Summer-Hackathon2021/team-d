@@ -53,7 +53,7 @@ class _PostPagePageState extends State<PostPage> {
         children:[
           TextFormField(
           controller: _textEditingControllerTitle,
- 
+
         onFieldSubmitted: (value) {
           print(value);
         },
@@ -76,9 +76,11 @@ class _PostPagePageState extends State<PostPage> {
             style: TextStyle(color: Colors.black,fontSize: 18),
             minLines:15,
             maxLines:15,
+
             onFieldSubmitted: (value) {
               print(value);
             },
+
             onSaved: (value) async{
               questions_content = value;
             },
@@ -95,16 +97,19 @@ class _PostPagePageState extends State<PostPage> {
             _incrementCounter();
 
               _form.currentState.save();
-              print(questions_title);
-              print(questions_content);
-              print(forms_id);
-              _firestore.collection("forms").add(
-                {"title": questions_title, "content": questions_content,"id": forms_id},
-              );
-              Navigator.pop(
-                context,
-                MaterialPageRoute(builder: (context) => PostPage()),
-              );
+              if(0 < questions_title.length&&0 < questions_content.length) {
+                _firestore.collection("forms").add(
+                  {
+                    "title": questions_title,
+                    "content": questions_content,
+                    "id": forms_id
+                  },
+                );
+                Navigator.pop(
+                  context,
+                  MaterialPageRoute(builder: (context) => PostPage()),
+                );
+              }
             },
           ),
         ]

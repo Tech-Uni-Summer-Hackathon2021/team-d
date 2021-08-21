@@ -28,11 +28,13 @@ class _ContentPagePageState extends State<ContentPage> {
       IconButton(
       icon: Text("投稿"),
       onPressed: () async{
-        _textEditingControllerReply.clear();
-        print(reply_content);
-        _firestore.collection("replies").add(
-          {"reply":reply_content,"reply_id":widget.id},
-        );
+        if(0 < reply_content.length) {
+          _textEditingControllerReply.clear();
+          print(reply_content);
+          _firestore.collection("replies").add(
+            {"reply": reply_content, "reply_id": widget.id},
+          );
+        }
         //ここに処理
       }),
 
