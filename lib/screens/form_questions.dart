@@ -17,12 +17,6 @@ class _PostPagePageState extends State<PostPage> {
   final myFocusNode = FocusNode();
   String questions_title;
   String questions_content;
-  // _incrementCounter() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   int counter = (prefs.getInt('counter') ?? 0) + 1;
-  //   print('Pressed $counter times.');
-  //   await prefs.setInt('counter', counter);
-  // }
   int forms_id=0;
   void _incrementCounter(){
     setState(() {
@@ -101,16 +95,19 @@ class _PostPagePageState extends State<PostPage> {
             _incrementCounter();
 
               _form.currentState.save();
-              print(questions_title);
-              print(questions_content);
-              print(forms_id);
-              _firestore.collection("forms").add(
-                {"title": questions_title, "content": questions_content,"id": forms_id},
-              );
-              Navigator.pop(
-                context,
-                MaterialPageRoute(builder: (context) => PostPage()),
-              );
+              if(0 < questions_title.length&&0 < questions_content.length) {
+                _firestore.collection("forms").add(
+                  {
+                    "title": questions_title,
+                    "content": questions_content,
+                    "id": forms_id
+                  },
+                );
+                Navigator.pop(
+                  context,
+                  MaterialPageRoute(builder: (context) => PostPage()),
+                );
+              }
             },
           ),
         ]
