@@ -35,7 +35,7 @@ class _ContentPagePageState extends State<ContentPage> {
                       builder: (context) {
                         return AlertDialog(
                           title: Text('入力エラー'),
-                          content: Text('入力してください'),
+                          content: Text('質問を入力してください'),
                           actions: <Widget>[
                             FlatButton(
                               child: Text("OK"),
@@ -52,29 +52,10 @@ class _ContentPagePageState extends State<ContentPage> {
                     _firestore.collection("replies").add(
                       {"reply": reply_content, "reply_id": widget.id},
                     );
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: Text('入力エラー'),
-                          content: Text('入力してください'),
-                          actions: <Widget>[
-                            FlatButton(
-                              child: Text("OK"),
-                              onPressed: () => Navigator.pop(context),
-
-
-
-                            ),
-
-                          ],
-                        );
-                      },
-                    );
-
-
-                  } //ここに処理
-                }),
+                  Navigator.pop(context);
+                  }
+                  //ここに処理
+                } ),
 
           ]
       ),
