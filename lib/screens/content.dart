@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+
+import 'main.dart';
 class ContentPage extends StatefulWidget {
   @override
 
@@ -34,31 +36,44 @@ class _ContentPagePageState extends State<ContentPage> {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          title: Text('サンプルダイアログ'),
-                          content: Text('アプリを閉じますか'),
-                          // actions: <Widget>[
-                          //   FlatButton(
-                          //     child: Text("CANCEL"),
-                          //     onPressed: () => Navigator.pop(context),
-                          //   ),
-                          //   FlatButton(
-                          //     child: Text("OK"),
-                          //     onPressed: () => SystemNavigator.pop(),
-                          //   ),
-                          // ],
+                          title: Text('入力エラー'),
+                          content: Text('回答を入力してください'),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text("OK"),
+                              onPressed: () => Navigator.pop(context),
+                            ),
+
+                          ],
                         );
                       },
                     );
                   }
                   else {
+                    showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text('　　　完了'),
+                        content: Text('投稿が完了しました！'),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text("確認"),
+                              onPressed: (){
+                                Navigator.popUntil(context, (route) => route.isFirst);
+                              }
+                          ),
+                        ],
+                      );
+                    },
+                  );
                     _textEditingControllerReply.clear();
-                    print(reply_content);
                     _firestore.collection("replies").add(
                       {"reply": reply_content, "reply_id": widget.id},
                     );
-
-                  } //ここに処理
-                }),
+                  }
+                  //ここに処理
+                } ),
 
           ]
       ),
