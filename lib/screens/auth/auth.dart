@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../main.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -17,8 +17,34 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   @override
+
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+    _saveCounter(_counter);
+  }
+
+  // 今のカウントを保存する
+  _saveCounter(int count) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    await pref.setInt("myCount", count);
+  }
+  _readCounter() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    setState(() {
+      var data = pref.getInt("myCount");
+      if (data != null) {
+        _counter = data;
+      }
+    });
+  }
+
   void initState() {
     super.initState();
+    _readCounter();
   }
 
   @override

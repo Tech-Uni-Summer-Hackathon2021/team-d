@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-
 class ContentPage extends StatefulWidget {
   @override
 
-  ContentPage(this.content);
+  ContentPage(this.content, this.id);
   final String content;
+  final int id;
 
   _ContentPagePageState createState() => _ContentPagePageState();
 }
