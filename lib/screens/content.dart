@@ -35,7 +35,7 @@ class _ContentPagePageState extends State<ContentPage> {
                       builder: (context) {
                         return AlertDialog(
                           title: Text('入力エラー'),
-                          content: Text('質問を入力してください'),
+                          content: Text('質問を入力してください!'),
                           actions: <Widget>[
                             FlatButton(
                               child: Text("OK"),
