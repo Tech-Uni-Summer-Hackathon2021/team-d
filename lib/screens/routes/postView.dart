@@ -31,7 +31,7 @@ class PostView extends StatelessWidget {
                       Navigator.push(
                         //画面遷移
                         context,
-                        MaterialPageRoute(builder: (context) => ContentPage(document.data()['content'])),
+                        MaterialPageRoute(builder: (context) => ContentPage(document.data()['content'],document.data()['id'])),
                       );
                     },
                   )

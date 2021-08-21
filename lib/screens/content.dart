@@ -19,6 +19,7 @@ class _ContentPagePageState extends State<ContentPage> {
   String reply_content;
   final _firestore = FirebaseFirestore.instance;
   final _reply = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,20 +28,43 @@ class _ContentPagePageState extends State<ContentPage> {
           actions: <Widget>[
             IconButton(
                 icon: Text("投稿"),
-                onPressed: () async{
-                  _textEditingControllerReply.clear();
-                  print(reply_content);
-                  _firestore.collection("replies").add(
-                    {"reply":reply_content},
-                  );
-                  //ここに処理
+                onPressed: () async {
+                  if (reply_content?.isEmpty ?? true) {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text('サンプルダイアログ'),
+                          content: Text('アプリを閉じますか'),
+                          // actions: <Widget>[
+                          //   FlatButton(
+                          //     child: Text("CANCEL"),
+                          //     onPressed: () => Navigator.pop(context),
+                          //   ),
+                          //   FlatButton(
+                          //     child: Text("OK"),
+                          //     onPressed: () => SystemNavigator.pop(),
+                          //   ),
+                          // ],
+                        );
+                      },
+                    );
+                  }
+                  else {
+                    _textEditingControllerReply.clear();
+                    print(reply_content);
+                    _firestore.collection("replies").add(
+                      {"reply": reply_content, "reply_id": widget.id},
+                    );
+
+                  } //ここに処理
                 }),
 
           ]
       ),
-      body:Column(
+      body: Column(
           key: _reply,
-          children:[
+          children: [
 
             Card(
               child: ListTile(
@@ -50,7 +74,7 @@ class _ContentPagePageState extends State<ContentPage> {
             ),
             Container(
               width: double.infinity,
-              child:Text("　回答",
+              child: Text("　回答",
                 style: TextStyle(
                   fontSize: 20,
                 ),
@@ -59,13 +83,16 @@ class _ContentPagePageState extends State<ContentPage> {
             ),
             Flexible(
               child: StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance.collection("replies").snapshots(),
-                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                stream: FirebaseFirestore.instance.collection("replies").where(
+                    'reply_id', isEqualTo: widget.id).snapshots(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(child: CircularProgressIndicator());
                   }
                   return ListView(
-                    children: snapshot.data.docs.map((DocumentSnapshot document) {
+                    children: snapshot.data.docs.map((
+                        DocumentSnapshot document) {
                       return Card(
                         //tapの処理
                         //質問内容等
@@ -80,9 +107,9 @@ class _ContentPagePageState extends State<ContentPage> {
               ),
             ),
 
-            SafeArea(child:Column(
+            SafeArea(child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children:[
+                children: [
                   TextFormField(
                     autofocus: true,
                     enabled: true,
@@ -94,7 +121,7 @@ class _ContentPagePageState extends State<ContentPage> {
                     onFieldSubmitted: (value) {
                       print(value);
                     },
-                    onChanged: (value) async{
+                    onChanged: (value) async {
                       reply_content = value;
                     },
                     decoration: new InputDecoration(
@@ -106,7 +133,7 @@ class _ContentPagePageState extends State<ContentPage> {
                   ),
                 ]
 
-            ) ,)
+            ),)
 
           ]
       ),
