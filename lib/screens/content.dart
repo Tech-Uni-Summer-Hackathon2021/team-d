@@ -34,28 +34,44 @@ class _ContentPagePageState extends State<ContentPage> {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          title: Text('サンプルダイアログ'),
-                          content: Text('アプリを閉じますか'),
-                          // actions: <Widget>[
-                          //   FlatButton(
-                          //     child: Text("CANCEL"),
-                          //     onPressed: () => Navigator.pop(context),
-                          //   ),
-                          //   FlatButton(
-                          //     child: Text("OK"),
-                          //     onPressed: () => SystemNavigator.pop(),
-                          //   ),
-                          // ],
+                          title: Text('入力エラー'),
+                          content: Text('入力してください'),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text("OK"),
+                              onPressed: () => Navigator.pop(context),
+                            ),
+
+                          ],
                         );
                       },
                     );
                   }
                   else {
                     _textEditingControllerReply.clear();
-                    print(reply_content);
                     _firestore.collection("replies").add(
                       {"reply": reply_content, "reply_id": widget.id},
                     );
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text('入力エラー'),
+                          content: Text('入力してください'),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text("OK"),
+                              onPressed: () => Navigator.pop(context),
+
+
+
+                            ),
+
+                          ],
+                        );
+                      },
+                    );
+
 
                   } //ここに処理
                 }),
