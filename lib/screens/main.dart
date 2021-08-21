@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'content.dart';
-import 'form_questions.dart';
+import 'routes/postView.dart';
+import 'routes/userView.dart';
+import 'settingView.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sawa/screens/auth/auth.dart';
@@ -48,43 +49,26 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    var routes =[PostView(), UserView()];
+
     return Scaffold(
       appBar: AppBar(
         title: Text('大学生のための質問教室'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SettingView()),
+              );
+            },
+          ),
+        ],
       ),
 
-      body: StreamBuilder<QuerySnapshot>(
-    stream: FirebaseFirestore.instance.collection("forms").snapshots(),
-    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-    if (snapshot.connectionState == ConnectionState.waiting) {
-    return Center(child: CircularProgressIndicator());
-    }
-    return ListView(
-    children: snapshot.data.docs.map((DocumentSnapshot document) {
-
-    return Card(
-      //tapの処理
-      child:GestureDetector(
-        //質問内容等
-    child: ListTile(
-    title: Text(document.data()['content']),
-      //ここに名前かジャンルを入れる
-      subtitle: Text(document.data()['title']),
-    ),
-        onTap: () {
-      print("a");
-      Navigator.push(
-        //画面遷移
-        context,
-        MaterialPageRoute(builder: (context) => ContentPage(document.data()['content']),),
-      );
-        },
-      )
-    );
-    }).toList(),
-    );
-    },
-    ),
+      body: routes[_selectedIndex],
 
 
       bottomNavigationBar: BottomNavigationBar(
@@ -99,24 +83,11 @@ class _MyHomePageState extends State<MyHomePage> {
             title: Text('ユーザー'),
           ),
         ],
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
       ),
 
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => PostPage()),
-          );
-        },
-        child: const Icon(Icons.add),
-        backgroundColor: Colors.blue,
-      ),
       // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
-
-
 }
-
-
-

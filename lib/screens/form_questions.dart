@@ -55,41 +55,41 @@ class _PostPagePageState extends State<PostPage> {
       ),
       body: Form(
           key: _form,
-    child: Column(
-        children:[
-          TextFormField(
-          controller: _textEditingControllerTitle,
- 
-        onFieldSubmitted: (value) {
-          print(value);
-        },
-            onSaved: (value) async{
-              questions_title = value;
-            },
-            enabled: true,
-          style: TextStyle(color: Colors.black,fontSize: 18),
-          obscureText: false,
-          maxLines:1 ,
-          decoration: const InputDecoration(
-            hintText: '　質問タイトル',
-          ),
-        ),
-          TextFormField(
-            controller: _textEditingController,
-            enabled: true,
-            maxLength: 330,
-            maxLengthEnforced: true,
-            style: TextStyle(color: Colors.black,fontSize: 18),
-            minLines:15,
-            maxLines:15,
-            onFieldSubmitted: (value) {
-              print(value);
-            },
-            onSaved: (value) async{
-              questions_content = value;
-            },
-            decoration: const InputDecoration(
-              hintText: '　投稿内容を記載してください',
+          child: Column(
+              children:[
+                TextFormField(
+                  controller: _textEditingControllerTitle,
+
+                  onFieldSubmitted: (value) {
+                    print(value);
+                  },
+                  onSaved: (value) async{
+                    questions_title = value;
+                  },
+                  enabled: true,
+                  style: TextStyle(color: Colors.black,fontSize: 18),
+                  obscureText: false,
+                  maxLines:1 ,
+                  decoration: const InputDecoration(
+                    hintText: '　質問タイトル',
+                  ),
+                ),
+                TextFormField(
+                  controller: _textEditingController,
+                  enabled: true,
+                  maxLength: 330,
+                  maxLengthEnforced: true,
+                  style: TextStyle(color: Colors.black,fontSize: 18),
+                  minLines:15,
+                  maxLines:15,
+                  onFieldSubmitted: (value) {
+                    print(value);
+                  },
+                  onSaved: (value) async{
+                    questions_content = value;
+                  },
+                  decoration: const InputDecoration(
+                    hintText: '　投稿内容を記載してください',
 
             ),
           ),
