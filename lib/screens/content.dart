@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+
+import 'main.dart';
 class ContentPage extends StatefulWidget {
   @override
 
@@ -35,7 +37,7 @@ class _ContentPagePageState extends State<ContentPage> {
                       builder: (context) {
                         return AlertDialog(
                           title: Text('入力エラー'),
-                          content: Text('質問を入力してください!'),
+                          content: Text('回答を入力してください'),
                           actions: <Widget>[
                             FlatButton(
                               child: Text("OK"),
@@ -48,11 +50,27 @@ class _ContentPagePageState extends State<ContentPage> {
                     );
                   }
                   else {
+                    showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text('　　　完了'),
+                        content: Text('投稿が完了しました！'),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text("確認"),
+                              onPressed: (){
+                                Navigator.popUntil(context, (route) => route.isFirst);
+                              }
+                          ),
+                        ],
+                      );
+                    },
+                  );
                     _textEditingControllerReply.clear();
                     _firestore.collection("replies").add(
                       {"reply": reply_content, "reply_id": widget.id},
                     );
-                  Navigator.pop(context);
                   }
                   //ここに処理
                 } ),
