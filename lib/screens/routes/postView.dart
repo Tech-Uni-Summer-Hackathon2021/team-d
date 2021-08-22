@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sawa/screens/auth/auth.dart';
 import '../content.dart';
 import '../form_questions.dart';
 
 
 class PostView extends StatelessWidget {
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder<QuerySnapshot>(
@@ -42,6 +44,10 @@ class PostView extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => PostPage()),
+          // );
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => PostPage()),
