@@ -1,8 +1,11 @@
+
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sawa/screens/auth/auth_model.dart';
 import 'routes/postView.dart';
 import 'routes/userView.dart';
-
 import 'settingView.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +17,9 @@ Future<void> main() async {
   await Firebase.initializeApp();
 
   runApp(MyApp());
+  //ログイン振り分け
+  // judge_login();
+
 }
 
 class MyApp extends StatelessWidget {
@@ -32,7 +38,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends StatefulWidget{
   MyHomePage({key, this.title}) : super(key: key);
   final String title;
 
@@ -55,13 +61,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
     var routes =[PostView(), UserView()];
 
-    return Scaffold(
+    return Scaffold (
+
       appBar: AppBar(
         title: Text('大学生のための質問教室'),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.settings),
             onPressed: () {
+
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => SettingView()),
