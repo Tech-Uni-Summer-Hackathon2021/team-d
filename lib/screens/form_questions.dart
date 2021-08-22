@@ -92,20 +92,70 @@ class _PostPagePageState extends State<PostPage> {
             child: Text('投稿'),
 
             onPressed: () async{
+              //この二つはここに置かないと遷移できない
             _incrementCounter();
-
               _form.currentState.save();
-              if(0 < questions_title.length&&0 < questions_content.length) {
+              if(questions_title?.isEmpty ?? true) {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text('注意'),
+                      content: Text('タイトルと投稿内容を記述してください。'),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text("確認"),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+
+                      ],
+                    );
+                  },
+                );
+              }
+              else if(questions_content?.isEmpty ?? true){
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text('注意'),
+                      content: Text('タイトルと投稿内容を記述してください。'),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text("確認"),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+
+                      ],
+                    );
+                  },
+                );
+              }
+              else{
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text('投稿'),
+                      content: Text('投稿が完了しました！'),
+                      actions: <Widget>[
+                        FlatButton(
+                            child: Text("確認"),
+                            onPressed: (){
+                              Navigator.popUntil(context, (route) => route.isFirst);
+                            }
+                        ),
+
+                      ],
+                    );
+                  },
+                );
                 _firestore.collection("forms").add(
                   {
                     "title": questions_title,
                     "content": questions_content,
                     "id": forms_id
                   },
-                );
-                Navigator.pop(
-                  context,
-                  MaterialPageRoute(builder: (context) => PostPage()),
                 );
               }
             },
