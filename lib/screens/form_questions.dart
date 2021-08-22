@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 
 class PostPage extends StatefulWidget {
-
   @override
-
   _PostPagePageState createState() => _PostPagePageState();
+
 }
 
 class _PostPagePageState extends State<PostPage> {
@@ -18,6 +18,20 @@ class _PostPagePageState extends State<PostPage> {
   String questions_title;
   String questions_content;
   int forms_id=0;
+  //  void getTodayDate() async {
+  //   initializeDateFormatting('ja');
+  //   var format = new DateFormat.yMMMd('ja');
+  //   var date = format.format(new DateTime.now());
+  //   _firestore.collection("forms").add(
+  //     {
+  //       "title": questions_title,
+  //       "content": questions_content,
+  //       "id": forms_id,
+  //       "days":date
+  //     },
+  //   );
+  // }
+
   void _incrementCounter(){
     setState(() {
       forms_id++;
@@ -84,15 +98,12 @@ class _PostPagePageState extends State<PostPage> {
                   },
                   decoration: const InputDecoration(
                     hintText: '　投稿内容を記載してください',
-
             ),
           ),
           FlatButton(
             //投稿ボタン
             child: Text('投稿'),
-
             onPressed: () async{
-              //この二つはここに置かないと遷移できない
             _incrementCounter();
               _form.currentState.save();
               if(questions_title?.isEmpty ?? true) {
@@ -107,7 +118,6 @@ class _PostPagePageState extends State<PostPage> {
                           child: Text("確認"),
                           onPressed: () => Navigator.pop(context),
                         ),
-
                       ],
                     );
                   },
@@ -145,18 +155,24 @@ class _PostPagePageState extends State<PostPage> {
                               Navigator.popUntil(context, (route) => route.isFirst);
                             }
                         ),
-
                       ],
                     );
                   },
                 );
-                _firestore.collection("forms").add(
-                  {
-                    "title": questions_title,
-                    "content": questions_content,
-                    "id": forms_id
-                  },
-                );
+                void getTodayDate() async {
+                  initializeDateFormatting('ja');
+                  var format = new DateFormat.yMMMd('ja');
+                  var date = format.format(new DateTime.now());
+                  _firestore.collection("forms").add(
+                    {
+                      "title": questions_title,
+                      "content": questions_content,
+                      "id": forms_id,
+                      "days":date
+                    },
+                  );
+                }
+                getTodayDate();
               }
             },
           ),
