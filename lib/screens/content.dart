@@ -6,15 +6,12 @@ import 'main.dart';
 class ContentPage extends StatefulWidget {
   @override
 
-  ContentPage(this.content, this.id);
+  ContentPage(this.content, this.id, this.days);
   final String content;
   final int id;
-
+  final String days;
   _ContentPagePageState createState() => _ContentPagePageState();
 }
-
-
-
 
 class _ContentPagePageState extends State<ContentPage> {
   TextEditingController _textEditingControllerReply = TextEditingController();
@@ -43,7 +40,6 @@ class _ContentPagePageState extends State<ContentPage> {
                               child: Text("OK"),
                               onPressed: () => Navigator.pop(context),
                             ),
-
                           ],
                         );
                       },
@@ -54,7 +50,7 @@ class _ContentPagePageState extends State<ContentPage> {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        title: Text('　　　完了'),
+                        title: Text('完了'),
                         content: Text('投稿が完了しました！'),
                         actions: <Widget>[
                           FlatButton(
@@ -74,7 +70,6 @@ class _ContentPagePageState extends State<ContentPage> {
                   }
                   //ここに処理
                 } ),
-
           ]
       ),
       body: Column(
@@ -83,7 +78,7 @@ class _ContentPagePageState extends State<ContentPage> {
 
             Card(
               child: ListTile(
-                subtitle: Text("  yoshiki"),
+                subtitle: Text(widget.days),
                 title: Text(widget.content),
               ),
             ),
@@ -143,11 +138,9 @@ class _ContentPagePageState extends State<ContentPage> {
                       border: OutlineInputBorder(),
                       hintText: ('回答する'),
                       prefixIcon: Icon(Icons.face),
-
                     ),
                   ),
                 ]
-
             ),)
 
           ]
