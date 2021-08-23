@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'settings/aboutView.dart';
 import 'settings/notifyView.dart';
 import 'settings/inquiryView.dart';
+import 'settings/destroyUserView.dart';
 
 class SettingView extends StatelessWidget {
   @override
@@ -30,7 +31,10 @@ class SettingView extends StatelessWidget {
             Card(
               child: InkWell(  // InkWellはCardの子ウィジェット
                 onTap: () {
-                  
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => DestroyUserView()),
+                  );
                 },
                 child: ListTile(
                   title: Text('アカウント削除'),
