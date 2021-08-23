@@ -29,7 +29,11 @@ class _AuthScreenState extends State<AuthScreen> {
     });
     _saveCounter(_counter);
   }
-
+  Future<String> inputData() async {
+    final User user = await FirebaseAuth.instance.currentUser;
+    final String uid = user.uid.toString();
+    return uid;
+  }
   // 今のカウントを保存する
   _saveCounter(int count) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
@@ -57,12 +61,15 @@ class _AuthScreenState extends State<AuthScreen> {
 
   // アカウント登録
   void registeUser() async {
+    final User user = await FirebaseAuth.instance.currentUser;
+    final String uid = user.uid.toString();
     await FirebaseAuth.instance.signInAnonymously().then((result) => {
       print("User id is ${result.user.uid}"),
       //ページ遷移
+
     Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) => ProfileSetView()),
+    MaterialPageRoute(builder: (context) => ProfileSetView(uid)),
     )
     });
   }
