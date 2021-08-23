@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sawa/screens/auth/auth.dart';
@@ -29,7 +30,6 @@ class PostView extends StatelessWidget {
                       subtitle: Text(document.data()['title']),
                     ),
                     onTap: () {
-                      print("a");
                       Navigator.push(
                         //画面遷移
                         context,
@@ -42,16 +42,27 @@ class PostView extends StatelessWidget {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => PostPage()),
-          // );
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => PostPage()),
-          );
+      floatingActionButton: FloatingActionButton (
+
+        onPressed: () async{
+          final User user =  await FirebaseAuth.instance.currentUser;
+          final String uid = user.uid.toString();
+          print(uid);
+          if(uid!=null) {
+            return Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => PostPage()),
+            );
+          }
+          else{
+            return Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AuthScreen()),
+            );
+          }
+
+
+
         },
         child: const Icon(Icons.add),
         backgroundColor: Colors.blue,
