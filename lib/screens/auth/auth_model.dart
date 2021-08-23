@@ -74,6 +74,7 @@
 //   final String uid = user.uid.toString();
 //   //uidをどう使うか
 //
+//
 //   if (uid == null) {
 //
 //     BuildContext context;
@@ -83,4 +84,11 @@
 //   else {
 //
 //   }
+// }
+//
+// Future<String> inputData() async {
+//
+//   final User user = await FirebaseAuth.instance.currentUser();
+//   final String uid = user.uid.toString();
+//   return uid;
 // }
