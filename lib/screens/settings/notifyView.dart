@@ -8,7 +8,10 @@ class NotifyView extends StatelessWidget {
       appBar: AppBar(
         title: Text("通知について"),
       ),
-      body: Center()
+      body: Column(children: [
+        Container(child: Text("自分への回答が届いた時")),
+        Container(child: Text("自分の回答へ返信が届いた時")),
+      ],)
     );
   }
 }
