@@ -18,7 +18,6 @@ Future<void> main() async {
 
   runApp(MyApp());
   //ログイン振り分け
-  // judge_login();
 
 }
 
@@ -48,7 +47,6 @@ class MyHomePage extends StatefulWidget{
 
 
 class _MyHomePageState extends State<MyHomePage> {
-
   int _selectedIndex = 0;
   void _onItemTapped(int index) {
     setState(() {
@@ -100,5 +98,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
       // This trailing comma makes auto-formatting nicer for build methods.
     );
+
   }
+
 }
+

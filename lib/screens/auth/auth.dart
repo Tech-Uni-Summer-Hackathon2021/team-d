@@ -44,7 +44,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
   void initState() {
     super.initState();
-    _readCounter();
+    // _readCounter();
   }
 
   @override
