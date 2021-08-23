@@ -152,7 +152,7 @@ class _PostPagePageState extends State<PostPage> {
                         FlatButton(
                             child: Text("確認"),
                             onPressed: (){
-                              Navigator.popUntil(context, (route) => route.isFirst);
+                              Navigator.of(context).pushReplacementNamed("/home");
                             }
                         ),
                       ],
@@ -182,3 +182,5 @@ class _PostPagePageState extends State<PostPage> {
     );
   }
 }
+
+

@@ -45,25 +45,12 @@ class PostView extends StatelessWidget {
       floatingActionButton: FloatingActionButton (
 
         onPressed: () async{
-          final User user =  await FirebaseAuth.instance.currentUser;
-          final String uid = user.uid.toString();
-          print(uid);
-          if(uid!=null) {
-            return Navigator.push(
+
+          Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => PostPage()),
             );
-          }
-          else{
-            return Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => AuthScreen()),
-            );
-          }
-
-
-
-        },
+          },
         child: const Icon(Icons.add),
         backgroundColor: Colors.blue,
       ),
