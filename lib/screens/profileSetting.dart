@@ -5,7 +5,9 @@ import 'package:sawa/screens/auth/auth.dart';
 import 'package:sawa/screens/routes/postView.dart';
 
 TextEditingController _nameController = TextEditingController();
-
+TextEditingController _ageController = TextEditingController();
+TextEditingController _majorController = TextEditingController();
+TextEditingController _genderController = TextEditingController();
 final myFocusNode = FocusNode();
 final _firestore = FirebaseFirestore.instance;
 String user_name;
@@ -99,7 +101,7 @@ class ProfileSetView extends StatelessWidget {
         ),
       ),
       TextFormField(
-
+        controller: _majorController,
         onChanged: (value) async{
           user_major = value;
         },
@@ -112,7 +114,7 @@ class ProfileSetView extends StatelessWidget {
         ),
       ),
       TextFormField(
-
+        controller: _ageController,
         onChanged: (value) async{
           user_age = value;
         },
@@ -125,7 +127,7 @@ class ProfileSetView extends StatelessWidget {
         ),
       ),
       TextFormField(
-
+        controller: _genderController,
         onChanged: (value) async{
           user_gender = value;
         },
