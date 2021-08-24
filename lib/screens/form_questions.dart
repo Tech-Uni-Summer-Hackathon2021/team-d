@@ -19,6 +19,7 @@ class _PostPagePageState extends State<PostPage> {
   String questions_content;
   int forms_id=0;
 
+  //countする
   void _incrementCounter(){
     setState(() {
       forms_id++;
