@@ -21,7 +21,6 @@ Future<void> main() async {
   await Firebase.initializeApp();
 
   runApp(MyApp());
-  //ログイン振り分け
 
 }
 
@@ -33,14 +32,14 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
 
       theme: ThemeData(
-        // This is the theme of your application.
+
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(),
+      //ルーティングここで画面遷移先決めれます。他でもできるのでどちらでも
       routes:<String, WidgetBuilder>{
         "/home":(BuildContext context) => MyHomePage(),
         "/setting":(BuildContext context) =>SettingView(),
-
       },
     );
   }
@@ -48,11 +47,9 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget{
 
-
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
-
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
@@ -67,14 +64,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
     var routes =[PostView(), AuthScreen()];
     return Scaffold (
-
+//appBarは上のタイトルが表示されているものです
       appBar: AppBar(
         title: Text('大学生のための質問教室'),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.settings),
+            //IconButtonを押した時の処理
             onPressed: () {
-
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => SettingView()),
@@ -86,8 +83,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
       body: routes[_selectedIndex],
 
-
       bottomNavigationBar: BottomNavigationBar(
+        //下のボタン
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.article),

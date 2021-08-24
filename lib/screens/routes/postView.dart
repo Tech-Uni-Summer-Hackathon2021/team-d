@@ -26,7 +26,6 @@ class PostView extends StatelessWidget {
                     //質問内容等
                     child: ListTile(
                       title: Text(document.data()['content']),
-                      //ここに名前かジャンルを入れる
                       subtitle: Text(document.data()['title']),
                     ),
                     onTap: () {
