@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sawa/screens/auth/auth.dart';
 import 'package:sawa/screens/routes/postView.dart';
-
+import 'package:flutter/cupertino.dart';
 TextEditingController _nameController = TextEditingController();
 TextEditingController _ageController = TextEditingController();
 TextEditingController _majorController = TextEditingController();

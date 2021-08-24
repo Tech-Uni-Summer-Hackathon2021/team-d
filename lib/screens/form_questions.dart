@@ -3,20 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
-
+//質問投稿のぺージ
 class PostPage extends StatefulWidget {
   @override
   _PostPagePageState createState() => _PostPagePageState();
 
 }
-
 class _PostPagePageState extends State<PostPage> {
+  //textfiledの処理
   TextEditingController _textEditingController = TextEditingController();
   TextEditingController _textEditingControllerTitle = TextEditingController();
   final _firestore = FirebaseFirestore.instance;
+  //キーボードにfocusする処理
   final myFocusNode = FocusNode();
   String questions_title;
   String questions_content;
+  //質問にidを付与するためのforms_id
   int forms_id=0;
 
   //countする
@@ -44,15 +46,16 @@ class _PostPagePageState extends State<PostPage> {
   }
 
   final _form = GlobalKey<FormState>();
+  //ここからが画面
   Widget build(BuildContext context) {
-
     return Scaffold(
-
+      //上の画面
       appBar: AppBar(
         title: Text("投稿フォーム"),
           actions: <Widget>[
       IconButton(
       icon: Text("投稿"),
+    //押した時の処理
     onPressed: () async {
     _incrementCounter();
     _form.currentState.save();
@@ -130,11 +133,12 @@ class _PostPagePageState extends State<PostPage> {
       )
     ]
     ),
+      //bodyであり、質問内容やタイトルを打ち込む場所
       body: Form(
-
           key: _form,
           child: Column(
               children:[
+                //titleのTextField
                 TextFormField(
                   controller: _textEditingControllerTitle,
 
@@ -148,10 +152,12 @@ class _PostPagePageState extends State<PostPage> {
                   style: TextStyle(color: Colors.black,fontSize: 18),
                   obscureText: false,
                   maxLines:1 ,
+
                   decoration: const InputDecoration(
                     hintText: '　質問タイトル',
                   ),
                 ),
+                //質問内容のTextField
                 TextFormField(
                   controller: _textEditingController,
                   enabled: true,
