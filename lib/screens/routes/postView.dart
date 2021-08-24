@@ -1,11 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sawa/screens/auth/auth.dart';
 import '../content.dart';
 import '../form_questions.dart';
 
 
 class PostView extends StatelessWidget {
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder<QuerySnapshot>(
@@ -27,11 +30,10 @@ class PostView extends StatelessWidget {
                       subtitle: Text(document.data()['title']),
                     ),
                     onTap: () {
-                      print("a");
                       Navigator.push(
                         //画面遷移
                         context,
-                        MaterialPageRoute(builder: (context) => ContentPage(document.data()['content'],document.data()['id'])),
+                        MaterialPageRoute(builder: (context) => ContentPage(document.data()['content'],document.data()['id'],document.data()['days'])),
                       );
                     },
                   )
@@ -40,13 +42,15 @@ class PostView extends StatelessWidget {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
+      floatingActionButton: FloatingActionButton (
+
+        onPressed: () async{
+
           Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => PostPage()),
-          );
-        },
+              context,
+              MaterialPageRoute(builder: (context) => PostPage()),
+            );
+          },
         child: const Icon(Icons.add),
         backgroundColor: Colors.blue,
       ),
