@@ -2,18 +2,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sawa/screens/form_questions.dart';
-import 'auth/auth_model.dart';
-import 'routes/postView.dart';
-import 'routes/userView.dart';
-import 'settingView.dart';
+import 'screens/auth/auth_model.dart';
+import 'screens/routes/postView.dart';
+import 'screens/routes/userView.dart';
+import 'screens/settingView.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sawa/screens/auth/auth.dart';
-import 'auth/auth.dart';
+import 'screens/auth/auth.dart';
 import 'dart:async';
-import 'auth/auth_model.dart';
+import 'screens/auth/auth_model.dart';
 import 'package:provider/provider.dart';
-import 'profileSetting.dart';
+import 'screens/profileSetting.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
-import 'main.dart';
+import '../main.dart';
 class ContentPage extends StatefulWidget {
   @override
 //main.dartから画面遷移された時の処理
