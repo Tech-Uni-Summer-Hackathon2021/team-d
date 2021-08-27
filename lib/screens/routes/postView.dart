@@ -26,7 +26,6 @@ class PostView extends StatelessWidget {
                     //質問内容等
                     child: ListTile(
                       title: Text(document.data()['content']),
-                      //ここに名前かジャンルを入れる
                       subtitle: Text(document.data()['title']),
                     ),
                     onTap: () {
@@ -45,24 +44,11 @@ class PostView extends StatelessWidget {
       floatingActionButton: FloatingActionButton (
 
         onPressed: () async{
-          final User user =  await FirebaseAuth.instance.currentUser;
-          final String uid = user.uid.toString();
-          print(uid);
-          if(uid!=null) {
-            return Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => PostPage()),
-            );
-          }
-          else{
-            return Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => AuthScreen()),
-            );
-          }
 
-
-
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => PostPage()),
+          );
         },
         child: const Icon(Icons.add),
         backgroundColor: Colors.blue,
