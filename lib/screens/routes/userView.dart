@@ -8,57 +8,20 @@ import '../main.dart';
 import '../settingView.dart';
 
 class AuthScreen extends StatefulWidget {
-  const AuthScreen({Key key}) : super(key: key);
 
+  const AuthScreen({Key key}) : super(key: key);
   static MaterialPageRoute get route => MaterialPageRoute(
     builder: (context) => const AuthScreen(),
   );
 
   @override
+
   _AuthScreenState createState() => _AuthScreenState();
 }
 
 class _AuthScreenState extends State<AuthScreen> {
   @override
   final _firestore = FirebaseFirestore.instance;
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-    _saveCounter(_counter);
-  }
-  Future<String> inputData() async {
-    final User user = await FirebaseAuth.instance.currentUser;
-    final String uid = user.uid.toString();
-    return uid;
-  }
-  // 今のカウントを保存する
-  _saveCounter(int count) async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    await pref.setInt("count", count);
-  }
-  _readCounter() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    setState(() {
-      var data = pref.getInt("count");
-      if (data != null) {
-        _counter = data;
-      }
-    });
-  }
-
-  void initState() {
-    super.initState();
-    _readCounter();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   // アカウント登録
   void registeUser() async {
     final User user = await FirebaseAuth.instance.currentUser;
@@ -66,13 +29,13 @@ class _AuthScreenState extends State<AuthScreen> {
     await FirebaseAuth.instance.signInAnonymously().then((result) => {
       print("User id is ${result.user.uid}"),
       //ページ遷移
-
     Navigator.push(
     context,
     MaterialPageRoute(builder: (context) => ProfileSetView(uid)),
     )
     });
   }
+
 //プロフィール
   @override
   Widget build(BuildContext context) {
