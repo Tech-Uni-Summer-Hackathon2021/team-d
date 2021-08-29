@@ -48,13 +48,7 @@ class ProfileSetView extends StatelessWidget {
                         actions: <Widget>[
                           FlatButton(
                               child: Text("確認"),
-                              onPressed: () {
-                                Navigator.push(
-                                  //画面遷移
-                                  context,
-                                  MaterialPageRoute(builder: (context) => AuthScreen()),
-                                );
-                              }
+                            onPressed: () => Navigator.pop(context),
                           ),
                         ],
                       );
