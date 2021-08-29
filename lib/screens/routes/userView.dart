@@ -8,18 +8,19 @@ import '../../main.dart';
 import '../settingView.dart';
 
 class AuthScreen extends StatefulWidget {
+const AuthScreen( {Key key}) : super(key: key);
 
-  const AuthScreen({Key key}) : super(key: key);
   static MaterialPageRoute get route => MaterialPageRoute(
-    builder: (context) => const AuthScreen(),
-  );
-
+    builder: (context) => const AuthScreen(),);
+// const AuthScreen(this.user_name);
+// final String user_name;
   @override
 
   _AuthScreenState createState() => _AuthScreenState();
-}
 
+}
 class _AuthScreenState extends State<AuthScreen> {
+
   @override
   final _firestore = FirebaseFirestore.instance;
   // アカウント登録
@@ -29,6 +30,7 @@ class _AuthScreenState extends State<AuthScreen> {
     await FirebaseAuth.instance.signInAnonymously().then((result) => {
       print("User id is ${result.user.uid}"),
       //ページ遷移
+      
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => ProfileSetView(uid)),
@@ -38,7 +40,9 @@ class _AuthScreenState extends State<AuthScreen> {
 
 //プロフィール
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext content) {
+    final User user = FirebaseAuth.instance.currentUser;
+    final String uid = user.uid.toString();
     return Scaffold(
       body: Stack(
         children: [
@@ -58,15 +62,31 @@ class _AuthScreenState extends State<AuthScreen> {
                         SizedBox(height: 25.0,),
                         CircleAvatar(
                           radius: 65.0,
-                          backgroundImage: AssetImage('assets/naruo.jpg'),
+                          backgroundImage: AssetImage('assets/default.png'),
                           backgroundColor: Colors.white,
                         ),
                         SizedBox(height: 10.0,),
-                        Text('Naruo Yoshiki',
-                            style: TextStyle(
-                              color:Colors.white,
-                              fontSize: 20.0,
-                            )),
+                        StreamBuilder<QuerySnapshot>(
+                            stream: FirebaseFirestore.instance.collection("user").where(
+                                'uid', isEqualTo: uid).snapshots(),
+                            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                return Center(child: CircularProgressIndicator());
+                              }
+                              return Column(
+                                children: snapshot.data.docs.map((
+                                    DocumentSnapshot document) {
+                                  return Text(
+                                 (document.data()['name']),
+                                    style: TextStyle(
+                                      color:Colors.white,
+                                      fontSize: 15.0,
+                                    ),
+                                  );
+                                }).toList(),
+                              );
+                                  }
+                        ),
                         SizedBox(height: 10.0,),
                         Text('Kwansei University',
                           style: TextStyle(
@@ -102,10 +122,26 @@ class _AuthScreenState extends State<AuthScreen> {
                                       fontSize: 14.0
                                   ),),
                                 SizedBox(height: 5.0,),
-                                Text('商学部',
-                                  style: TextStyle(
-                                    fontSize: 15.0,
-                                  ),)
+                                StreamBuilder<QuerySnapshot>(
+                                    stream: FirebaseFirestore.instance.collection("user").where(
+                                        'uid', isEqualTo: uid).snapshots(),
+                                    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+                                      if (snapshot.connectionState == ConnectionState.waiting) {
+                                        return Center(child: CircularProgressIndicator());
+                                      }
+                                      return Column(
+                                        children: snapshot.data.docs.map((
+                                            DocumentSnapshot document) {
+                                          return Text(
+                                            (document.data()['major']),
+                                            style: TextStyle(
+                                              fontSize: 15.0,
+                                            ),
+                                          );
+                                        }).toList(),
+                                      );
+                                    }
+                                ),
                               ]),
                         ),
 //age
@@ -118,10 +154,26 @@ class _AuthScreenState extends State<AuthScreen> {
                                       fontSize: 14.0
                                   ),),
                                 SizedBox(height: 5.0,),
-                                Text('2回生',
-                                  style: TextStyle(
-                                    fontSize: 15.0,
-                                  ),)
+                                StreamBuilder<QuerySnapshot>(
+                                    stream: FirebaseFirestore.instance.collection("user").where(
+                                        'uid', isEqualTo: uid).snapshots(),
+                                    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+                                      if (snapshot.connectionState == ConnectionState.waiting) {
+                                        return Center(child: CircularProgressIndicator());
+                                      }
+                                      return Column(
+                                        children: snapshot.data.docs.map((
+                                            DocumentSnapshot document) {
+                                          return Text(
+                                            (document.data()['age']),
+                                            style: TextStyle(
+                                              fontSize: 15.0,
+                                            ),
+                                          );
+                                        }).toList(),
+                                      );
+                                    }
+                                ),
                               ],
                             )
                         ),
@@ -134,10 +186,26 @@ class _AuthScreenState extends State<AuthScreen> {
                                       fontSize: 14.0
                                   ),),
                                 SizedBox(height: 5.0,),
-                                Text('男',
-                                  style: TextStyle(
-                                    fontSize: 15.0,
-                                  ),)
+                                StreamBuilder<QuerySnapshot>(
+                                    stream: FirebaseFirestore.instance.collection("user").where(
+                                        'uid', isEqualTo: uid).snapshots(),
+                                    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+                                      if (snapshot.connectionState == ConnectionState.waiting) {
+                                        return Center(child: CircularProgressIndicator());
+                                      }
+                                      return Column(
+                                        children: snapshot.data.docs.map((
+                                            DocumentSnapshot document) {
+                                          return Text(
+                                            (document.data()['gender']),
+                                            style: TextStyle(
+                                              fontSize: 15.0,
+                                            ),
+                                          );
+                                        }).toList(),
+                                      );
+                                    }
+                                ),
                               ]),
                         ),
                         Container(
