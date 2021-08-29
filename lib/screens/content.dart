@@ -28,7 +28,12 @@ class _ContentPagePageState extends State<ContentPage> {
           title: Text("Q＆A"),
           actions: <Widget>[
             IconButton(
-                icon: Text("投稿"),
+                icon: Text("投稿",
+                // style:TextStyle(
+                //   backgroundColor: Color(0xFF57d8d6),
+                // ),
+                ),
+                
                 onPressed: () async {
                   if (reply_content?.isEmpty ?? true) {
                     showDialog(

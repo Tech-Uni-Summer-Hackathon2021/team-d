@@ -85,8 +85,9 @@ class _MyHomePageState extends State<MyHomePage> {
       body: routes[_selectedIndex],
 
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.black,
-        //投稿とユーザーで今選んでいる方のアイコンの色
+        selectedItemColor: Color(0xFF57d8d6),
+        //selectedItemColor: Colors.black,
+        //投稿とユーザーで今選んでいる方のボタンのアイコンの色
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.article),

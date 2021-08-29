@@ -102,7 +102,11 @@ class _PostPagePageState extends State<PostPage> {
           ),
           FlatButton(
             //投稿ボタン
-            child: Text('投稿'),
+            child: Text('投稿',
+            // style: TextStyle(
+            //   color: Color(57d8d6),
+            // ),
+            ),
             onPressed: () async{
             _incrementCounter();
               _form.currentState.save();
