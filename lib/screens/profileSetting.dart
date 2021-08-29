@@ -6,6 +6,9 @@ import 'package:sawa/screens/routes/postView.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sawa/screens/routes/userView.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 TextEditingController _nameController = TextEditingController();
 TextEditingController _ageController = TextEditingController();
 TextEditingController _majorController = TextEditingController();
@@ -21,17 +24,54 @@ Future _getPreferences() async {
   print(preferences.getString("test_string_key"));
 }
 
-class ProfileSetView extends StatelessWidget {
+
+
+class ProfileSetView extends StatefulWidget {
 
   ProfileSetView(this.uid) ;
 
   final String uid;
+
+  @override
+  _ProfileSetViewState createState() => _ProfileSetViewState();
+}
+
+class _ProfileSetViewState extends State<ProfileSetView> {
+  File _image;
+
+  final imagePicker = ImagePicker();
+
+  Future getImageFromGallery() async {
+    final pickedFile = await imagePicker.getImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      }
+    });
+//     _firestore.collection("image").add(
+//       {
+// "url":_image,
+//       },
+//     );
+  }
+  Future<Null> _uploadProfilePicture() async{
+    User user = await FirebaseAuth.instance.currentUser;
+
+    final StorageReference ref = FirebaseStorage.instance.ref().child('${user.email}/${user.email}_profilePicture.jpg');
+    final StorageUploadTask uploadTask = ref.putFile(_image);
+    final Uri downloadUrl = (await uploadTask.future).downloadUrl;
+  }
   String user_name;
+
   String user_age;
+
   String user_major;
+
   String user_gender;
+
   @override
   final _profile = GlobalKey <FormState>();
+
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -40,7 +80,7 @@ class ProfileSetView extends StatelessWidget {
             IconButton(
                 icon: Text("保存"),
                 onPressed: () async {
-                  print(uid);
+                  print(widget.uid);
                   if (user_name?.isEmpty ?? true) {
                     showDialog(
                       context: context,
@@ -148,7 +188,7 @@ class ProfileSetView extends StatelessWidget {
                           "age": user_age,
                           "major": user_major,
                           "gender": user_gender,
-                          "uid": uid,
+                          "uid": widget.uid,
                         },
                       );
                       var documentId = docRef.id;
@@ -187,14 +227,26 @@ class ProfileSetView extends StatelessWidget {
                         child: Column(
                             children: [
                               SizedBox(height: 25.0,),
-                              CircleAvatar(
-                                radius: 65.0,
-                                backgroundImage: AssetImage(
-                                    'assets/default.png'),
-                                backgroundColor: Colors.white,
-                              ),
+                    Container(
+                            child: _image == null
+                                ?  CircleAvatar(
+                              radius: 65.0,
+                              backgroundImage: AssetImage(
+                                  'assets/default.png'),
+                              backgroundColor: Colors.white,
+                            )
+                                : CircleAvatar(
+
+                              child: Image.file(_image),
+                              radius: 65.0,
+                              backgroundColor: Colors.white,
+                            )
+                    ),
                               SizedBox(height: 10.0,),
-                              TextButton(onPressed: () {}, child: Text(
+                              TextButton(onPressed: () async {
+                                getImageFromGallery();
+
+                              }, child: Text(
                                   'プロフィール画像を変更')),
                               TextFormField(
 
@@ -267,5 +319,4 @@ class ProfileSetView extends StatelessWidget {
         )
     );
   }
-
 }

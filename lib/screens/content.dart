@@ -123,8 +123,8 @@ class _ContentPagePageState extends State<ContentPage> {
                       //リプライ部分
                       return Card(
                         child: ListTile(
-                          title: Text(document.data()['reply']),
-                          subtitle: Text(document.data()['reply_days']),
+                          title: Text(document.data()["reply"]),
+                          subtitle: Text(document.data()["reply_days"]),
                           //ここに名前を入れる予定
                         ),
                       );
