@@ -47,14 +47,14 @@ class ProfileSetView extends StatelessWidget {
                         content: Text('プロフィールを更新しました'),
                         actions: <Widget>[
                           FlatButton(
-                            child: Text("確認"),
-                     onPressed: () {
-                      Navigator.push(
-                      //画面遷移
-                      context,
-                      MaterialPageRoute(builder: (context) => AuthScreen()),
-                      );
-                      }
+                              child: Text("確認"),
+                              onPressed: () {
+                                Navigator.push(
+                                  //画面遷移
+                                  context,
+                                  MaterialPageRoute(builder: (context) => AuthScreen()),
+                                );
+                              }
                           ),
                         ],
                       );
@@ -122,7 +122,7 @@ class ProfileSetView extends StatelessWidget {
                               CircleAvatar(
                                 radius: 65.0,
                                 backgroundImage: AssetImage(
-                                    'assets/naruo.jpg'),
+                                    'assets/default.png'),
                                 backgroundColor: Colors.white,
                               ),
                               SizedBox(height: 10.0,),

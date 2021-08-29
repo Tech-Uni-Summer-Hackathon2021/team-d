@@ -8,7 +8,7 @@ import '../../main.dart';
 import '../settingView.dart';
 
 class AuthScreen extends StatefulWidget {
-const AuthScreen( {Key key}) : super(key: key);
+  const AuthScreen( {Key key}) : super(key: key);
 
   static MaterialPageRoute get route => MaterialPageRoute(
     builder: (context) => const AuthScreen(),);
@@ -30,7 +30,7 @@ class _AuthScreenState extends State<AuthScreen> {
     await FirebaseAuth.instance.signInAnonymously().then((result) => {
       print("User id is ${result.user.uid}"),
       //ページ遷移
-      
+
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => ProfileSetView(uid)),
@@ -77,7 +77,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                 children: snapshot.data.docs.map((
                                     DocumentSnapshot document) {
                                   return Text(
-                                 (document.data()['name']),
+                                    (document.data()['name']),
                                     style: TextStyle(
                                       color:Colors.white,
                                       fontSize: 15.0,
@@ -85,7 +85,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                   );
                                 }).toList(),
                               );
-                                  }
+                            }
                         ),
                         SizedBox(height: 10.0,),
                         Text('Kwansei University',
@@ -237,4 +237,3 @@ class _AuthScreenState extends State<AuthScreen> {
 
 
 }
-
