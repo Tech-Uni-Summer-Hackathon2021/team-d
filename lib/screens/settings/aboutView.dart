@@ -8,7 +8,12 @@ class AboutView extends StatelessWidget {
       appBar: AppBar(
         title: Text("このアプリについて"),
       ),
-      body: Center()
+      body: Center(child: Column(children: [
+        Text("バージョン"),
+        Text("利用規約"),
+        Text("プライバシーポリシー"),
+        Text("法的表示"),
+      ],))
     );
   }
 }

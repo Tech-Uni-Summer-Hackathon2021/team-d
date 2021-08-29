@@ -46,10 +46,10 @@ class PostView extends StatelessWidget {
         onPressed: () async{
 
           Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => PostPage()),
-            );
-          },
+            context,
+            MaterialPageRoute(builder: (context) => PostPage()),
+          );
+        },
         child: const Icon(Icons.add),
         backgroundColor: Colors.blue,
       ),

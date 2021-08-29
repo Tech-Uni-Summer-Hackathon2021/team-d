@@ -38,6 +38,7 @@ class MyApp extends StatelessWidget {
       routes:<String, WidgetBuilder>{
         "/home":(BuildContext context) => MyHomePage(),
         "/setting":(BuildContext context) =>SettingView(),
+        "/profile":(BuildContext context) =>AuthScreen(),
       },
     );
   }
