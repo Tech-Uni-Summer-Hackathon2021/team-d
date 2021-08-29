@@ -17,12 +17,14 @@ Future _getPreferences() async {
   var preferences = await SharedPreferences.getInstance();
   // SharedPreferencesから値を取得.
   // keyが存在しない場合はnullを返す.
+  //documentIDの取得のために使用
   print(preferences.getString("test_string_key"));
 }
 
 class ProfileSetView extends StatelessWidget {
 
   ProfileSetView(this.uid) ;
+
   final String uid;
   String user_name;
   String user_age;
@@ -39,64 +41,136 @@ class ProfileSetView extends StatelessWidget {
                 icon: Text("保存"),
                 onPressed: () async {
                   print(uid);
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: Text('完了'),
-                        content: Text('プロフィールを更新しました'),
-                        actions: <Widget>[
-                          FlatButton(
+                  if (user_name?.isEmpty ?? true) {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text('注意'),
+                          content: Text('項目を入力してください'),
+                          actions: <Widget>[
+                            FlatButton(
                               child: Text("確認"),
-                            onPressed: () => Navigator.pop(context),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                  _getPreferences();
-                  var preferences = await SharedPreferences.getInstance();
-                  if (preferences.containsKey("test_string_key")) {
-                    //更新
-                    FirebaseFirestore.instance.collection('user')
-                        .doc(preferences.getString("test_string_key"))
-                        .update(
-                      {
-                        "name": user_name,
-                        "age": user_age,
-                        "major": user_major,
-                        "gender": user_gender,
+                              onPressed: () => Navigator.pop(context),
+                            ),
+                          ],
+                        );
                       },
                     );
                   }
-                  else{
-                    //追加
-                    var docRef = await _firestore.collection("user").add(
-                      {
-                        "name": user_name,
-                        "age": user_age,
-                        "major": user_major,
-                        "gender": user_gender,
-                        "uid": uid,
+                  else if (user_age?.isEmpty ?? true) {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text('注意'),
+                          content: Text('項目を入力してください'),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text("確認"),
+                              onPressed: () => Navigator.pop(context),
+                            ),
+                          ],
+                        );
                       },
                     );
-                    var documentId = docRef.id;
-                    _firestore.collection("user").doc(documentId).update(
-                      {
-                        "documentID":documentId
+                  }
+                  else if (user_gender?.isEmpty ?? true) {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text('注意'),
+                          content: Text('項目を入力してください'),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text("確認"),
+                              onPressed: () => Navigator.pop(context),
+                            ),
+                          ],
+                        );
                       },
                     );
-                    Future _setPreferences() async {
-                      var preferences = await SharedPreferences.getInstance();
-                      // SharedPreferencesに値を設定
-                      preferences.setString("test_string_key", documentId);
+                  }
+                  else if (user_major?.isEmpty ?? true) {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text('注意'),
+                          content: Text('項目を入力してください'),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text("確認"),
+                              onPressed: () => Navigator.pop(context),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
+                  else {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text('完了'),
+                          content: Text('プロフィールを更新しました'),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text("確認"),
+                              onPressed: () => Navigator.pop(context),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                    _getPreferences();
+                    var preferences = await SharedPreferences.getInstance();
+                    if (preferences.containsKey("test_string_key")) {
+                      //更新
+                      FirebaseFirestore.instance.collection('user')
+                          .doc(preferences.getString("test_string_key"))
+                          .update(
+                        {
+                          "name": user_name,
+                          "age": user_age,
+                          "major": user_major,
+                          "gender": user_gender,
+                        },
+                      );
                     }
-                    _setPreferences();
-                  }}
+                    else {
+                      //追加
+                      var docRef = await _firestore.collection("user").add(
+                        {
+                          "name": user_name,
+                          "age": user_age,
+                          "major": user_major,
+                          "gender": user_gender,
+                          "uid": uid,
+                        },
+                      );
+                      var documentId = docRef.id;
+                      _firestore.collection("user").doc(documentId).update(
+                        {
+                          "documentID": documentId
+                        },
+                      );
+                      Future _setPreferences() async {
+                        var preferences = await SharedPreferences.getInstance();
+                        // SharedPreferencesに値を設定
+                        preferences.setString("test_string_key", documentId);
+                      }
+                      _setPreferences();
+                    }
+                  }
+                }
             )
           ],
         ),
         body: Stack(
+
             key: _profile,
             children: [
               Column(
@@ -123,6 +197,7 @@ class ProfileSetView extends StatelessWidget {
                               TextButton(onPressed: () {}, child: Text(
                                   'プロフィール画像を変更')),
                               TextFormField(
+
                                 controller: _nameController,
                                 onFieldSubmitted: (value) {
                                   print(value);
