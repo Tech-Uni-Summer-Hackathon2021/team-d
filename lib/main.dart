@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sawa/screens/form_questions.dart';
-import 'screens/auth/auth_model.dart';
 import 'screens/routes/postView.dart';
 import 'screens/routes/userView.dart';
 import 'screens/settingView.dart';
@@ -11,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:sawa/screens/auth/auth.dart';
 import 'screens/auth/auth.dart';
 import 'dart:async';
-import 'screens/auth/auth_model.dart';
 import 'package:provider/provider.dart';
 import 'screens/profileSetting.dart';
 
