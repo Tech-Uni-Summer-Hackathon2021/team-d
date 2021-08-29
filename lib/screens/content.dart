@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import '../main.dart';
 class ContentPage extends StatefulWidget {
   @override
-
+//main.dartから画面遷移された時の処理
   ContentPage(this.content, this.id, this.days);
   final String content;
   final int id;
@@ -20,15 +20,17 @@ class _ContentPagePageState extends State<ContentPage> {
   String reply_days;
   final _firestore = FirebaseFirestore.instance;
   final _reply = GlobalKey<FormState>();
-
+//ここからが画面
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //上の画面
       appBar: AppBar(
           title: Text("Q＆A"),
           actions: <Widget>[
             IconButton(
                 icon: Text("投稿"),
+                //押した時の処理
                 onPressed: () async {
                   if (reply_content?.isEmpty ?? true) {
                     showDialog(
@@ -79,23 +81,23 @@ class _ContentPagePageState extends State<ContentPage> {
                       );
                     }
                     getTodayDate();
-
-
                   }
                   //ここに処理
                 } ),
           ]
       ),
+      //ここからがメイン画面_リプライを表示する
       body: Column(
           key: _reply,
           children: [
-
+            //質問部分
             Card(
               child: ListTile(
                 subtitle: Text(widget.days),
                 title: Text(widget.content),
               ),
             ),
+            //質問の下にある回答の処理
             Container(
               width: double.infinity,
               child: Text("　回答",
@@ -105,6 +107,7 @@ class _ContentPagePageState extends State<ContentPage> {
                 textAlign: TextAlign.left,
               ),
             ),
+            //firebaseの処理
             Flexible(
               child: StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance.collection("replies").where(
@@ -117,14 +120,12 @@ class _ContentPagePageState extends State<ContentPage> {
                   return ListView(
                     children: snapshot.data.docs.map((
                         DocumentSnapshot document) {
+                      //リプライ部分
                       return Card(
-                        //tapの処理
-                        //質問内容等
                         child: ListTile(
-
                           title: Text(document.data()['reply']),
                           subtitle: Text(document.data()['reply_days']),
-                          //ここに名前かジャンルを入れる
+                          //ここに名前を入れる予定
                         ),
                       );
                     }).toList(),
@@ -132,7 +133,7 @@ class _ContentPagePageState extends State<ContentPage> {
                 },
               ),
             ),
-
+            //下の回答のTextField
             SafeArea(child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -161,8 +162,6 @@ class _ContentPagePageState extends State<ContentPage> {
 
           ]
       ),
-
-
     );
   }
 }
