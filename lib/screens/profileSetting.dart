@@ -226,28 +226,28 @@ class _ProfileSetViewState extends State<ProfileSetView> {
                             children: [
                               SizedBox(height: 25.0,),
 
-                        Container(
-                          child:StreamBuilder<QuerySnapshot>(
-                              stream: FirebaseFirestore.instance.collection("user").where(
-                                  'uid', isEqualTo: widget.uid).snapshots(),
-                              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
-                                if (snapshot.connectionState == ConnectionState.waiting) {
-                                  return Center(child: CircularProgressIndicator());
-                                }
-                                return Column(
-                                  children: snapshot.data.docs.map((
-                                      DocumentSnapshot document) {
-                                    return CircleAvatar(
-                                      radius: 65.0,
-                                      backgroundImage: NetworkImage(document.data()['avatar_image_path']),
-                                      backgroundColor: Colors.white,
-                                    );
+                              Container(
+                                child:StreamBuilder<QuerySnapshot>(
+                                    stream: FirebaseFirestore.instance.collection("user").where(
+                                        'uid', isEqualTo: widget.uid).snapshots(),
+                                    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+                                      if (snapshot.connectionState == ConnectionState.waiting) {
+                                        return Center(child: CircularProgressIndicator());
+                                      }
+                                      return Column(
+                                        children: snapshot.data.docs.map((
+                                            DocumentSnapshot document) {
+                                          return CircleAvatar(
+                                            radius: 65.0,
+                                            backgroundImage: NetworkImage(document.data()['avatar_image_path']),
+                                            backgroundColor: Colors.white,
+                                          );
 
-                                  }).toList(),
-                                );
-                              }
-                          ),
-                        ),
+                                        }).toList(),
+                                      );
+                                    }
+                                ),
+                              ),
                               SizedBox(height: 10.0,),
                               TextButton(onPressed: () async {
                                 // getImageFromGallery();
