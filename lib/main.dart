@@ -2,28 +2,88 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sawa/screens/form_questions.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/routes/postView.dart';
 import 'screens/routes/userView.dart';
 import 'screens/settingView.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
 import 'package:sawa/screens/auth/auth.dart';
 import 'screens/auth/auth.dart';
 import 'dart:async';
 import 'package:provider/provider.dart';
 import 'screens/profileSetting.dart';
 
+
+Future firebaseAddData() async {
+//追加
+  FirebaseAuth.instance.signInAnonymously();
+  final User user = await FirebaseAuth.instance.currentUser;
+  final String uid = user.uid.toString();
+  //ページ遷移
+  var preferences = await SharedPreferences.getInstance();
+  if (preferences.containsKey("start")){
+    print("エラー");
+  }
+  else {
+    final _firestore = FirebaseFirestore.instance;
+
+    var docRef = await _firestore.collection("user").add(
+      {
+        "name": "匿名",
+        "age": "未設定",
+        "major": "未設定",
+        "gender": "未設定",
+        "uid": uid,
+        "avatar_image_path": "https://firebasestorage.googleapis.com/v0/b/summerhackathon2021-23986.appspot.com/o/user_icon%2Fdefault.png?alt=media&token=2e1a0e9f-41eb-41f8-8c2d-40467c5d6277",
+      },
+    );
+    var documentId = docRef.id;
+    _firestore.collection("user").doc(documentId).update(
+      {
+        "documentID": documentId
+      },
+    );
+    Future _setPreferences() async {
+      // SharedPreferencesに値を設定
+      preferences.setString("start", documentId);
+
+    }
+    _setPreferences();
+  }
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp();
-
   runApp(MyApp());
-
+  firebaseAddData();
 }
+
+
+
+
+
+
 
 class MyApp extends StatelessWidget {
   @override
+
+  static const MaterialColor white = const MaterialColor(
+    0xFFFFFFFF,
+    const <int, Color>{
+      50: const Color(0xFFFFFFFF),
+      100: const Color(0xFFFFFFFF),
+      200: const Color(0xFFFFFFFF),
+      300: const Color(0xFFFFFFFF),
+      400: const Color(0xFFFFFFFF),
+      500: const Color(0xFFFFFFFF),
+      600: const Color(0xFFFFFFFF),
+      700: const Color(0xFFFFFFFF),
+      800: const Color(0xFFFFFFFF),
+      900: const Color(0xFFFFFFFF),
+    },
+  );
 
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -47,7 +107,9 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget{
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  State createState() {
+    return _MyHomePageState();
+  }
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -83,6 +145,9 @@ class _MyHomePageState extends State<MyHomePage> {
       body: routes[_selectedIndex],
 
       bottomNavigationBar: BottomNavigationBar(
+
+        //selectedItemColor: Color(0xFF57d8d6),
+        //選択された方の色の設定
         //下のボタン
         items: [
           BottomNavigationBarItem(
@@ -103,5 +168,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
   }
+
 
 }

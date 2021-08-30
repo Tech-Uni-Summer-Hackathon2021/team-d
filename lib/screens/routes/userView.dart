@@ -30,7 +30,6 @@ class _AuthScreenState extends State<AuthScreen> {
     await FirebaseAuth.instance.signInAnonymously().then((result) => {
       print("User id is ${result.user.uid}"),
       //ページ遷移
-
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => ProfileSetView(uid)),
@@ -60,10 +59,25 @@ class _AuthScreenState extends State<AuthScreen> {
                   child: Column(
                       children: [
                         SizedBox(height: 25.0,),
-                        CircleAvatar(
-                          radius: 65.0,
-                          backgroundImage: AssetImage('assets/default.png'),
-                          backgroundColor: Colors.white,
+                        StreamBuilder<QuerySnapshot>(
+                            stream: FirebaseFirestore.instance.collection("user").where(
+                                'uid', isEqualTo: uid).snapshots(),
+                            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                return Center(child: CircularProgressIndicator());
+                              }
+                              return Column(
+                                children: snapshot.data.docs.map((
+                                    DocumentSnapshot document) {
+                                  return CircleAvatar(
+                                    radius: 65.0,
+                                    backgroundImage: NetworkImage(document.data()['avatar_image_path']),
+                                    backgroundColor: Colors.white,
+                                  );
+
+                                }).toList(),
+                              );
+                            }
                         ),
                         SizedBox(height: 10.0,),
                         StreamBuilder<QuerySnapshot>(

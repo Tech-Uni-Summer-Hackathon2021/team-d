@@ -6,6 +6,9 @@ import 'package:sawa/screens/routes/postView.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sawa/screens/routes/userView.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 TextEditingController _nameController = TextEditingController();
 TextEditingController _ageController = TextEditingController();
 TextEditingController _majorController = TextEditingController();
@@ -15,22 +18,84 @@ final _firestore = FirebaseFirestore.instance;
 
 Future _getPreferences() async {
   var preferences = await SharedPreferences.getInstance();
-  // SharedPreferencesから値を取得.
-  // keyが存在しない場合はnullを返す.
+  //documentIDの取得のために使用
   print(preferences.getString("test_string_key"));
 }
-
-class ProfileSetView extends StatelessWidget {
-
+Future deletePreferences() async {
+  //削除用-リリース前には消す
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.remove('test_string_key');
+}
+class ProfileSetView extends StatefulWidget {
   ProfileSetView(this.uid) ;
   final String uid;
+
+  @override
+  _ProfileSetViewState createState() => _ProfileSetViewState();
+}
+
+class _ProfileSetViewState extends State<ProfileSetView> {
+  File _image;
+
+  final imagePicker = ImagePicker();
+
+  // Future getImageFromGallery() async {
+  //   final pickedFile = await imagePicker.getImage(source: ImageSource.gallery);
+  //   setState(() {
+  //     if (pickedFile != null) {
+  //       _image = File(pickedFile.path);
+  //     }
+  //     else return;
+  //   });
+  // }
+  void showBottomSheet() async {
+    final result = 1;
+    File file;
+    final imagePicker = ImagePicker();
+
+    if (result == 0) {
+      final pickedFile = await imagePicker.getImage(source: ImageSource.camera);
+      file = File(pickedFile.path);
+    } else if (result == 1) {
+      final pickedFile =
+      await imagePicker.getImage(source: ImageSource.gallery);
+      file = File(pickedFile.path);
+    } else {
+      return;
+    }
+    try {
+      var task = await firebase_storage.FirebaseStorage.instance
+          .ref('user_icon/' + widget.uid + '.jpg')
+          .putFile(file);
+      _getPreferences();
+      var preferences = await SharedPreferences.getInstance();
+      task.ref.getDownloadURL().then((downloadURL) => FirebaseFirestore.instance
+          .collection("user")
+          .doc(preferences.getString("start"))
+          .update({'avatar_image_path': downloadURL}));
+    } catch (e) {
+      print("Image upload failed");
+      print(e);
+    }
+  }
+
+
+
   String user_name;
+
   String user_age;
+
   String user_major;
+
   String user_gender;
+
+
   @override
   final _profile = GlobalKey <FormState>();
+
   Widget build(BuildContext context) {
+
+
     return Scaffold(
         appBar: AppBar(
           title: Text('大学生のための質問教室'),
@@ -38,34 +103,97 @@ class ProfileSetView extends StatelessWidget {
             IconButton(
                 icon: Text("保存"),
                 onPressed: () async {
-                  print(uid);
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: Text('完了'),
-                        content: Text('プロフィールを更新しました'),
-                        actions: <Widget>[
-                          FlatButton(
+                  print(widget.uid);
+                  if (user_name?.isEmpty ?? true) {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text('注意'),
+                          content: Text('項目を入力してください'),
+                          actions: <Widget>[
+                            FlatButton(
                               child: Text("確認"),
-                              onPressed: () {
-                                Navigator.push(
-                                  //画面遷移
-                                  context,
-                                  MaterialPageRoute(builder: (context) => AuthScreen()),
-                                );
-                              }
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                  _getPreferences();
-                  var preferences = await SharedPreferences.getInstance();
-                  if (preferences.containsKey("test_string_key")) {
+                              onPressed: () => Navigator.pop(context),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
+                  else if (user_age?.isEmpty ?? true) {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text('注意'),
+                          content: Text('項目を入力してください'),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text("確認"),
+                              onPressed: () => Navigator.pop(context),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
+                  else if (user_gender?.isEmpty ?? true) {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text('注意'),
+                          content: Text('項目を入力してください'),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text("確認"),
+                              onPressed: () => Navigator.pop(context),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
+                  else if (user_major?.isEmpty ?? true) {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text('注意'),
+                          content: Text('項目を入力してください'),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text("確認"),
+                              onPressed: () => Navigator.pop(context),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
+                  else {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text('完了'),
+                          content: Text('プロフィールを更新しました'),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text("確認"),
+                              onPressed: () => Navigator.pop(context),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                    _getPreferences();
+                    var preferences = await SharedPreferences.getInstance();
+
                     //更新
                     FirebaseFirestore.instance.collection('user')
-                        .doc(preferences.getString("test_string_key"))
+                        .doc(preferences.getString("start"))
                         .update(
                       {
                         "name": user_name,
@@ -75,34 +203,12 @@ class ProfileSetView extends StatelessWidget {
                       },
                     );
                   }
-                  else{
-                    //追加
-                    var docRef = await _firestore.collection("user").add(
-                      {
-                        "name": user_name,
-                        "age": user_age,
-                        "major": user_major,
-                        "gender": user_gender,
-                        "uid": uid,
-                      },
-                    );
-                    var documentId = docRef.id;
-                    _firestore.collection("user").doc(documentId).update(
-                      {
-                        "documentID":documentId
-                      },
-                    );
-                    Future _setPreferences() async {
-                      var preferences = await SharedPreferences.getInstance();
-                      // SharedPreferencesに値を設定
-                      preferences.setString("test_string_key", documentId);
-                    }
-                    _setPreferences();
-                  }}
+                }
             )
           ],
         ),
         body: Stack(
+
             key: _profile,
             children: [
               Column(
@@ -119,14 +225,33 @@ class ProfileSetView extends StatelessWidget {
                         child: Column(
                             children: [
                               SizedBox(height: 25.0,),
-                              CircleAvatar(
-                                radius: 65.0,
-                                backgroundImage: AssetImage(
-                                    'assets/default.png'),
-                                backgroundColor: Colors.white,
+
+                              Container(
+                                child:StreamBuilder<QuerySnapshot>(
+                                    stream: FirebaseFirestore.instance.collection("user").where(
+                                        'uid', isEqualTo: widget.uid).snapshots(),
+                                    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+                                      if (snapshot.connectionState == ConnectionState.waiting) {
+                                        return Center(child: CircularProgressIndicator());
+                                      }
+                                      return Column(
+                                        children: snapshot.data.docs.map((
+                                            DocumentSnapshot document) {
+                                          return CircleAvatar(
+                                            radius: 65.0,
+                                            backgroundImage: NetworkImage(document.data()['avatar_image_path']),
+                                            backgroundColor: Colors.white,
+                                          );
+
+                                        }).toList(),
+                                      );
+                                    }
+                                ),
                               ),
                               SizedBox(height: 10.0,),
-                              TextButton(onPressed: () {}, child: Text(
+                              TextButton(onPressed: () async {
+                                showBottomSheet();
+                              }, child: Text(
                                   'プロフィール画像を変更')),
                               TextFormField(
                                 controller: _nameController,
@@ -198,5 +323,4 @@ class ProfileSetView extends StatelessWidget {
         )
     );
   }
-
 }
