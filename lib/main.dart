@@ -13,16 +13,20 @@ import 'dart:async';
 import 'package:provider/provider.dart';
 import 'screens/profileSetting.dart';
 
+
 Future firebaseAddData() async {
 //追加
-  final _firestore = FirebaseFirestore.instance;
+  FirebaseAuth.instance.signInAnonymously();
   final User user = await FirebaseAuth.instance.currentUser;
   final String uid = user.uid.toString();
+  //ページ遷移
   var preferences = await SharedPreferences.getInstance();
-  if (preferences.containsKey("count")){
-
+  if (preferences.containsKey("start")){
+    print("エラー");
   }
   else {
+    final _firestore = FirebaseFirestore.instance;
+
     var docRef = await _firestore.collection("user").add(
       {
         "name": "匿名",
@@ -41,8 +45,8 @@ Future firebaseAddData() async {
     );
     Future _setPreferences() async {
       // SharedPreferencesに値を設定
-      preferences.setString("test_string_key", documentId);
-      preferences.setString("count", "1");
+      preferences.setString("start", documentId);
+
     }
     _setPreferences();
   }
@@ -103,8 +107,9 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget{
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
-
+  State createState() {
+    return _MyHomePageState();
+  }
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -163,5 +168,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
   }
+
 
 }

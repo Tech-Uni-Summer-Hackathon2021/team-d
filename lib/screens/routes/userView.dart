@@ -30,7 +30,6 @@ class _AuthScreenState extends State<AuthScreen> {
     await FirebaseAuth.instance.signInAnonymously().then((result) => {
       print("User id is ${result.user.uid}"),
       //ページ遷移
-
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => ProfileSetView(uid)),

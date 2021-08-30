@@ -18,8 +18,6 @@ final _firestore = FirebaseFirestore.instance;
 
 Future _getPreferences() async {
   var preferences = await SharedPreferences.getInstance();
-  // SharedPreferencesから値を取得.
-  // keyが存在しない場合はnullを返す.
   //documentIDの取得のために使用
   print(preferences.getString("test_string_key"));
 }
@@ -65,7 +63,6 @@ class _ProfileSetViewState extends State<ProfileSetView> {
     } else {
       return;
     }
-
     try {
       var task = await firebase_storage.FirebaseStorage.instance
           .ref('user_icon/' + widget.uid + '.jpg')
@@ -74,13 +71,15 @@ class _ProfileSetViewState extends State<ProfileSetView> {
       var preferences = await SharedPreferences.getInstance();
       task.ref.getDownloadURL().then((downloadURL) => FirebaseFirestore.instance
           .collection("user")
-          .doc(preferences.getString("test_string_key"))
+          .doc(preferences.getString("start"))
           .update({'avatar_image_path': downloadURL}));
     } catch (e) {
       print("Image upload failed");
       print(e);
     }
   }
+
+
 
   String user_name;
 
@@ -191,17 +190,18 @@ class _ProfileSetViewState extends State<ProfileSetView> {
                     );
                     _getPreferences();
                     var preferences = await SharedPreferences.getInstance();
-                      //更新
-                      FirebaseFirestore.instance.collection('user')
-                          .doc(preferences.getString("test_string_key"))
-                          .update(
-                        {
-                          "name": user_name,
-                          "age": user_age,
-                          "major": user_major,
-                          "gender": user_gender,
-                        },
-                      );
+
+                    //更新
+                    FirebaseFirestore.instance.collection('user')
+                        .doc(preferences.getString("start"))
+                        .update(
+                      {
+                        "name": user_name,
+                        "age": user_age,
+                        "major": user_major,
+                        "gender": user_gender,
+                      },
+                    );
                   }
                 }
             )
@@ -250,12 +250,10 @@ class _ProfileSetViewState extends State<ProfileSetView> {
                               ),
                               SizedBox(height: 10.0,),
                               TextButton(onPressed: () async {
-                                // getImageFromGallery();
                                 showBottomSheet();
                               }, child: Text(
                                   'プロフィール画像を変更')),
                               TextFormField(
-
                                 controller: _nameController,
                                 onFieldSubmitted: (value) {
                                   print(value);
