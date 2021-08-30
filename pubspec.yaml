@@ -26,6 +26,7 @@ dependencies:
   firebase_core: ^0.7.0
   firebase_auth: ^0.20.1
   cloud_firestore: ^0.16.0+1
+  firebase_storage: ^7.0.0
   flutter_hooks: ^0.17.0
   hooks_riverpod: ^0.14.0+4
   provider: ^5.0.0
@@ -36,13 +37,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   intl: ^0.16.1
   image_picker:
-  firebase_storage:
-  path_provider:
 dev_dependencies:
   flutter_test:
     sdk: flutter
   cupertino_icons: ^1.0.2
-  flutter_native_splash: ^1.2.1
+  flutter_native_splash:
 
 flutter_native_splash:
   color: "#F8E7F4"
