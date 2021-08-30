@@ -140,12 +140,9 @@ class _MyHomePageState extends State<MyHomePage> {
       body: routes[_selectedIndex],
 
       bottomNavigationBar: BottomNavigationBar(
-<<<<<<< HEAD
 
-=======
         //selectedItemColor: Color(0xFF57d8d6),
         //選択された方の色の設定
->>>>>>> 7707cb200ce5a7e12f9c8f8391f74c6bbd59bd5a
         //下のボタン
         items: [
           BottomNavigationBarItem(
