@@ -37,7 +37,19 @@ class ProfileSetView extends StatefulWidget {
 }
 
 class _ProfileSetViewState extends State<ProfileSetView> {
+  File _image;
+
   final imagePicker = ImagePicker();
+
+  // Future getImageFromGallery() async {
+  //   final pickedFile = await imagePicker.getImage(source: ImageSource.gallery);
+  //   setState(() {
+  //     if (pickedFile != null) {
+  //       _image = File(pickedFile.path);
+  //     }
+  //     else return;
+  //   });
+  // }
   void showBottomSheet() async {
     final result = 1;
     File file;
@@ -179,6 +191,7 @@ class _ProfileSetViewState extends State<ProfileSetView> {
                     );
                     _getPreferences();
                     var preferences = await SharedPreferences.getInstance();
+                    if (preferences.containsKey("test_string_key")) {
                       //更新
                       FirebaseFirestore.instance.collection('user')
                           .doc(preferences.getString("test_string_key"))
@@ -190,7 +203,31 @@ class _ProfileSetViewState extends State<ProfileSetView> {
                           "gender": user_gender,
                         },
                       );
-
+                    }
+                    else {
+                      //追加
+                      var docRef = await _firestore.collection("user").add(
+                        {
+                          "name": user_name,
+                          "age": user_age,
+                          "major": user_major,
+                          "gender": user_gender,
+                          "uid": widget.uid,
+                        },
+                      );
+                      var documentId = docRef.id;
+                      _firestore.collection("user").doc(documentId).update(
+                        {
+                          "documentID": documentId
+                        },
+                      );
+                      Future _setPreferences() async {
+                        var preferences = await SharedPreferences.getInstance();
+                        // SharedPreferencesに値を設定
+                        preferences.setString("test_string_key", documentId);
+                      }
+                      _setPreferences();
+                    }
                   }
                 }
             )
@@ -215,28 +252,28 @@ class _ProfileSetViewState extends State<ProfileSetView> {
                             children: [
                               SizedBox(height: 25.0,),
 
-                        Container(
-                          child:StreamBuilder<QuerySnapshot>(
-                              stream: FirebaseFirestore.instance.collection("user").where(
-                                  'uid', isEqualTo: widget.uid).snapshots(),
-                              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
-                                if (snapshot.connectionState == ConnectionState.waiting) {
-                                  return Center(child: CircularProgressIndicator());
-                                }
-                                return Column(
-                                  children: snapshot.data.docs.map((
-                                      DocumentSnapshot document) {
-                                    return CircleAvatar(
-                                      radius: 65.0,
-                                      backgroundImage: NetworkImage(document.data()['avatar_image_path']),
-                                      backgroundColor: Colors.white,
-                                    );
+                              Container(
+                                child:StreamBuilder<QuerySnapshot>(
+                                    stream: FirebaseFirestore.instance.collection("user").where(
+                                        'uid', isEqualTo: widget.uid).snapshots(),
+                                    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+                                      if (snapshot.connectionState == ConnectionState.waiting) {
+                                        return Center(child: CircularProgressIndicator());
+                                      }
+                                      return Column(
+                                        children: snapshot.data.docs.map((
+                                            DocumentSnapshot document) {
+                                          return CircleAvatar(
+                                            radius: 65.0,
+                                            backgroundImage: NetworkImage(document.data()['avatar_image_path']),
+                                            backgroundColor: Colors.white,
+                                          );
 
-                                  }).toList(),
-                                );
-                              }
-                          ),
-                        ),
+                                        }).toList(),
+                                      );
+                                    }
+                                ),
+                              ),
                               SizedBox(height: 10.0,),
                               TextButton(onPressed: () async {
                                 // getImageFromGallery();
