@@ -6,7 +6,6 @@ import 'screens/routes/postView.dart';
 import 'screens/routes/userView.dart';
 import 'screens/settingView.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
 import 'package:sawa/screens/auth/auth.dart';
 import 'screens/auth/auth.dart';
 import 'dart:async';
@@ -24,6 +23,22 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   @override
+
+  static const MaterialColor white = const MaterialColor(
+    0xFFFFFFFF,
+    const <int, Color>{
+      50: const Color(0xFFFFFFFF),
+      100: const Color(0xFFFFFFFF),
+      200: const Color(0xFFFFFFFF),
+      300: const Color(0xFFFFFFFF),
+      400: const Color(0xFFFFFFFF),
+      500: const Color(0xFFFFFFFF),
+      600: const Color(0xFFFFFFFF),
+      700: const Color(0xFFFFFFFF),
+      800: const Color(0xFFFFFFFF),
+      900: const Color(0xFFFFFFFF),
+    },
+  );
 
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -83,6 +98,8 @@ class _MyHomePageState extends State<MyHomePage> {
       body: routes[_selectedIndex],
 
       bottomNavigationBar: BottomNavigationBar(
+        //selectedItemColor: Color(0xFF57d8d6),
+        //選択された方の色の設定
         //下のボタン
         items: [
           BottomNavigationBarItem(
