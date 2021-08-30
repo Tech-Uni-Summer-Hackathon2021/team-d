@@ -191,7 +191,6 @@ class _ProfileSetViewState extends State<ProfileSetView> {
                     );
                     _getPreferences();
                     var preferences = await SharedPreferences.getInstance();
-                    if (preferences.containsKey("test_string_key")) {
                       //更新
                       FirebaseFirestore.instance.collection('user')
                           .doc(preferences.getString("test_string_key"))
@@ -203,31 +202,6 @@ class _ProfileSetViewState extends State<ProfileSetView> {
                           "gender": user_gender,
                         },
                       );
-                    }
-                    else {
-                      //追加
-                      var docRef = await _firestore.collection("user").add(
-                        {
-                          "name": user_name,
-                          "age": user_age,
-                          "major": user_major,
-                          "gender": user_gender,
-                          "uid": widget.uid,
-                        },
-                      );
-                      var documentId = docRef.id;
-                      _firestore.collection("user").doc(documentId).update(
-                        {
-                          "documentID": documentId
-                        },
-                      );
-                      Future _setPreferences() async {
-                        var preferences = await SharedPreferences.getInstance();
-                        // SharedPreferencesに値を設定
-                        preferences.setString("test_string_key", documentId);
-                      }
-                      _setPreferences();
-                    }
                   }
                 }
             )
