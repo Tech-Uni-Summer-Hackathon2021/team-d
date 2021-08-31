@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+
+import '../main.dart';
 //質問投稿のぺージ
 class PostPage extends StatefulWidget {
   @override
@@ -12,7 +14,6 @@ class _PostPagePageState extends State<PostPage> {
   TextEditingController _textEditingController = TextEditingController();
   TextEditingController _textEditingControllerTitle = TextEditingController();
   final _firestore = FirebaseFirestore.instance;
-  //キーボードにfocusする処理
   final myFocusNode = FocusNode();
   String questions_title;
   String questions_content;
@@ -40,6 +41,15 @@ class _PostPagePageState extends State<PostPage> {
   void _setCounterValue() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setInt('count', count);
+  }
+
+  Future<void> stopFiveSeconds() async {
+    int _counter = 0;
+    while(true) {
+      await Future.delayed(Duration(seconds: 2));
+      _counter++;
+      Navigator.of(context).pop("/home");
+    }
   }
 
   final _form = GlobalKey<FormState>();
@@ -91,6 +101,7 @@ class _PostPagePageState extends State<PostPage> {
                   );
                 }
                 else{
+                  stopFiveSeconds();
                   _incrementCounter();
                   showDialog(
                     context: context,
@@ -102,7 +113,7 @@ class _PostPagePageState extends State<PostPage> {
                           FlatButton(
                               child: Text("確認"),
                               onPressed: (){
-                                Navigator.of(context).pushReplacementNamed("/home");
+
                               }
                           ),
                         ],
@@ -125,8 +136,6 @@ class _PostPagePageState extends State<PostPage> {
                   getTodayDate();
                 }
               },
-
-
             )
           ]
       ),
@@ -173,7 +182,6 @@ class _PostPagePageState extends State<PostPage> {
                     hintText: '　投稿内容を記載してください',
                   ),
                 ),
-
               ]
           )
       ),
