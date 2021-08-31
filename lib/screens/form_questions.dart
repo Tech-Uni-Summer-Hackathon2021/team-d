@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sawa/picker/genre_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
@@ -46,10 +48,66 @@ class _PostPagePageState extends State<PostPage> {
   Future<void> stopFiveSeconds() async {
     int _counter = 0;
     while(true) {
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(Duration(seconds: 1));
       _counter++;
       Navigator.of(context).pop("/home");
     }
+  }
+
+  String _selectedGenre = "授業";
+  String _initial = "選択";
+  void _onSelectedItemChanged_genre(int index) {
+    setState(() {
+      _selectedGenre = genreList[index];
+    });
+  }
+  void picker_genre() {
+    Widget _pickerGenre(String str) {
+      return Text(
+        str,
+        style: const TextStyle(fontSize: 32),
+      );
+    }
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: MediaQuery.of(context).size.height / 2,
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  CupertinoButton(
+                    child: Text("戻る"),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  CupertinoButton(
+                    child: Text("決定"),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      setState(() {
+                        _initial = _selectedGenre;
+                        questions_title=_initial;
+                        _textEditingControllerTitle.text=questions_title;
+                      });
+                    },
+                  ),
+                ],
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height / 3,
+                child: CupertinoPicker(
+                  itemExtent: 40,
+                  children: genreList.map(_pickerGenre).toList(),
+                  onSelectedItemChanged: _onSelectedItemChanged_genre,
+                ),
+              )
+            ],
+          ),
+        );
+      },
+    );
   }
 
   final _form = GlobalKey<FormState>();
@@ -145,11 +203,12 @@ class _PostPagePageState extends State<PostPage> {
           child: Column(
               children:[
                 //titleのTextField
-                TextFormField(
+            GestureDetector(
+                child: TextFormField(
                   controller: _textEditingControllerTitle,
-
-                  onFieldSubmitted: (value) {
-                    print(value);
+                  readOnly: true,
+                  onTap:(){
+                    picker_genre();
                   },
                   onSaved: (value) async{
                     questions_title = value;
@@ -163,6 +222,7 @@ class _PostPagePageState extends State<PostPage> {
                     hintText: '　質問タイトル',
                   ),
                 ),
+            ),
                 //質問内容のTextField
                 TextFormField(
                   controller: _textEditingController,

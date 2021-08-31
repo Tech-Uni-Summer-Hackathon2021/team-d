@@ -437,6 +437,7 @@ void picker_age() {
                               ),
                         GestureDetector(
                               child: TextFormField(
+                                readOnly: true,
                                 onTap:(){
                                   picker_major();
                                 },
@@ -456,6 +457,7 @@ void picker_age() {
                         ),
                     GestureDetector(
                               child: TextFormField(
+                                readOnly: true,
                                 onTap:(){
                                   picker_age();
                                 },
@@ -475,6 +477,7 @@ void picker_age() {
                     ),
                         GestureDetector(
                               child: TextFormField(
+                                readOnly: true,
                                 onTap:(){
                                   picker_gender();
                                 },
