@@ -8,7 +8,8 @@ import '../form_questions.dart';
 
 class PostView extends StatelessWidget {
   @override
-
+  final defaultName="匿名";
+  final defaultImage ="匿名";
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder<QuerySnapshot>(
@@ -19,7 +20,6 @@ class PostView extends StatelessWidget {
           }
           return ListView(
             children: snapshot.data.docs.map((DocumentSnapshot document) {
-
               return Card(
                 //tapの処理
                   child:GestureDetector(
@@ -43,11 +43,11 @@ class PostView extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton (
 
-        onPressed: () async{
 
+        onPressed: () async{
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => PostPage()),
+            MaterialPageRoute(builder: (context) => PostPage(defaultImage,defaultName)),
           );
         },
         child: const Icon(Icons.add),
@@ -56,3 +56,8 @@ class PostView extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
