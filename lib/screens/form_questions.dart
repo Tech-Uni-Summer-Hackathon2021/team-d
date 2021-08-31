@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sawa/picker/genre_picker.dart';
@@ -11,6 +12,9 @@ import '../main.dart';
 class PostPage extends StatefulWidget {
   @override
   _PostPagePageState createState() => _PostPagePageState();
+  PostPage(this.defaultName,this.defaultImage);
+  final String defaultName;
+  final String defaultImage;
 }
 class _PostPagePageState extends State<PostPage> {
   TextEditingController _textEditingController = TextEditingController();
@@ -19,6 +23,7 @@ class _PostPagePageState extends State<PostPage> {
   final myFocusNode = FocusNode();
   String questions_title;
   String questions_content;
+
   //質問にidを付与するためのforms_id
   int count=0;
   //countする
@@ -159,6 +164,8 @@ class _PostPagePageState extends State<PostPage> {
                   );
                 }
                 else{
+                  final User user = await FirebaseAuth.instance.currentUser;
+                  final String uid = user.uid.toString();
                   stopFiveSeconds();
                   _incrementCounter();
                   showDialog(
@@ -187,7 +194,10 @@ class _PostPagePageState extends State<PostPage> {
                         "title": questions_title,
                         "content": questions_content,
                         "id": count,
-                        "days":date
+                        "days":date,
+                        "uid":uid,
+                        "user_name":"匿名",
+                        "user_image":"https://firebasestorage.googleapis.com/v0/b/summerhackathon2021-23986.appspot.com/o/user_icon%2Fdefault.png?alt=media&token=2e1a0e9f-41eb-41f8-8c2d-40467c5d6277"
                       },
                     );
                   }
