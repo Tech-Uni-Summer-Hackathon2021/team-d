@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../main.dart';
 import '../settingView.dart';
 
+
 class AuthScreen extends StatefulWidget {
   const AuthScreen( {Key key}) : super(key: key);
 
