@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../main.dart';
 import '../settingView.dart';
 
+
 class AuthScreen extends StatefulWidget {
   const AuthScreen( {Key key}) : super(key: key);
 
@@ -53,7 +54,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   width: double.infinity,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [Colors.orange,Colors.orange],
+                      colors: [Colors.white,Colors.white],
                     ),
                   ),
                   child: Column(
@@ -93,7 +94,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                   return Text(
                                     (document.data()['name']),
                                     style: TextStyle(
-                                      color:Colors.white,
+                                      color:Colors.black,
                                       fontSize: 15.0,
                                     ),
                                   );
@@ -104,7 +105,7 @@ class _AuthScreenState extends State<AuthScreen> {
                         SizedBox(height: 10.0,),
                         Text('Kwansei University',
                           style: TextStyle(
-                            color:Colors.white,
+                            color:Colors.black,
                             fontSize: 15.0,
                           ),)
                       ]
@@ -119,15 +120,23 @@ class _AuthScreenState extends State<AuthScreen> {
               right: 10.0,
 
               child: Card(
+                  elevation: 7.0,
                   color:Colors.white,
+    child: Container(
+    decoration: BoxDecoration(
+    // 枠線
+    border: Border.all(color: Colors.black87, width: 0.3),
+    // 角丸
+    borderRadius: BorderRadius.circular(8),
+    ),
+
                   child: Padding(
                     padding:EdgeInsets.all(18.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-//major
-
                         Container(
+
                           child: Column(
                               children: [
                                 Text('学部',
@@ -225,6 +234,7 @@ class _AuthScreenState extends State<AuthScreen> {
                         Container(
                             child:Column(
                                 children: [
+                                  
                                   SizedBox(height: 1.0,),
                                   IconButton(
                                       icon: Icon(Icons.create_rounded),
@@ -243,7 +253,8 @@ class _AuthScreenState extends State<AuthScreen> {
                   )
               )
           )
-        ],
+          )
+                  ],
 
       ),
     );

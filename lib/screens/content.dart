@@ -28,8 +28,22 @@ class _ContentPagePageState extends State<ContentPage> {
       appBar: AppBar(
           title: Text("Q＆A"),
           actions: <Widget>[
-            IconButton(
-                icon: Text("投稿"),
+            ElevatedButton(
+          child: const Text("投稿"),
+          style: ElevatedButton.styleFrom(
+            primary: Colors.white,
+            onPrimary: Colors.black,
+            shape: const CircleBorder(
+              side: BorderSide(
+                color: Colors.blue,
+                width: 1,
+                style: BorderStyle.solid,
+              ),
+              ),
+            //side: const BorderSide(color: Colors.blueGrey),　<-ダサいので没
+          ),
+            //IconButton(
+                //icon: Text("投稿"),
                 //押した時の処理
                 onPressed: () async {
                   if (reply_content?.isEmpty ?? true) {

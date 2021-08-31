@@ -9,6 +9,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:sawa/picker/age_picker.dart';
+import 'package:sawa/picker/major_picker.dart';
+import 'package:sawa/picker/gender_picker.dart';
+
 TextEditingController _nameController = TextEditingController();
 TextEditingController _ageController = TextEditingController();
 TextEditingController _majorController = TextEditingController();
@@ -38,16 +42,177 @@ class _ProfileSetViewState extends State<ProfileSetView> {
   File _image;
 
   final imagePicker = ImagePicker();
+  String _selectedAge = "1回生";
+  String _selectedGender = "男";
+  String _selectedMajor = "神";
+  String _initial = "選択";
+  void _onSelectedItemChanged_age(int index) {
+    setState(() {
+      _selectedAge = ageList[index];
+    });
+  }
+  void _onSelectedItemChanged_major(int index) {
+    setState(() {
+      _selectedMajor = majorList[index];
+    });
+  }
+void picker_age() {
 
-  // Future getImageFromGallery() async {
-  //   final pickedFile = await imagePicker.getImage(source: ImageSource.gallery);
-  //   setState(() {
-  //     if (pickedFile != null) {
-  //       _image = File(pickedFile.path);
-  //     }
-  //     else return;
-  //   });
-  // }
+  Widget _pickerAge(String str) {
+    return Text(
+      str,
+      style: const TextStyle(fontSize: 32),
+    );
+  }
+  showModalBottomSheet(
+    context: context,
+    builder: (BuildContext context) {
+      return Container(
+        height: MediaQuery.of(context).size.height / 2,
+        child: Column(
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                CupertinoButton(
+                  child: Text("戻る"),
+                  onPressed: () => Navigator.pop(context),
+                ),
+                CupertinoButton(
+                  child: Text("決定"),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    setState(() {
+                      _initial = _selectedAge;
+                      user_age=_initial;
+                      _ageController.text=user_age;
+                    });
+                  },
+                ),
+              ],
+            ),
+            Container(
+              height: MediaQuery.of(context).size.height / 3,
+              child: CupertinoPicker(
+                itemExtent: 40,
+                children: ageList.map(_pickerAge).toList(),
+                onSelectedItemChanged: _onSelectedItemChanged_age,
+              ),
+            )
+          ],
+        ),
+      );
+    },
+  );
+}
+
+  void picker_gender() {
+    void _onSelectedItemChanged_gender(int index) {
+      setState(() {
+        _selectedGender = genderList[index];
+      });
+    }
+
+    Widget _pickerGender(String str) {
+      return Text(
+        str,
+        style: const TextStyle(fontSize: 32),
+      );
+    }
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: MediaQuery.of(context).size.height / 2,
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  CupertinoButton(
+                    child: Text("戻る"),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  CupertinoButton(
+                    child: Text("決定"),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      setState(() {
+                        _initial = _selectedGender;
+                        user_gender=_initial;
+                        _genderController.text=user_gender;
+                      });
+                    },
+                  ),
+                ],
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height / 3,
+                child: CupertinoPicker(
+                  itemExtent: 40,
+                  children: genderList.map(_pickerGender).toList(),
+                  onSelectedItemChanged: _onSelectedItemChanged_gender,
+                ),
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void picker_major() {
+
+
+    Widget _pickerMajor(String str) {
+      return Text(
+        str,
+        style: const TextStyle(fontSize: 32),
+      );
+    }
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: MediaQuery.of(context).size.height / 2,
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  CupertinoButton(
+                    child: Text("戻る"),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  CupertinoButton(
+                    child: Text("決定"),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      setState(() {
+                        _initial = _selectedMajor;
+                        user_major=_initial;
+                        _majorController.text=user_major;
+                      });
+                    },
+                  ),
+                ],
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height / 3,
+                child: CupertinoPicker(
+                  itemExtent: 40,
+                  children: majorList.map(_pickerMajor).toList(),
+                  onSelectedItemChanged: _onSelectedItemChanged_major,
+                ),
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+
   void showBottomSheet() async {
     final result = 1;
     File file;
@@ -224,7 +389,7 @@ class _ProfileSetViewState extends State<ProfileSetView> {
                         ),
                         child: Column(
                             children: [
-                              SizedBox(height: 25.0,),
+                              SizedBox(height: 20.0,),
 
                               Container(
                                 child:StreamBuilder<QuerySnapshot>(
@@ -248,7 +413,7 @@ class _ProfileSetViewState extends State<ProfileSetView> {
                                     }
                                 ),
                               ),
-                              SizedBox(height: 10.0,),
+                              SizedBox(height: 8.0,),
                               TextButton(onPressed: () async {
                                 showBottomSheet();
                               }, child: Text(
@@ -263,55 +428,70 @@ class _ProfileSetViewState extends State<ProfileSetView> {
                                 },
                                 enabled: true,
                                 style: TextStyle(
-                                    color: Colors.black, fontSize: 18),
+                                    color: Colors.black, fontSize: 14),
                                 obscureText: false,
                                 maxLines: 1,
                                 decoration: const InputDecoration(
                                   hintText: '　名前',
                                 ),
                               ),
-                              TextFormField(
+                        GestureDetector(
+                              child: TextFormField(
+                                onTap:(){
+                                  picker_major();
+                                },
                                 controller: _majorController,
                                 onChanged: (value) async {
                                   user_major = value;
                                 },
                                 enabled: true,
                                 style: TextStyle(
-                                    color: Colors.black, fontSize: 18),
+                                    color: Colors.black, fontSize: 14),
                                 obscureText: false,
                                 maxLines: 1,
                                 decoration: const InputDecoration(
                                   hintText: '　学部',
                                 ),
                               ),
-                              TextFormField(
+                        ),
+                    GestureDetector(
+                              child: TextFormField(
+                                onTap:(){
+                                  picker_age();
+                                },
                                 controller: _ageController,
                                 onChanged: (value) async {
                                   user_age = value;
                                 },
                                 enabled: true,
                                 style: TextStyle(
-                                    color: Colors.black, fontSize: 18),
+                                    color: Colors.black, fontSize: 14),
                                 obscureText: false,
                                 maxLines: 1,
                                 decoration: const InputDecoration(
                                   hintText: '　学年',
                                 ),
                               ),
-                              TextFormField(
+                    ),
+                        GestureDetector(
+                              child: TextFormField(
+                                onTap:(){
+                                  picker_gender();
+                                },
                                 controller: _genderController,
                                 onChanged: (value) async {
                                   user_gender = value;
                                 },
                                 enabled: true,
                                 style: TextStyle(
-                                    color: Colors.black, fontSize: 18),
+                                    color: Colors.black, fontSize: 14),
                                 obscureText: false,
                                 maxLines: 1,
                                 decoration: const InputDecoration(
                                   hintText: '　性別',
                                 ),
                               ),
+                        )
                             ]
 
                         ),
