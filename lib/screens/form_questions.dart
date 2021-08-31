@@ -7,10 +7,8 @@ import 'package:intl/intl.dart';
 class PostPage extends StatefulWidget {
   @override
   _PostPagePageState createState() => _PostPagePageState();
-
 }
 class _PostPagePageState extends State<PostPage> {
-  //textfiledの処理
   TextEditingController _textEditingController = TextEditingController();
   TextEditingController _textEditingControllerTitle = TextEditingController();
   final _firestore = FirebaseFirestore.instance;
@@ -19,12 +17,11 @@ class _PostPagePageState extends State<PostPage> {
   String questions_title;
   String questions_content;
   //質問にidを付与するためのforms_id
-  int forms_id=0;
-
+  int count=0;
   //countする
   void _incrementCounter(){
     setState(() {
-      forms_id++;
+      count++;
       _setCounterValue();
     });
   }
@@ -36,13 +33,13 @@ class _PostPagePageState extends State<PostPage> {
   void _getCounterValue() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      forms_id = prefs.getInt('id');
+      count = prefs.getInt('count');
     });
   }
 
   void _setCounterValue() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setInt('id', forms_id);
+    prefs.setInt('count', count);
   }
 
   final _form = GlobalKey<FormState>();
@@ -57,8 +54,7 @@ class _PostPagePageState extends State<PostPage> {
       icon: Text("投稿"),
     //押した時の処理
     onPressed: () async {
-    _incrementCounter();
-    _form.currentState.save();
+      _form.currentState.save();
     if(questions_title?.isEmpty ?? true) {
     showDialog(
     context: context,
@@ -95,6 +91,7 @@ class _PostPagePageState extends State<PostPage> {
     );
     }
     else{
+      _incrementCounter();
     showDialog(
     context: context,
     builder: (context) {
@@ -120,7 +117,7 @@ class _PostPagePageState extends State<PostPage> {
     {
     "title": questions_title,
     "content": questions_content,
-    "id": forms_id,
+    "id": count,
     "days":date
     },
     );
