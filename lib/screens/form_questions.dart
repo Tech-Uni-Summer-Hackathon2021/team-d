@@ -17,7 +17,10 @@ class _PostPagePageState extends State<PostPage> {
   String questions_title;
   String questions_content;
   //質問にidを付与するためのforms_id
+
   int count=0;
+
+
   //countする
   void _incrementCounter(){
     setState(() {
