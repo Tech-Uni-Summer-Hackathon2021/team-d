@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sawa/picker/genre_picker.dart';
@@ -159,6 +160,8 @@ class _PostPagePageState extends State<PostPage> {
                   );
                 }
                 else{
+                  final User user = await FirebaseAuth.instance.currentUser;
+                  final String uid = user.uid.toString();
                   stopFiveSeconds();
                   _incrementCounter();
                   showDialog(
@@ -187,7 +190,8 @@ class _PostPagePageState extends State<PostPage> {
                         "title": questions_title,
                         "content": questions_content,
                         "id": count,
-                        "days":date
+                        "days":date,
+                        "uid":uid
                       },
                     );
                   }
