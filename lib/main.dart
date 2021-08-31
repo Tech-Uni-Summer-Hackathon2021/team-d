@@ -60,12 +60,6 @@ Future<void> main() async {
   firebaseAddData();
 }
 
-
-
-
-
-
-
 class MyApp extends StatelessWidget {
   @override
 
@@ -166,8 +160,5 @@ class _MyHomePageState extends State<MyHomePage> {
 
       // This trailing comma makes auto-formatting nicer for build methods.
     );
-
   }
-
-
 }

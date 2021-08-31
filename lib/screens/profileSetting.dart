@@ -224,7 +224,7 @@ class _ProfileSetViewState extends State<ProfileSetView> {
                         ),
                         child: Column(
                             children: [
-                              SizedBox(height: 25.0,),
+                              SizedBox(height: 20.0,),
 
                               Container(
                                 child:StreamBuilder<QuerySnapshot>(
@@ -248,7 +248,7 @@ class _ProfileSetViewState extends State<ProfileSetView> {
                                     }
                                 ),
                               ),
-                              SizedBox(height: 10.0,),
+                              SizedBox(height: 8.0,),
                               TextButton(onPressed: () async {
                                 showBottomSheet();
                               }, child: Text(
@@ -263,7 +263,7 @@ class _ProfileSetViewState extends State<ProfileSetView> {
                                 },
                                 enabled: true,
                                 style: TextStyle(
-                                    color: Colors.black, fontSize: 18),
+                                    color: Colors.black, fontSize: 14),
                                 obscureText: false,
                                 maxLines: 1,
                                 decoration: const InputDecoration(
@@ -277,7 +277,7 @@ class _ProfileSetViewState extends State<ProfileSetView> {
                                 },
                                 enabled: true,
                                 style: TextStyle(
-                                    color: Colors.black, fontSize: 18),
+                                    color: Colors.black, fontSize: 14),
                                 obscureText: false,
                                 maxLines: 1,
                                 decoration: const InputDecoration(
@@ -291,7 +291,7 @@ class _ProfileSetViewState extends State<ProfileSetView> {
                                 },
                                 enabled: true,
                                 style: TextStyle(
-                                    color: Colors.black, fontSize: 18),
+                                    color: Colors.black, fontSize: 14),
                                 obscureText: false,
                                 maxLines: 1,
                                 decoration: const InputDecoration(
@@ -305,7 +305,7 @@ class _ProfileSetViewState extends State<ProfileSetView> {
                                 },
                                 enabled: true,
                                 style: TextStyle(
-                                    color: Colors.black, fontSize: 18),
+                                    color: Colors.black, fontSize: 14),
                                 obscureText: false,
                                 maxLines: 1,
                                 decoration: const InputDecoration(
