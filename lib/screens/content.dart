@@ -123,7 +123,11 @@ class _ContentPagePageState extends State<ContentPage> {
                       child: Column(
                         children: [
                           ListTile(
-                            leading: Image.network(document.data()['user_image']),
+                            leading: CircleAvatar(
+                      radius: 30.0,
+                        backgroundImage: NetworkImage(document.data()['user_image']),
+                        backgroundColor: Colors.white,
+                      ),
                             title: Text(document.data()['user_name'],style: TextStyle(color: Colors.black,fontSize: 18)),
                           ),
                           Text(widget.content,
@@ -132,13 +136,13 @@ class _ContentPagePageState extends State<ContentPage> {
                           ButtonBar(
                             alignment: MainAxisAlignment.start,
                             children: [
-                              FlatButton(
-                                textColor: const Color(0xFF6200EE),
-                                onPressed: () {
-                                  // Perform some action
-                                },
-                                child: const Text('ACTION 1'),
-                              ),
+                              // FlatButton(
+                              //   textColor: const Color(0xFF6200EE),
+                              //   onPressed: () {
+                              //     // Perform some action
+                              //   },
+                              //   child: const Text('ACTION 1'),
+                              // ),
                             ],
                           ),
                         ],
