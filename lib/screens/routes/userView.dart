@@ -59,7 +59,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   ),
                   child: Column(
                       children: [
-                        SizedBox(height: 25.0,),
+                        SizedBox(height: 20.0,),
                         StreamBuilder<QuerySnapshot>(
                             stream: FirebaseFirestore.instance.collection("user").where(
                                 'uid', isEqualTo: uid).snapshots(),
@@ -75,7 +75,6 @@ class _AuthScreenState extends State<AuthScreen> {
                                     backgroundImage: NetworkImage(document.data()['avatar_image_path']),
                                     backgroundColor: Colors.white,
                                   );
-
                                 }).toList(),
                               );
                             }
