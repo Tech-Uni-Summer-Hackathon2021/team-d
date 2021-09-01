@@ -3,7 +3,7 @@ import 'settings/aboutView.dart';
 import 'settings/notifyView.dart';
 import 'settings/inquiryView.dart';
 import 'settings/destroyUserView.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 class SettingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
