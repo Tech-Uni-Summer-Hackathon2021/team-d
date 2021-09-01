@@ -6,7 +6,6 @@ import 'package:sawa/picker/genre_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
-
 import '../main.dart';
 //質問投稿のぺージ
 class PostPage extends StatefulWidget {
