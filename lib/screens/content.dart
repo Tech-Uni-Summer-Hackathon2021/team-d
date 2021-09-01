@@ -35,21 +35,6 @@ class _ContentPagePageState extends State<ContentPage> {
           actions: <Widget>[
             ElevatedButton(
           child: const Text("投稿"),
-          style: ElevatedButton.styleFrom(
-            primary: Colors.white,
-            onPrimary: Colors.black,
-            shape: const CircleBorder(
-              side: BorderSide(
-                color: Colors.blue,
-                width: 1,
-                style: BorderStyle.solid,
-              ),
-              ),
-            //side: const BorderSide(color: Colors.blueGrey),　<-ダサいので没
-          ),
-            //IconButton(
-                //icon: Text("投稿"),
-                //押した時の処理
                 onPressed: () async {
                   if (reply_content?.isEmpty ?? true) {
                     showDialog(
@@ -111,7 +96,7 @@ class _ContentPagePageState extends State<ContentPage> {
           children: [
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance.collection("forms").where(
-                  'uid', isEqualTo:uid).snapshots(),
+                  'id', isEqualTo:widget.id).snapshots(),
               builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
@@ -124,7 +109,7 @@ class _ContentPagePageState extends State<ContentPage> {
                         children: [
                           ListTile(
                             leading: CircleAvatar(
-                      radius: 30.0,
+                      radius: 26.0,
                         backgroundImage: NetworkImage(document.data()['user_image']),
                         backgroundColor: Colors.white,
                       ),
