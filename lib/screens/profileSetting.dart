@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sawa/main.dart';
 import 'package:sawa/screens/auth/auth.dart';
 import 'package:sawa/screens/routes/postView.dart';
 import 'package:flutter/cupertino.dart';
@@ -211,8 +212,6 @@ void picker_age() {
       },
     );
   }
-
-
   void showBottomSheet() async {
     final result = 1;
     File file;
@@ -437,6 +436,7 @@ void picker_age() {
                               ),
                         GestureDetector(
                               child: TextFormField(
+                                readOnly: true,
                                 onTap:(){
                                   picker_major();
                                 },
@@ -456,6 +456,7 @@ void picker_age() {
                         ),
                     GestureDetector(
                               child: TextFormField(
+                                readOnly: true,
                                 onTap:(){
                                   picker_age();
                                 },
@@ -475,6 +476,7 @@ void picker_age() {
                     ),
                         GestureDetector(
                               child: TextFormField(
+                                readOnly: true,
                                 onTap:(){
                                   picker_gender();
                                 },

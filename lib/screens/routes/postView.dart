@@ -2,13 +2,24 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sawa/screens/auth/auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../content.dart';
 import '../form_questions.dart';
+
+void getName() async{
+  var preferences = await SharedPreferences.getInstance();
+  FirebaseFirestore.instance.collection("user").doc(preferences.getString("start")).get().then((value) {
+    String user_name=value.data()['name'];
+  print(user_name);
+  return user_name;
+  });
+}
+
+
 
 
 class PostView extends StatelessWidget {
   @override
-
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder<QuerySnapshot>(
@@ -19,7 +30,6 @@ class PostView extends StatelessWidget {
           }
           return ListView(
             children: snapshot.data.docs.map((DocumentSnapshot document) {
-
               return Card(
                 //tapの処理
                   child:GestureDetector(
@@ -42,13 +52,16 @@ class PostView extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton (
-
         onPressed: () async{
-
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => PostPage()),
-          );
+          var preferences = await SharedPreferences.getInstance();
+          FirebaseFirestore.instance.collection("user").doc(preferences.getString("start")).get().then((value) {
+            String user_name=value.data()['name'];
+            String defaultImage=value.data()['avatar_image_path'];
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => PostPage(user_name,defaultImage)),
+            );
+          });
         },
         child: const Icon(Icons.add),
         backgroundColor: Colors.blue,
@@ -56,3 +69,8 @@ class PostView extends StatelessWidget {
     );
   }
 }
+
+
+
+
+

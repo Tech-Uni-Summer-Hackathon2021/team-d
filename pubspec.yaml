@@ -41,6 +41,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   cupertino_icons: ^1.0.2
+  url_launcher:
   flutter_native_splash:
 
 flutter_native_splash:

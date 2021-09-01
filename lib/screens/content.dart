@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -11,6 +12,7 @@ class ContentPage extends StatefulWidget {
   final String content;
   final int id;
   final String days;
+
   _ContentPagePageState createState() => _ContentPagePageState();
 }
 
@@ -20,9 +22,12 @@ class _ContentPagePageState extends State<ContentPage> {
   String reply_days;
   final _firestore = FirebaseFirestore.instance;
   final _reply = GlobalKey<FormState>();
+
 //ここからが画面
   @override
   Widget build(BuildContext context) {
+    final User user =  FirebaseAuth.instance.currentUser;
+    final String uid = user.uid.toString();
     return Scaffold(
       //上の画面
       appBar: AppBar(
@@ -30,21 +35,6 @@ class _ContentPagePageState extends State<ContentPage> {
           actions: <Widget>[
             ElevatedButton(
           child: const Text("投稿"),
-          style: ElevatedButton.styleFrom(
-            primary: Colors.white,
-            onPrimary: Colors.black,
-            shape: const CircleBorder(
-              side: BorderSide(
-                color: Colors.blue,
-                width: 1,
-                style: BorderStyle.solid,
-              ),
-              ),
-            //side: const BorderSide(color: Colors.blueGrey),　<-ダサいので没
-          ),
-            //IconButton(
-                //icon: Text("投稿"),
-                //押した時の処理
                 onPressed: () async {
                   if (reply_content?.isEmpty ?? true) {
                     showDialog(
@@ -104,13 +94,50 @@ class _ContentPagePageState extends State<ContentPage> {
       body: Column(
           key: _reply,
           children: [
-            //質問部分
-            Card(
-              child: ListTile(
-                subtitle: Text(widget.days),
-                title: Text(widget.content),
-              ),
+            StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance.collection("forms").where(
+                  'id', isEqualTo:widget.id).snapshots(),
+              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                return Column(
+                  children: snapshot.data.docs.map((DocumentSnapshot document) {
+                   return Card(
+                     clipBehavior: Clip.antiAlias,
+                      child: Column(
+                        children: [
+                          ListTile(
+                            leading: CircleAvatar(
+                      radius: 26.0,
+                        backgroundImage: NetworkImage(document.data()['user_image']),
+                        backgroundColor: Colors.white,
+                      ),
+                            title: Text(document.data()['user_name'],style: TextStyle(color: Colors.black,fontSize: 18)),
+                          ),
+                          Text(widget.content,
+                            style: TextStyle(color: Colors.black,fontSize: 18),textAlign: TextAlign.right,
+                          ),
+                          ButtonBar(
+                            alignment: MainAxisAlignment.start,
+                            children: [
+                              // FlatButton(
+                              //   textColor: const Color(0xFF6200EE),
+                              //   onPressed: () {
+                              //     // Perform some action
+                              //   },
+                              //   child: const Text('ACTION 1'),
+                              // ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                );
+              },
             ),
+
             //質問の下にある回答の処理
             Container(
               width: double.infinity,

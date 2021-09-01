@@ -13,7 +13,6 @@ import 'dart:async';
 import 'package:provider/provider.dart';
 import 'screens/profileSetting.dart';
 
-
 Future firebaseAddData() async {
 //追加
   FirebaseAuth.instance.signInAnonymously();
@@ -22,7 +21,7 @@ Future firebaseAddData() async {
   //ページ遷移
   var preferences = await SharedPreferences.getInstance();
   if (preferences.containsKey("start")){
-    print("エラー");
+    print("ログイン成功しました");
   }
   else {
     final _firestore = FirebaseFirestore.instance;
