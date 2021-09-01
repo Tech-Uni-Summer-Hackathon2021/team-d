@@ -12,8 +12,8 @@ import '../main.dart';
 class PostPage extends StatefulWidget {
   @override
   _PostPagePageState createState() => _PostPagePageState();
-  PostPage(this.defaultName,this.defaultImage);
-  final String defaultName;
+  PostPage(this.user_name,this.defaultImage);
+  final String user_name;
   final String defaultImage;
 }
 class _PostPagePageState extends State<PostPage> {
@@ -127,6 +127,8 @@ class _PostPagePageState extends State<PostPage> {
               icon: Text("投稿"),
               //押した時の処理
               onPressed: () async {
+                print(widget.defaultImage);
+                print(widget.user_name);
                 _form.currentState.save();
                 if(questions_title?.isEmpty ?? true) {
                   showDialog(
@@ -196,8 +198,8 @@ class _PostPagePageState extends State<PostPage> {
                         "id": count,
                         "days":date,
                         "uid":uid,
-                        "user_name":"匿名",
-                        "user_image":"https://firebasestorage.googleapis.com/v0/b/summerhackathon2021-23986.appspot.com/o/user_icon%2Fdefault.png?alt=media&token=2e1a0e9f-41eb-41f8-8c2d-40467c5d6277"
+                        "user_name":widget.user_name,
+                        "user_image":widget.defaultImage,
                       },
                     );
                   }
