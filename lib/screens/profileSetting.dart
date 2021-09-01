@@ -212,8 +212,6 @@ void picker_age() {
       },
     );
   }
-
-
   void showBottomSheet() async {
     final result = 1;
     File file;

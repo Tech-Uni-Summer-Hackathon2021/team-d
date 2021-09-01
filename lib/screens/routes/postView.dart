@@ -2,16 +2,24 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sawa/screens/auth/auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../content.dart';
 import '../form_questions.dart';
+
+void getName() async{
+  var preferences = await SharedPreferences.getInstance();
+  FirebaseFirestore.instance.collection("user").doc(preferences.getString("start")).get().then((value) {
+    String user_name=value.data()['name'];
+  print(user_name);
+  return user_name;
+  });
+}
+
+
 
 
 class PostView extends StatelessWidget {
   @override
-  final user_name="匿名";
-  final String defaultImage ="https://firebasestorage.googleapis.com/v0/b/summerhackathon2021-23986.appspot.com/o/user_icon%2Fdefault.png?alt=media&token=2e1a0e9f-41eb-41f8-8c2d-40467c5d6277";
-
-
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder<QuerySnapshot>(
@@ -44,13 +52,16 @@ class PostView extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton (
-
-//ここの処理を考える
         onPressed: () async{
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => PostPage(user_name,defaultImage)),
-          );
+          var preferences = await SharedPreferences.getInstance();
+          FirebaseFirestore.instance.collection("user").doc(preferences.getString("start")).get().then((value) {
+            String user_name=value.data()['name'];
+            String defaultImage=value.data()['avatar_image_path'];
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => PostPage(user_name,defaultImage)),
+            );
+          });
         },
         child: const Icon(Icons.add),
         backgroundColor: Colors.blue,
