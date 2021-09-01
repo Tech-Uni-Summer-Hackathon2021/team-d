@@ -27,7 +27,6 @@
 //
 // Future<Null> _uploadProfilePicture() async{
 //   FirebaseUser user = await FirebaseAuth.instance.currentUser();
-//
 //   final StorageReference ref = FirebaseStorage.instance.ref().child('${user.email}/${user.email}_profilePicture.jpg');
 //   final StorageUploadTask uploadTask = ref.putFile(_image);
 //   final Uri downloadUrl = (await uploadTask.future).downloadUrl;

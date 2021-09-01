@@ -4,8 +4,18 @@ import 'settings/notifyView.dart';
 import 'settings/inquiryView.dart';
 import 'settings/destroyUserView.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'dart:core';
 class SettingView extends StatelessWidget {
+
   @override
+  _launchURL() async {
+    const url = "https://forms.gle/KwX57QFeHqWKXBi87";
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not Launch $url';
+    }
+  }
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -45,10 +55,7 @@ class SettingView extends StatelessWidget {
             Card(
               child: InkWell(  // InkWellはCardの子ウィジェット
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => InquiryView()),
-                  );
+                  _launchURL();
                 },
                 child: ListTile(
                   title: Text('お問い合わせ'),
@@ -75,3 +82,6 @@ class SettingView extends StatelessWidget {
     );
   }
 }
+
+
+
