@@ -164,7 +164,7 @@ class _PostPagePageState extends State<PostPage> {
                     },
                   );
                 }
-                else{
+                else if(questions_content.length>=10){
                   final User user = await FirebaseAuth.instance.currentUser;
                   final String uid = user.uid.toString();
                   stopFiveSeconds();
@@ -204,6 +204,24 @@ class _PostPagePageState extends State<PostPage> {
                   }
                   getTodayDate();
                 }
+                else if(questions_content.length<9){
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text('注意'),
+                        content: Text('10文字以上入力してください'),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text("確認"),
+                            onPressed: () => Navigator.pop(context),
+                          ),
+
+                        ],
+                      );
+                    },
+                  );
+                }
               },
             )
           ]
@@ -239,6 +257,7 @@ class _PostPagePageState extends State<PostPage> {
                   controller: _textEditingController,
                   enabled: true,
                   maxLength: 330,
+
                   maxLengthEnforced: true,
                   style: TextStyle(color: Colors.black,fontSize: 18),
                   minLines:15,
