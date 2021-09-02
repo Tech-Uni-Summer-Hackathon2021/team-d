@@ -216,7 +216,6 @@ class _PostPagePageState extends State<PostPage> {
                             child: Text("確認"),
                             onPressed: () => Navigator.pop(context),
                           ),
-
                         ],
                       );
                     },

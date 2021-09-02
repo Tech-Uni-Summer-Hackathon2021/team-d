@@ -115,19 +115,14 @@ class _ContentPagePageState extends State<ContentPage> {
                       ),
                             title: Text(document.data()['user_name'],style: TextStyle(color: Colors.black,fontSize: 18)),
                           ),
-                          Text(widget.content,
-                            style: TextStyle(color: Colors.black,fontSize: 18),textAlign: TextAlign.right,
+                          Container(
+                            width: double.infinity,
+                            child:  Text(widget.content,
+                              style: TextStyle(color: Colors.black,fontSize: 18),textAlign: TextAlign.left,),
                           ),
                           ButtonBar(
                             alignment: MainAxisAlignment.start,
                             children: [
-                              // FlatButton(
-                              //   textColor: const Color(0xFF6200EE),
-                              //   onPressed: () {
-                              //     // Perform some action
-                              //   },
-                              //   child: const Text('ACTION 1'),
-                              // ),
                             ],
                           ),
                         ],
