@@ -19,10 +19,8 @@ class _PostPagePageState extends State<PostPage> {
   TextEditingController _textEditingController = TextEditingController();
   TextEditingController _textEditingControllerTitle = TextEditingController();
   final _firestore = FirebaseFirestore.instance;
-  final myFocusNode = FocusNode();
   String questions_title;
   String questions_content;
-
   //質問にidを付与するためのforms_id
   int count=0;
   //countする
@@ -126,8 +124,7 @@ class _PostPagePageState extends State<PostPage> {
               icon: Text("投稿"),
               //押した時の処理
               onPressed: () async {
-                print(widget.defaultImage);
-                print(widget.user_name);
+                FocusScope.of(context).unfocus();
                 _form.currentState.save();
                 if(questions_title?.isEmpty ?? true) {
                   showDialog(
@@ -226,7 +223,14 @@ class _PostPagePageState extends State<PostPage> {
           ]
       ),
       //bodyであり、質問内容やタイトルを打ち込む場所
-      body: Form(
+    body: GestureDetector(
+    onTap: () {
+    final FocusScopeNode currentScope = FocusScope.of(context);
+    if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
+    FocusManager.instance.primaryFocus.unfocus();
+    }
+    },
+      child: Form(
           key: _form,
           child: Column(
               children:[
@@ -245,7 +249,6 @@ class _PostPagePageState extends State<PostPage> {
                   style: TextStyle(color: Colors.black,fontSize: 18),
                   obscureText: false,
                   maxLines:1 ,
-
                   decoration: const InputDecoration(
                     hintText: '　質問タイトル',
                   ),
@@ -256,7 +259,6 @@ class _PostPagePageState extends State<PostPage> {
                   controller: _textEditingController,
                   enabled: true,
                   maxLength: 330,
-
                   maxLengthEnforced: true,
                   style: TextStyle(color: Colors.black,fontSize: 18),
                   minLines:15,
@@ -271,10 +273,13 @@ class _PostPagePageState extends State<PostPage> {
                     hintText: '　投稿内容を記載してください',
                   ),
                 ),
+
               ]
           )
       ),
+    )
     );
+
   }
 }
 
