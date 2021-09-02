@@ -5,25 +5,26 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sawa/picker/genre_picker.dart';
 import 'package:sawa/screens/auth/auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'content.dart';
 
 
-class myQuestions extends StatefulWidget {
+class favoriteQ extends StatefulWidget {
   @override
-  _myQuestionsState createState() => _myQuestionsState();
+  _favoriteQState createState() => _favoriteQState();
 
 }
 
-class _myQuestionsState extends State<myQuestions> {
-
+class _favoriteQState extends State<favoriteQ> {
   @override
   Widget build(BuildContext context) {
+    //実験用なので気にしないで
+    var id=44;
+    //
     final User user =  FirebaseAuth.instance.currentUser;
     final String uid = user.uid.toString();
     return Scaffold(
         appBar: AppBar(
-          title: Text("自分の質問一覧"),
+          title: Text("いいねした質問一覧"),
         ),
         body:Column(
             children:[
@@ -32,7 +33,7 @@ class _myQuestionsState extends State<myQuestions> {
 
                 child:StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance.collection("forms").where(
-                      'uid', isEqualTo:uid).orderBy('id', descending: true).snapshots(),
+                      'id', isEqualTo:id).snapshots(),
                   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Center(child: CircularProgressIndicator());
