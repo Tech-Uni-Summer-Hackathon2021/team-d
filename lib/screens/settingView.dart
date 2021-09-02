@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sawa/screens/settings/announcementView.dart';
 import 'settings/aboutView.dart';
 import 'settings/notifyView.dart';
-import 'settings/inquiryView.dart';
 import 'settings/destroyUserView.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:core';
@@ -58,7 +58,7 @@ class SettingView extends StatelessWidget {
                     _launchURL();
                   },
                   child: ListTile(
-                    title: Text('お問い合わせ'),
+                    title: Text('お問い合わせとレビュー'),
                   ),
                 ),
               ),
@@ -73,6 +73,20 @@ class SettingView extends StatelessWidget {
                   },
                   child: ListTile(
                     title: Text('このアプリについて'),
+                  ),
+                ),
+              ),
+
+               Card(
+                child: InkWell(  // InkWellはCardの子ウィジェット
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AnnouncementView()),
+                    );
+                  },
+                  child: ListTile(
+                    title: Text('お知らせ'),
                   ),
                 ),
               ),
