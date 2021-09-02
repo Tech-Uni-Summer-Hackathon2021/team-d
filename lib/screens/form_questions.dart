@@ -204,7 +204,7 @@ class _PostPagePageState extends State<PostPage> {
                   }
                   getTodayDate();
                 }
-                else if(questions_content.length<9){
+                else if(questions_content.length<10){
                   showDialog(
                     context: context,
                     builder: (context) {
