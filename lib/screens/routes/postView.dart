@@ -1,10 +1,20 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sawa/picker/genre_picker.dart';
 import 'package:sawa/screens/auth/auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../content.dart';
 import '../form_questions.dart';
+
+class PostView extends StatefulWidget {
+  @override
+  _PostViewState createState() => _PostViewState();
+
+}
+
+
 
 void getName() async{
   var preferences = await SharedPreferences.getInstance();
@@ -15,7 +25,71 @@ void getName() async{
   });
 }
 
-class PostView extends StatelessWidget {
+
+
+
+
+
+
+class _PostViewState extends State<PostView> {
+
+  String _selectedGenre = "授業";
+  String _initial = "選択";
+  void _onSelectedItemChanged_genre(int index) {
+    setState(() {
+      _selectedGenre = genreList[index];
+    });
+  }
+
+  void picker_genre() {
+    Widget _pickerGenre(String str) {
+      return Text(
+        str,
+        style: const TextStyle(fontSize: 32),
+      );
+    }
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: MediaQuery.of(context).size.height / 2,
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  CupertinoButton(
+                    child: Text("戻る"),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  CupertinoButton(
+                    child: Text("決定"),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      setState(() {
+                        _initial = _selectedGenre;
+
+
+                      });
+                    },
+                  ),
+                ],
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height / 3,
+                child: CupertinoPicker(
+                  itemExtent: 40,
+                  children: genreList.map(_pickerGenre).toList(),
+                  onSelectedItemChanged: _onSelectedItemChanged_genre,
+                ),
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,9 +99,9 @@ class PostView extends StatelessWidget {
       children:[
        Container(
          height: 40,  // サイズ指定しないと表示されない
-         margin:EdgeInsets.only(top:18,left:20),
+         margin:EdgeInsets.only(top:18,left:30),
           width: 130,
-          child: Text("　新着",
+          child: Text(_selectedGenre,
             style: TextStyle(
               fontSize: 18,
             ),
@@ -36,15 +110,21 @@ class PostView extends StatelessWidget {
         ),
         Container(
           height: 40,  // サイズ指定しないと表示されない
-          margin:EdgeInsets.only(top:18,left:50),
+          margin:EdgeInsets.only(left:60),
           width:180,
-          child: Text("　ジャンルを選択する",
+child:TextButton(
+  onPressed: () {
+    // ボタンが押されたときに発動される処理
+    picker_genre();
+  },
+          child: Text("ジャンルを選択する",
             style: TextStyle(
               fontSize: 18,
             ),
             textAlign: TextAlign.right,
           ),
         ),
+        )
        ]
       ),
 
