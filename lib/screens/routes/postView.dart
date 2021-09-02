@@ -15,14 +15,23 @@ void getName() async{
   });
 }
 
-
-
-
 class PostView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StreamBuilder<QuerySnapshot>(
+      body:Column(
+      children:[
+        Container(
+          width: double.infinity,
+          child: Text("　新着",
+            style: TextStyle(
+              fontSize: 20,
+            ),
+            textAlign: TextAlign.left,
+          ),
+        ),
+        Flexible(
+      child:StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection("forms").snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -51,7 +60,15 @@ class PostView extends StatelessWidget {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton (
+        ),
+        SafeArea(child: Column(
+
+        mainAxisAlignment: MainAxisAlignment.end,
+        children:[
+            Container(
+    margin:EdgeInsets.only(left: 300.0,bottom: 30),
+        child:FloatingActionButton (
+
         onPressed: () async{
           var preferences = await SharedPreferences.getInstance();
           FirebaseFirestore.instance.collection("user").doc(preferences.getString("start")).get().then((value) {
@@ -66,7 +83,14 @@ class PostView extends StatelessWidget {
         child: const Icon(Icons.add),
         backgroundColor: Colors.blue,
       ),
+            )
+        ]
+    )
+        )
+    ]
+    )
     );
+
   }
 }
 
