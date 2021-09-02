@@ -51,7 +51,6 @@ class SettingView extends StatelessWidget {
                   ),
                 ),
               ),
-
               Card(
                 child: InkWell(  // InkWellはCardの子ウィジェット
                   onTap: () {
@@ -60,6 +59,7 @@ class SettingView extends StatelessWidget {
                   child: ListTile(
                     title: Text('お問い合わせ'),
                   ),
+
                 ),
               ),
 
@@ -82,3 +82,6 @@ class SettingView extends StatelessWidget {
     );
   }
 }
+
+
+
