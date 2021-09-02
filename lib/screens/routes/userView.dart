@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:sawa/screens/profileSetting.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../main.dart';
+import '../myQuestions.dart';
 import '../settingView.dart';
 
 
@@ -266,6 +267,7 @@ class _AuthScreenState extends State<AuthScreen> {
             ),
           ),
     GestureDetector(
+
     child:Container(
       decoration: BoxDecoration(
         border: const Border(
@@ -288,6 +290,12 @@ class _AuthScreenState extends State<AuthScreen> {
         ),
       ),
             child:TextFormField(
+              onTap:(){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => myQuestions()),
+                );
+              },
               enabled: true,
               readOnly: true,
               style: TextStyle(color: Colors.black,fontSize: 18),
@@ -299,7 +307,6 @@ class _AuthScreenState extends State<AuthScreen> {
     )
     )
         ],
-
       ),
             GestureDetector(
               child:Container(
