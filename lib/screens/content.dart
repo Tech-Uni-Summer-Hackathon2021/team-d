@@ -26,16 +26,20 @@ class _ContentPagePageState extends State<ContentPage> {
 //ここからが画面
   @override
   Widget build(BuildContext context) {
+
     final User user =  FirebaseAuth.instance.currentUser;
     final String uid = user.uid.toString();
+
     return Scaffold(
       //上の画面
+
       appBar: AppBar(
           title: Text("Q＆A"),
           actions: <Widget>[
             ElevatedButton(
           child: const Text("投稿"),
                 onPressed: () async {
+                  FocusScope.of(context).unfocus();
                   if (reply_content?.isEmpty ?? true) {
                     showDialog(
                       context: context,
@@ -91,8 +95,16 @@ class _ContentPagePageState extends State<ContentPage> {
           ]
       ),
       //ここからがメイン画面_リプライを表示する
-      body: Column(
+            body: GestureDetector(
+              onTap: () {
+                final FocusScopeNode currentScope = FocusScope.of(context);
+                if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
+                  FocusManager.instance.primaryFocus.unfocus();
+                }
+              },
+              child:Column(
           key: _reply,
+
           children: [
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance.collection("forms").where(
@@ -115,19 +127,14 @@ class _ContentPagePageState extends State<ContentPage> {
                       ),
                             title: Text(document.data()['user_name'],style: TextStyle(color: Colors.black,fontSize: 18)),
                           ),
-                          Text(widget.content,
-                            style: TextStyle(color: Colors.black,fontSize: 18),textAlign: TextAlign.right,
+                          Container(
+                            width: double.infinity,
+                            child:  Text(widget.content,
+                              style: TextStyle(color: Colors.black,fontSize: 18),textAlign: TextAlign.left,),
                           ),
                           ButtonBar(
                             alignment: MainAxisAlignment.start,
                             children: [
-                              // FlatButton(
-                              //   textColor: const Color(0xFF6200EE),
-                              //   onPressed: () {
-                              //     // Perform some action
-                              //   },
-                              //   child: const Text('ACTION 1'),
-                              // ),
                             ],
                           ),
                         ],
@@ -174,12 +181,13 @@ class _ContentPagePageState extends State<ContentPage> {
                 },
               ),
             ),
+
             //下の回答のTextField
-            SafeArea(child: Column(
+
+        SafeArea(child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  TextFormField(
-                    autofocus: true,
+            TextFormField(
                     enabled: true,
                     controller: _textEditingControllerReply,
                     style: new TextStyle(
@@ -198,11 +206,14 @@ class _ContentPagePageState extends State<ContentPage> {
                       prefixIcon: Icon(Icons.face),
                     ),
                   ),
+
                 ]
             ),)
 
           ]
+
       ),
+            )
     );
   }
 }
