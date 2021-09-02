@@ -21,15 +21,33 @@ class PostView extends StatelessWidget {
     return Scaffold(
       body:Column(
       children:[
-        Container(
-          width: double.infinity,
+        Row(
+      children:[
+       Container(
+         height: 40,  // サイズ指定しないと表示されない
+         margin:EdgeInsets.only(top:18,left:20),
+          width: 130,
           child: Text("　新着",
             style: TextStyle(
-              fontSize: 20,
+              fontSize: 18,
             ),
             textAlign: TextAlign.left,
           ),
         ),
+        Container(
+          height: 40,  // サイズ指定しないと表示されない
+          margin:EdgeInsets.only(top:18,left:50),
+          width:180,
+          child: Text("　ジャンルを選択する",
+            style: TextStyle(
+              fontSize: 18,
+            ),
+            textAlign: TextAlign.right,
+          ),
+        ),
+       ]
+      ),
+
         Flexible(
       child:StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection("forms").snapshots(),
