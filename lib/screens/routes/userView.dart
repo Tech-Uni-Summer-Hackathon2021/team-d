@@ -21,7 +21,7 @@ class AuthScreen extends StatefulWidget {
 
 }
 class _AuthScreenState extends State<AuthScreen> {
-
+  TextEditingController _myQuestions = TextEditingController();
   @override
   final _firestore = FirebaseFirestore.instance;
   // アカウント登録
@@ -37,7 +37,6 @@ class _AuthScreenState extends State<AuthScreen> {
       )
     });
   }
-
 //プロフィール
   @override
   Widget build(BuildContext content) {
@@ -75,7 +74,6 @@ class _AuthScreenState extends State<AuthScreen> {
                                     backgroundImage: NetworkImage(document.data()['avatar_image_path']),
                                     backgroundColor: Colors.white,
                                   );
-
                                 }).toList(),
                               );
                             }
@@ -136,7 +134,6 @@ class _AuthScreenState extends State<AuthScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Container(
-
                           child: Column(
                               children: [
                                 Text('学部',
@@ -240,24 +237,111 @@ class _AuthScreenState extends State<AuthScreen> {
                                       icon: Icon(Icons.create_rounded),
                                       onPressed: () {
                                         registeUser();
-
                                       }
-
                                   ),
-                                ]
 
+                                ]
                             )
                         ),
                       ],
                     ),
                   )
               )
-          )
-          )
-                  ],
+          ),
+
+          ),
+          Column(
+            children:[
+          Column(
+          children:[
+          Container(
+          height: 40,  // サイズ指定しないと表示されない
+            margin:EdgeInsets.only(top:360,left:30),
+            width: 300,
+            child: Text("投稿した質問     いいねした質問",
+              style: TextStyle(
+                fontSize: 18,
+              ),
+              textAlign: TextAlign.left,
+            ),
+          ),
+    GestureDetector(
+    child:Container(
+      decoration: BoxDecoration(
+        border: const Border(
+          left: const BorderSide(
+            color: Colors.black,
+            width: 0.7,
+          ),
+          top: const BorderSide(
+            color: Colors.black,
+            width: 0.5,
+          ),
+          right: const BorderSide(
+            color: Colors.black,
+            width: 0.5,
+          ),
+          bottom: const BorderSide(
+            color: Colors.black,
+            width: 0.2,
+          ),
+        ),
+      ),
+            child:TextFormField(
+              enabled: true,
+              readOnly: true,
+              style: TextStyle(color: Colors.black,fontSize: 18),
+              maxLines:1,
+              decoration: const InputDecoration(
+                hintText: '    投稿した質問',
+              ),
+            ),
+    )
+    )
+        ],
 
       ),
+            GestureDetector(
+              child:Container(
+                decoration: BoxDecoration(
+                  border: const Border(
+                    left: const BorderSide(
+                      color: Colors.black,
+                      width: 0,
+                    ),
+                    top: const BorderSide(
+                      color: Colors.black,
+                      width: 0.5,
+                    ),
+                    right: const BorderSide(
+                      color: Colors.black,
+                      width: 0.5,
+                    ),
+                    bottom: const BorderSide(
+                      color: Colors.black,
+                      width: 0.5,
+                    ),
+                  ),
+                ),
+                child:TextFormField(
+                  controller: _myQuestions,
+
+                  enabled: true,
+                  readOnly: true,
+                  style: TextStyle(color: Colors.black,fontSize: 18),
+                  maxLines:1,
+                  decoration: const InputDecoration(
+                    hintText: '    いいねした質問',
+                  ),
+                ),
+              )
+            )
+      ]
+    )
+    ]
+      )
     );
+
   }
 
 

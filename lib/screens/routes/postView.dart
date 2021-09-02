@@ -139,7 +139,7 @@ child:TextButton(
                     //質問内容等
                     child: ListTile(
                       title: Text(document.data()['content'], maxLines:1,),
-                      subtitle: Text(document.data()['title']),
+                      subtitle: Text(document.data()['days']),
                     ),
                     onTap: () {
                       Navigator.push(
