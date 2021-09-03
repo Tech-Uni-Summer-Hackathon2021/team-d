@@ -11,9 +11,10 @@ import '../main.dart';
 class PostPage extends StatefulWidget {
   @override
   _PostPagePageState createState() => _PostPagePageState();
-  PostPage(this.user_name,this.defaultImage);
+  PostPage(this.user_name,this.defaultImage,this.major);
   final String user_name;
   final String defaultImage;
+  final String major;
 }
 class _PostPagePageState extends State<PostPage> {
   TextEditingController _textEditingController = TextEditingController();
@@ -196,6 +197,7 @@ class _PostPagePageState extends State<PostPage> {
                         "uid":uid,
                         "user_name":widget.user_name,
                         "user_image":widget.defaultImage,
+                        "user_major":widget.major
                       },
                     );
                   }
@@ -273,7 +275,6 @@ class _PostPagePageState extends State<PostPage> {
                     hintText: '　投稿内容を記載してください',
                   ),
                 ),
-
               ]
           )
       ),

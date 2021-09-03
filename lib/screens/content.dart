@@ -28,6 +28,7 @@ class _ContentPagePageState extends State<ContentPage> {
 //ここからが画面
   @override
   Widget build(BuildContext context) {
+     int count=0;
     final User user =  FirebaseAuth.instance.currentUser;
     final String uid = user.uid.toString();
     return Scaffold(
@@ -38,17 +39,21 @@ class _ContentPagePageState extends State<ContentPage> {
       Container(
         margin:EdgeInsets.only(right:15),
       child:IconButton(
-      icon: const Icon(Icons.star),
+      icon: const Icon(Icons.bookmark_outlined),
     onPressed: () async{
       showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('いいねをしました'),
-            content: Text('マイページでいいね一覧を観覧できます'),
+            title: Text('保存をしますか？'),
+            content: Text('保存をしたら、マイページでいいね一覧を観覧できます'),
             actions: <Widget>[
               FlatButton(
-                child: Text("確認"),
+                child: Text("いいえ"),
+                onPressed: () => Navigator.pop(context),
+              ),
+              FlatButton(
+                child: Text("保存"),
                 onPressed: (){
           Navigator.pop(context);
           _firestore.collection("favorite").add(
@@ -108,19 +113,30 @@ class _ContentPagePageState extends State<ContentPage> {
                     },
                   );
                     _textEditingControllerReply.clear();
+
                     void getTodayDate() async {
                       initializeDateFormatting('ja');
                       var format = new DateFormat.yMMMd('ja');
                       var date = format.format(new DateTime.now());
-                      _firestore.collection("replies").add(
+                      var docRef= await _firestore.collection("replies").add(
                         {
                           "reply": reply_content,
                           "reply_id": widget.id,
-                          "reply_days":date
+                          "reply_days":date,
+                          "reply_count":0
+                        },
+
+                      );
+                      var documentId = docRef.id;
+                      _firestore.collection("replies").doc(documentId).update(
+                        {
+                          "reply_docId": documentId
                         },
                       );
                     }
                     getTodayDate();
+
+
                   }
                   //ここに処理
                 } ),
@@ -151,7 +167,9 @@ class _ContentPagePageState extends State<ContentPage> {
                      clipBehavior: Clip.antiAlias,
                       child: Column(
                         children: [
-                          ListTile(
+                          Container(
+                            margin:EdgeInsets.only(top:10),
+                          child:ListTile(
                             leading: CircleAvatar(
                       radius: 26.0,
                         backgroundImage: NetworkImage(document.data()['user_image']),
@@ -159,16 +177,14 @@ class _ContentPagePageState extends State<ContentPage> {
                       ),
                             title: Text(document.data()['user_name'],style: TextStyle(color: Colors.black,fontSize: 18)),
                           ),
+                          ),
                           Container(
+                            margin:EdgeInsets.only(top:10,bottom:10,left:70),
                             width: double.infinity,
                             child:  Text(widget.content,
-                              style: TextStyle(color: Colors.black,fontSize: 18),textAlign: TextAlign.left,),
+                              style: TextStyle(color: Colors.black,fontSize: 20),textAlign: TextAlign.left,),
                           ),
-                          ButtonBar(
-                            alignment: MainAxisAlignment.start,
-                            children: [
-                            ],
-                          ),
+
                         ],
                       ),
                     );
@@ -202,11 +218,39 @@ class _ContentPagePageState extends State<ContentPage> {
                         DocumentSnapshot document) {
                       //リプライ部分
                       return Card(
-                        child: ListTile(
-                          title: Text(document.data()["reply"]),
-                          subtitle: Text(document.data()["reply_days"]),
-                          //ここに名前を入れる予定
+                        clipBehavior: Clip.antiAlias,
+                        child: Column(
+                          children: [
+                            ListTile(
+                              title: Text(document.data()['reply'],style: TextStyle(color: Colors.black,fontSize: 18)),
+                            ),
+                            Row(
+                            children:[
+                              Text("　"+document.data()['reply_days'],style: TextStyle(color: Colors.grey,fontSize: 15)),
+
+                              Container(
+                              margin:EdgeInsets.only(left:200),
+                            child:IconButton(
+                            icon: const Icon(Icons.star),
+                                onPressed: () async{
+                                    // データを更新
+                                 count=1+document.data()["reply_count"];
+                                      _firestore.collection("replies")
+                                          .doc(document.data()["reply_docId"])
+                                          .update(
+                                        {
+                                          "reply_count": count
+                                        },
+                                      );
+                                    }
+
+                            ),
+                            ),
+                              Text(document.data()["reply_count"].toString())
+                          ],
                         ),
+                            ]
+                            )
                       );
                     }).toList(),
                   );
