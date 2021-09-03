@@ -235,7 +235,6 @@ class _ContentPagePageState extends State<ContentPage> {
                                 onPressed: () async{
                                     // データを更新
                                  count=1+document.data()["reply_count"];
-
                                       _firestore.collection("replies")
                                           .doc(document.data()["reply_docId"])
                                           .update(
@@ -244,7 +243,7 @@ class _ContentPagePageState extends State<ContentPage> {
                                         },
                                       );
                                     }
-                                
+
                             ),
                             ),
                               Text(document.data()["reply_count"].toString())
