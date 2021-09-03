@@ -5,6 +5,7 @@ import 'package:sawa/screens/form_questions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/routes/postView.dart';
 import 'screens/routes/userView.dart';
+import 'screens/routes/infoView.dart';
 import 'screens/settingView.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:sawa/screens/auth/auth.dart';
@@ -116,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
 
-    var routes =[PostView(), AuthScreen()];
+    var routes =[PostView(), InfoView(), AuthScreen()];
     return Scaffold (
 //appBarは上のタイトルが表示されているものです
       appBar: AppBar(
@@ -147,7 +148,10 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: Icon(Icons.article),
             title: Text('投稿'),
           ),
-
+          BottomNavigationBarItem(
+            icon: Icon(Icons.assignment_outlined),
+            title: Text('情報'),
+          ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),
             title: Text('ユーザー'),
