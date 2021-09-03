@@ -59,6 +59,8 @@ class SettingView extends StatelessWidget {
                   child: ListTile(
                     title: Text('お問い合わせとレビュー'),
                   ),
+    ),
+              ),
               Card(
                 child: InkWell(  // InkWellはCardの子ウィジェット
                   onTap: () {

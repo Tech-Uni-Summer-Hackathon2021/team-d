@@ -342,7 +342,6 @@ class _AuthScreenState extends State<AuthScreen> {
                       snapshot.docs.forEach((doc) {
                         ids.add(doc.data()["id"]);
                       });
-                      print(ids);
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => favoriteQ(ids)),
