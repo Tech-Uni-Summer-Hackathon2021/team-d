@@ -116,10 +116,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     var routes =[PostView(), InfoView(), AuthScreen()];
     return Scaffold (
 //appBarは上のタイトルが表示されているものです
+      backgroundColor: Color(0xFF57d8d6),
       appBar: AppBar(
         title: Text('しゅわしゅわ'),
         actions: <Widget>[
