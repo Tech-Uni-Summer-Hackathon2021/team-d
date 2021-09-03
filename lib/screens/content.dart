@@ -234,13 +234,17 @@ class _ContentPagePageState extends State<ContentPage> {
                             icon: const Icon(Icons.star),
                                 onPressed: () async{
                                     // データを更新
-                                    count+=1;
-                                  _firestore.collection("replies").doc(document.data()["reply_docId"]).update(
-                                    {
-                                      "reply_count":count
-                                    },
-                                  );
-                                }
+                                 count=1+document.data()["reply_count"];
+
+                                      _firestore.collection("replies")
+                                          .doc(document.data()["reply_docId"])
+                                          .update(
+                                        {
+                                          "reply_count": count
+                                        },
+                                      );
+                                    }
+                                
                             ),
                             ),
                               Text(document.data()["reply_count"].toString())
