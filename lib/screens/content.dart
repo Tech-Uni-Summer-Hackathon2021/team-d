@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../main.dart';
 class ContentPage extends StatefulWidget {
   @override
@@ -12,27 +13,25 @@ class ContentPage extends StatefulWidget {
   final String content;
   final int id;
   final String days;
-
   _ContentPagePageState createState() => _ContentPagePageState();
+
 }
 
 class _ContentPagePageState extends State<ContentPage> {
   TextEditingController _textEditingControllerReply = TextEditingController();
   String reply_content;
   String reply_days;
+
   final _firestore = FirebaseFirestore.instance;
   final _reply = GlobalKey<FormState>();
 
 //ここからが画面
   @override
   Widget build(BuildContext context) {
-
     final User user =  FirebaseAuth.instance.currentUser;
     final String uid = user.uid.toString();
-
     return Scaffold(
       //上の画面
-
       appBar: AppBar(
           title: Text("Q＆A"),
           actions: <Widget>[
@@ -40,9 +39,33 @@ class _ContentPagePageState extends State<ContentPage> {
         margin:EdgeInsets.only(right:15),
       child:IconButton(
       icon: const Icon(Icons.star),
-    onPressed: (){
+    onPressed: () async{
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('いいねをしました'),
+            content: Text('マイページでいいね一覧を観覧できます'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("確認"),
+                onPressed: (){
+          Navigator.pop(context);
+          _firestore.collection("favorite").add(
+            {
+              "uid":uid,
+              "id":widget.id,
+            },
+          );
+          }
+          ),
+          ]
+          );
+        },
+      );
 
-    }
+      },
+
       ),
       ),
             ElevatedButton(
@@ -218,9 +241,7 @@ class _ContentPagePageState extends State<ContentPage> {
 
                 ]
             ),)
-
           ]
-
       ),
             )
     );

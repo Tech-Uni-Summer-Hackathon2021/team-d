@@ -59,6 +59,7 @@ class SettingView extends StatelessWidget {
                   child: ListTile(
                     title: Text('お問い合わせとレビュー'),
                   ),
+
                 ),
               ),
               Card(
@@ -99,7 +100,7 @@ class SettingView extends StatelessWidget {
               ),
             ],
           ),
-        )
+     )
     );
   }
 }
