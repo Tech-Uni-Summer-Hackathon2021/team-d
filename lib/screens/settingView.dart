@@ -61,16 +61,7 @@ class SettingView extends StatelessWidget {
                   ),
     ),
               ),
-              Card(
-                child: InkWell(  // InkWellはCardの子ウィジェット
-                  onTap: () {
-                    _launchURL();
-                  },
-                  child: ListTile(
-                    title: Text('お問い合わせ'),
-                  ),
-                ),
-              ),
+        
               Card(
                 child: InkWell(  // InkWellはCardの子ウィジェット
                   onTap: () {
