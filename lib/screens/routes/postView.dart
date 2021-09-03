@@ -26,7 +26,7 @@ void getName() async{
 }
 
 class _PostViewState extends State<PostView> {
-
+  final list = <String>[];
   String _selectedGenre = "授業";
   String _initial = "選択";
   void _onSelectedItemChanged_genre(int index) {
@@ -62,8 +62,6 @@ class _PostViewState extends State<PostView> {
                       Navigator.pop(context);
                       setState(() {
                         _initial = _selectedGenre;
-
-
                       });
                     },
                   ),
@@ -122,9 +120,7 @@ child:TextButton(
        ]
       ),
         Flexible(
-
       child:StreamBuilder<QuerySnapshot>(
-
         stream: FirebaseFirestore.instance.collection("forms").where(
     'title', isEqualTo:_selectedGenre).orderBy('id', descending: true).snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -133,13 +129,15 @@ child:TextButton(
           }
           return ListView(
             children: snapshot.data.docs.map((DocumentSnapshot document) {
+              // list.add(document.data()['content']);
+              // print(list);
               return Card(
                 //tapの処理
                   child:GestureDetector(
                     //質問内容等
                     child: ListTile(
                       title: Text(document.data()['content'], maxLines:1,),
-                      subtitle: Text(document.data()['title']),
+                      subtitle: Text(document.data()['days']),
                     ),
                     onTap: () {
                       Navigator.push(
@@ -156,7 +154,6 @@ child:TextButton(
       ),
         ),
         SafeArea(child: Column(
-
         mainAxisAlignment: MainAxisAlignment.end,
         children:[
             Container(
@@ -164,6 +161,7 @@ child:TextButton(
         child:FloatingActionButton (
 
         onPressed: () async{
+
           var preferences = await SharedPreferences.getInstance();
           FirebaseFirestore.instance.collection("user").doc(preferences.getString("start")).get().then((value) {
             String user_name=value.data()['name'];

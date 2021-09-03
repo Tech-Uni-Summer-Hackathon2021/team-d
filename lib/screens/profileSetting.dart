@@ -23,8 +23,6 @@ final _firestore = FirebaseFirestore.instance;
 
 Future _getPreferences() async {
   var preferences = await SharedPreferences.getInstance();
-  //documentIDの取得のために使用
-  print(preferences.getString("test_string_key"));
 }
 Future deletePreferences() async {
   //削除用-リリース前には消す
