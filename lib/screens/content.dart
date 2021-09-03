@@ -36,6 +36,15 @@ class _ContentPagePageState extends State<ContentPage> {
       appBar: AppBar(
           title: Text("Q＆A"),
           actions: <Widget>[
+      Container(
+        margin:EdgeInsets.only(right:15),
+      child:IconButton(
+      icon: const Icon(Icons.star),
+    onPressed: (){
+
+    }
+      ),
+      ),
             ElevatedButton(
           child: const Text("投稿"),
                 onPressed: () async {
