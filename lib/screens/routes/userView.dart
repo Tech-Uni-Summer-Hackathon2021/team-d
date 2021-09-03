@@ -25,6 +25,7 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   TextEditingController _myQuestions = TextEditingController();
   @override
+
   final _firestore = FirebaseFirestore.instance;
   // アカウント登録
   void registeUser() async {
@@ -42,6 +43,7 @@ class _AuthScreenState extends State<AuthScreen> {
 //プロフィール
   @override
   Widget build(BuildContext content) {
+    var list = <int>[];
     final User user = FirebaseAuth.instance.currentUser;
     final String uid = user.uid.toString();
     return Scaffold(
@@ -333,11 +335,21 @@ class _AuthScreenState extends State<AuthScreen> {
                 ),
                 child:TextFormField(
                   controller: _myQuestions,
-                  onTap:(){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => favoriteQ()),
-                    );
+                  onTap:() async {
+                    final userRef= FirebaseFirestore.instance.collection('favorite').where('uid', isEqualTo:uid);
+                    userRef.get().then((snapshot) {
+                      final List <int> ids=[];
+                      snapshot.docs.forEach((doc) {
+                        ids.add(doc.data()["id"]);
+                      });
+                      print(ids);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => favoriteQ(ids)),
+                      );
+                    });
+
+
                   },
                   enabled: true,
                   readOnly: true,
