@@ -60,6 +60,18 @@ class SettingView extends StatelessWidget {
                     title: Text('お問い合わせとレビュー'),
                   ),
     ),
+                ),
+
+              Card(
+                child: InkWell(  // InkWellはCardの子ウィジェット
+                  onTap: () {
+                    _launchURL();
+                  },
+                  child: ListTile(
+                    title: Text('お問い合わせ'),
+                  ),
+                ),
+
               ),
         
               Card(
@@ -90,7 +102,7 @@ class SettingView extends StatelessWidget {
               ),
             ],
           ),
-        )
+     )
     );
   }
 }
