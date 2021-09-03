@@ -9,7 +9,6 @@ import '../favoriteQ.dart';
 import '../myQuestions.dart';
 import '../settingView.dart';
 
-
 class AuthScreen extends StatefulWidget {
   const AuthScreen( {Key key}) : super(key: key);
 

@@ -13,9 +13,6 @@ class PostView extends StatefulWidget {
   _PostViewState createState() => _PostViewState();
 
 }
-
-
-
 void getName() async{
   var preferences = await SharedPreferences.getInstance();
   FirebaseFirestore.instance.collection("user").doc(preferences.getString("start")).get().then((value) {
@@ -26,6 +23,7 @@ void getName() async{
 }
 
 class _PostViewState extends State<PostView> {
+  TextEditingController _search = TextEditingController();
   final list = <String>[];
   String _selectedGenre = "授業";
   String _initial = "選択";
@@ -61,7 +59,7 @@ class _PostViewState extends State<PostView> {
                     onPressed: () {
                       Navigator.pop(context);
                       setState(() {
-                        _initial = _selectedGenre;
+                        _search.text = _selectedGenre;
                       });
                     },
                   ),
@@ -87,38 +85,64 @@ class _PostViewState extends State<PostView> {
     return Scaffold(
       body:Column(
       children:[
-        Row(
-      children:[
-       Container(
-         height: 40,  // サイズ指定しないと表示されない
-         margin:EdgeInsets.only(top:18,left:30),
-          width: 130,
-          child: Text(_selectedGenre,
-            style: TextStyle(
-              fontSize: 18,
-            ),
-            textAlign: TextAlign.left,
+      Container(
+      margin:EdgeInsets.only(top:10,bottom:8),
+        decoration: BoxDecoration(
+            border: const Border(
+              top: const BorderSide(
+                color: Colors.black,
+                width: 0.5,
+              ),
+            )
+        ),
+        child:GestureDetector(
+        child:TextField(
+          controller: _search,
+          readOnly: true,
+          onTap: () {
+            // onChangedは入力されている文字が変更するたびに呼ばれます
+            picker_genre();
+          },
+          decoration: new InputDecoration(
+            prefixIcon: new Icon(Icons.search, color: Colors.grey),
+            hintText: "検索条件を決める",
           ),
         ),
-        Container(
-          height: 40,  // サイズ指定しないと表示されない
-          margin:EdgeInsets.only(left:60),
-          width:180,
-child:TextButton(
-  onPressed: () {
-    // ボタンが押されたときに発動される処理
-    picker_genre();
-  },
-          child: Text("ジャンルを選択する",
-            style: TextStyle(
-              fontSize: 18,
-            ),
-            textAlign: TextAlign.right,
-          ),
         ),
-        )
-       ]
       ),
+
+//         Row(
+//       children:[
+//        Container(
+//          height: 40,  // サイズ指定しないと表示されない
+//          margin:EdgeInsets.only(top:18,left:30),
+//           width: 130,
+//           child: Text(_selectedGenre,
+//             style: TextStyle(
+//               fontSize: 18,
+//             ),
+//             textAlign: TextAlign.left,
+//           ),
+//         ),
+//         Container(
+//           height: 40,  // サイズ指定しないと表示されない
+//           margin:EdgeInsets.only(left:60),
+//           width:180,
+// child:TextButton(
+//   onPressed: () {
+//     // ボタンが押されたときに発動される処理
+//     picker_genre();
+//   },
+//           child: Text("ジャンルを選択する",
+//             style: TextStyle(
+//               fontSize: 18,
+//             ),
+//             textAlign: TextAlign.right,
+//           ),
+//         ),
+//         )
+//        ]
+//       ),
         Flexible(
       child:StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection("forms").where(
