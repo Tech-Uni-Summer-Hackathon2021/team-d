@@ -20,10 +20,9 @@ Future firebaseAddData() async {
   final String uid = user.uid.toString();
   //ページ遷移
   var preferences = await SharedPreferences.getInstance();
-  if (preferences.containsKey("start")){
+  if (preferences.containsKey("start")) {
     print("ログイン成功しました");
-  }
-  else {
+  } else {
     final _firestore = FirebaseFirestore.instance;
 
     var docRef = await _firestore.collection("user").add(
@@ -33,20 +32,19 @@ Future firebaseAddData() async {
         "major": "未設定",
         "gender": "未設定",
         "uid": uid,
-        "avatar_image_path": "https://firebasestorage.googleapis.com/v0/b/summerhackathon2021-23986.appspot.com/o/user_icon%2Fdefault.png?alt=media&token=2e1a0e9f-41eb-41f8-8c2d-40467c5d6277",
+        "avatar_image_path":
+            "https://firebasestorage.googleapis.com/v0/b/summerhackathon2021-23986.appspot.com/o/user_icon%2Fdefault.png?alt=media&token=2e1a0e9f-41eb-41f8-8c2d-40467c5d6277",
       },
     );
     var documentId = docRef.id;
     _firestore.collection("user").doc(documentId).update(
-      {
-        "documentID": documentId
-      },
+      {"documentID": documentId},
     );
     Future _setPreferences() async {
       // SharedPreferencesに値を設定
       preferences.setString("start", documentId);
-
     }
+
     _setPreferences();
   }
 }
@@ -61,7 +59,21 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   @override
-
+  static const MaterialColor shuwablue = const MaterialColor(
+    0xFF57d8d6,
+    const <int, Color>{
+      50: const Color(0xFF57d8d6),
+      100: const Color(0xFF57d8d6),
+      200: const Color(0xFF57d8d6),
+      300: const Color(0xFF57d8d6),
+      400: const Color(0xFF57d8d6),
+      500: const Color(0xFF57d8d6),
+      600: const Color(0xFF57d8d6),
+      700: const Color(0xFF57d8d6),
+      800: const Color(0xFF57d8d6),
+      900: const Color(0xFF57d8d6),
+    },
+  );
   static const MaterialColor white = const MaterialColor(
     0xFFFFFFFF,
     const <int, Color>{
@@ -83,22 +95,21 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
 
       theme: ThemeData(
-
-        primarySwatch: Colors.blue,
+        // primaryColor: Color(0xFF92F1C7),
+        primarySwatch:Colors.blue,
       ),
       home: MyHomePage(),
       //ルーティングここで画面遷移先決めれます。他でもできるのでどちらでも
-      routes:<String, WidgetBuilder>{
-        "/home":(BuildContext context) => MyHomePage(),
-        "/setting":(BuildContext context) =>SettingView(),
-        "/profile":(BuildContext context) =>AuthScreen(),
+      routes: <String, WidgetBuilder>{
+        "/home": (BuildContext context) => MyHomePage(),
+        "/setting": (BuildContext context) => SettingView(),
+        "/profile": (BuildContext context) => AuthScreen(),
       },
     );
   }
 }
 
-class MyHomePage extends StatefulWidget{
-
+class MyHomePage extends StatefulWidget {
   @override
   State createState() {
     return _MyHomePageState();
@@ -115,11 +126,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
-    var routes =[PostView(), AuthScreen()];
-    return Scaffold (
+    var routes = [PostView(), AuthScreen()];
+    return Scaffold(
 //appBarは上のタイトルが表示されているものです
       appBar: AppBar(
+        backgroundColor: Color(0xFF57d8d6),
         title: Text('大学生のための質問教室'),
         actions: <Widget>[
           IconButton(
@@ -138,16 +149,15 @@ class _MyHomePageState extends State<MyHomePage> {
       body: routes[_selectedIndex],
 
       bottomNavigationBar: BottomNavigationBar(
-
+        // selectedItemColor: Color(0xFF92F1C7),
         //selectedItemColor: Color(0xFF57d8d6),
+        // selectedItemColor:Colors.blue,
         //選択された方の色の設定
-        //下のボタン
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.article),
             title: Text('投稿'),
           ),
-
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),
             title: Text('ユーザー'),
