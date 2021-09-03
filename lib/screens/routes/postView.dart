@@ -144,6 +144,7 @@ class _PostViewState extends State<PostView> {
         },
       ),
         ),
+
         SafeArea(child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children:[
