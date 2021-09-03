@@ -9,17 +9,20 @@ import 'content.dart';
 
 
 class favoriteQ extends StatefulWidget {
+  favoriteQ(this.ids);
+  final List<int> ids;
   @override
   _favoriteQState createState() => _favoriteQState();
 
 }
 
 class _favoriteQState extends State<favoriteQ> {
+
   @override
   Widget build(BuildContext context) {
     //実験用なので気にしないで
-    var id=44;
     //
+print(widget.ids);
     final User user =  FirebaseAuth.instance.currentUser;
     final String uid = user.uid.toString();
     return Scaffold(
@@ -28,20 +31,21 @@ class _favoriteQState extends State<favoriteQ> {
         ),
         body:Column(
             children:[
-
               Flexible(
-
                 child:StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance.collection("forms").where(
-                      'id', isEqualTo:id).snapshots(),
+                      'id', whereIn:widget.ids).snapshots(),
                   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Center(child: CircularProgressIndicator());
                     }
                     return ListView(
+
                       children: snapshot.data.docs.map((DocumentSnapshot document) {
+
                         return Card(
                           //tapの処理
+
                             child:GestureDetector(
                               //質問内容等
                               child: ListTile(
