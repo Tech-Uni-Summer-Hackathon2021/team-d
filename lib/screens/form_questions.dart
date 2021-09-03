@@ -260,11 +260,11 @@ class _PostPagePageState extends State<PostPage> {
                 TextFormField(
                   controller: _textEditingController,
                   enabled: true,
-                  maxLength: 330,
+                  maxLength: 300,
                   maxLengthEnforced: true,
                   style: TextStyle(color: Colors.black,fontSize: 18),
-                  minLines:15,
-                  maxLines:15,
+                  minLines:13,
+                  maxLines:13,
                   onFieldSubmitted: (value) {
                     print(value);
                   },

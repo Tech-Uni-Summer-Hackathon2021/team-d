@@ -27,10 +27,10 @@ class SettingView extends StatelessWidget {
               Card(
                 child: InkWell(  // InkWellはCardの子ウィジェット
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => NotifyView()),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => NotifyView()),
+                    // );
                   },
                   child: ListTile(
                     title: Text('通知について'),
@@ -62,17 +62,6 @@ class SettingView extends StatelessWidget {
     ),
                 ),
 
-              Card(
-                child: InkWell(  // InkWellはCardの子ウィジェット
-                  onTap: () {
-                    _launchURL();
-                  },
-                  child: ListTile(
-                    title: Text('お問い合わせ'),
-                  ),
-                ),
-
-              ),
         
               Card(
                 child: InkWell(  // InkWellはCardの子ウィジェット

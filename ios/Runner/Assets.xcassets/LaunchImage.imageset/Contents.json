@@ -6,14 +6,17 @@
       "scale" : "1x"
     },
     {
+      "filename" : "splash-14.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "splash-15.png",
       "idiom" : "universal",
       "scale" : "3x"
     },
     {
+      "filename" : "splash-16.png",
       "height-class" : "compact",
       "idiom" : "universal",
       "scale" : "1x"
