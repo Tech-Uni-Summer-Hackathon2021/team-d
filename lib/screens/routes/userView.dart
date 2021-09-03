@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:sawa/screens/profileSetting.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../main.dart';
+import '../content.dart';
 import '../favoriteQ.dart';
 import '../myQuestions.dart';
 import '../settingView.dart';
@@ -259,17 +260,20 @@ class _AuthScreenState extends State<AuthScreen> {
           children:[
           Container(
           height: 40,  // サイズ指定しないと表示されない
-            margin:EdgeInsets.only(top:360,left:30),
+            margin:EdgeInsets.only(top:360,bottom:20),
             width: 300,
-            child: Text("投稿した質問     いいねした質問",
+            child: Text("マイページ",
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 25,
               ),
-              textAlign: TextAlign.left,
+              textAlign: TextAlign.center,
             ),
           ),
+    ]
+    ),
+       Column(
+          children:[
     GestureDetector(
-
     child:Container(
       decoration: BoxDecoration(
         border: const Border(
@@ -291,79 +295,63 @@ class _AuthScreenState extends State<AuthScreen> {
           ),
         ),
       ),
-            child:TextFormField(
-              onTap:(){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => myQuestions()),
-                );
-              },
-              enabled: true,
-              readOnly: true,
-              style: TextStyle(color: Colors.black,fontSize: 18),
-              maxLines:1,
-              decoration: const InputDecoration(
-                hintText: '    投稿した質問',
-              ),
+            child:Card(
+
+                child:GestureDetector(
+                  //質問内容等
+                  child: ListTile(
+    title: Text("自分の質問一覧"),
+    subtitle: Text("タップすると自分の質問一覧が見れます")
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      //画面遷移
+                      context,
+                      MaterialPageRoute(builder: (context) => myQuestions(),
+                      )
+                    );
+                  },
+                )
             ),
+
     )
     )
         ],
       ),
-            GestureDetector(
-              child:Container(
-                decoration: BoxDecoration(
-                  border: const Border(
-                    left: const BorderSide(
-                      color: Colors.black,
-                      width: 0,
-                    ),
-                    top: const BorderSide(
-                      color: Colors.black,
-                      width: 0.5,
-                    ),
-                    right: const BorderSide(
-                      color: Colors.black,
-                      width: 0.5,
-                    ),
-                    bottom: const BorderSide(
-                      color: Colors.black,
-                      width: 0.5,
-                    ),
-                  ),
-                ),
-                child:TextFormField(
-                  controller: _myQuestions,
-                  onTap:() async {
-                    final userRef= FirebaseFirestore.instance.collection('favorite').where('uid', isEqualTo:uid);
-                    userRef.get().then((snapshot) {
-                      final List <int> ids=[];
-                      snapshot.docs.forEach((doc) {
-                        ids.add(doc.data()["id"]);
-                      });
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => favoriteQ(ids)),
-                      );
-                    });
 
+              Card(
+                  child:GestureDetector(
+                    //質問内容等
+                    child: ListTile(
+                        title: Text("いいねした質問一覧"),
+                        subtitle: Text("タップするといいねした質問一覧が見れます")
+                    ),
 
-                  },
-                  enabled: true,
-                  readOnly: true,
-                  style: TextStyle(color: Colors.black,fontSize: 18),
-                  maxLines:1,
-                  decoration: const InputDecoration(
-                    hintText: '    いいねした質問',
-                  ),
-                ),
-              )
-            )
+                      onTap:() async {
+                        final userRef = FirebaseFirestore.instance.collection(
+                            'favorite').where('uid', isEqualTo: uid);
+                        userRef.get().then((snapshot) {
+                          final List <int> ids = [];
+                          snapshot.docs.forEach((doc) {
+                            ids.add(doc.data()["id"]);
+                          });
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => favoriteQ(ids)),
+                          );
+                        });
+                      }
+
+                  )
+              ),
       ]
     )
     ]
       )
-    );
+      );
+
+
+
 
   }
 
