@@ -11,7 +11,6 @@ import '../form_questions.dart';
 class PostView extends StatefulWidget {
   @override
   _PostViewState createState() => _PostViewState();
-
 }
 void getName() async{
   var preferences = await SharedPreferences.getInstance();
@@ -111,38 +110,6 @@ class _PostViewState extends State<PostView> {
         ),
       ),
 
-//         Row(
-//       children:[
-//        Container(
-//          height: 40,  // サイズ指定しないと表示されない
-//          margin:EdgeInsets.only(top:18,left:30),
-//           width: 130,
-//           child: Text(_selectedGenre,
-//             style: TextStyle(
-//               fontSize: 18,
-//             ),
-//             textAlign: TextAlign.left,
-//           ),
-//         ),
-//         Container(
-//           height: 40,  // サイズ指定しないと表示されない
-//           margin:EdgeInsets.only(left:60),
-//           width:180,
-// child:TextButton(
-//   onPressed: () {
-//     // ボタンが押されたときに発動される処理
-//     picker_genre();
-//   },
-//           child: Text("ジャンルを選択する",
-//             style: TextStyle(
-//               fontSize: 18,
-//             ),
-//             textAlign: TextAlign.right,
-//           ),
-//         ),
-//         )
-//        ]
-//       ),
         Flexible(
       child:StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection("forms").where(
@@ -161,7 +128,7 @@ class _PostViewState extends State<PostView> {
                     //質問内容等
                     child: ListTile(
                       title: Text(document.data()['content'], maxLines:1,),
-                      subtitle: Text(document.data()['days']),
+                      subtitle: Text(document.data()['days']+"   "+document.data()['user_major']+"学部"),
                     ),
                     onTap: () {
                       Navigator.push(
@@ -190,9 +157,10 @@ class _PostViewState extends State<PostView> {
           FirebaseFirestore.instance.collection("user").doc(preferences.getString("start")).get().then((value) {
             String user_name=value.data()['name'];
             String defaultImage=value.data()['avatar_image_path'];
+            String major=value.data()['major'];
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => PostPage(user_name,defaultImage)),
+              MaterialPageRoute(builder: (context) => PostPage(user_name,defaultImage,major)),
             );
           });
         },

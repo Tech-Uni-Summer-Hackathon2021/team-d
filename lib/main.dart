@@ -120,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold (
 //appBarは上のタイトルが表示されているものです
       appBar: AppBar(
-        title: Text('大学生のための質問教室'),
+        title: Text('しゅわしゅわ'),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.settings),

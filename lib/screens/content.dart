@@ -38,17 +38,21 @@ class _ContentPagePageState extends State<ContentPage> {
       Container(
         margin:EdgeInsets.only(right:15),
       child:IconButton(
-      icon: const Icon(Icons.star),
+      icon: const Icon(Icons.bookmark_outlined),
     onPressed: () async{
       showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('いいねをしました'),
-            content: Text('マイページでいいね一覧を観覧できます'),
+            title: Text('保存をしますか？'),
+            content: Text('保存をしたら、マイページでいいね一覧を観覧できます'),
             actions: <Widget>[
               FlatButton(
-                child: Text("確認"),
+                child: Text("いいえ"),
+                onPressed: () => Navigator.pop(context),
+              ),
+              FlatButton(
+                child: Text("保存"),
                 onPressed: (){
           Navigator.pop(context);
           _firestore.collection("favorite").add(
