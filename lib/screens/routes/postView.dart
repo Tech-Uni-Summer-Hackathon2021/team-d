@@ -25,12 +25,6 @@ void getName() async{
   });
 }
 
-
-
-
-
-
-
 class _PostViewState extends State<PostView> {
 
   String _selectedGenre = "授業";
@@ -127,10 +121,12 @@ child:TextButton(
         )
        ]
       ),
-
         Flexible(
+
       child:StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection("forms").snapshots(),
+
+        stream: FirebaseFirestore.instance.collection("forms").where(
+    'title', isEqualTo:_selectedGenre).orderBy('id', descending: true).snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -143,7 +139,7 @@ child:TextButton(
                     //質問内容等
                     child: ListTile(
                       title: Text(document.data()['content'], maxLines:1,),
-                      subtitle: Text(document.data()['title']),
+                      subtitle: Text(document.data()['days']),
                     ),
                     onTap: () {
                       Navigator.push(
