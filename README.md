@@ -26,7 +26,7 @@
 
 起動するときに表示される画面
 
-<h2>・ホーム画面画面</h2>
+<h2>・ホーム画面</h2>
 
 ![IMG_1676](https://user-images.githubusercontent.com/75286616/132076317-7c258a1f-8262-433e-bfae-faf42c070e99.PNG)
 ![IMG_1677](https://user-images.githubusercontent.com/75286616/132076852-51e0547a-8614-4435-bcfa-0a73c255a7cc.PNG)
@@ -55,4 +55,7 @@
 ![IMG_1682](https://user-images.githubusercontent.com/75286616/132076933-fea38688-1a35-4f7f-ba6c-eb86f41a43c1.PNG)
 ![IMG_1683](https://user-images.githubusercontent.com/75286616/132076945-1958ca9a-2806-4a79-92be-68013adda4cc.PNG)
 
+<h2>・関学情報画面</h2>
 
+
+関学情報画面では、関西学院大学に関する情報をお届けします。
