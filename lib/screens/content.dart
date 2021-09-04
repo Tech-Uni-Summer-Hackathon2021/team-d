@@ -279,10 +279,9 @@ class _ContentPagePageState extends State<ContentPage> {
                     decoration: new InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: ('回答する'),
-                      prefixIcon: Icon(Icons.face),
+                      prefixIcon: Icon(Icons.edit_sharp),
                     ),
                   ),
-
                 ]
             ),)
           ]
