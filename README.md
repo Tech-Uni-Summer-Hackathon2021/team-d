@@ -1,8 +1,8 @@
 # Tech.Uni SummerHack 2021 
 
 ![Tech.Uni SummerHack](https://user-images.githubusercontent.com/63713624/126744501-639e7f32-0ed9-48ff-91e1-2fdee17d7830.jpg)
-![背景](https://user-images.githubusercontent.com/75286616/132077066-ee15f783-2aea-40cc-9275-fbdedd93714e.png)
 
+![背景](https://user-images.githubusercontent.com/75286616/132077555-71d3a008-bd66-43a7-9bbe-76026d08c04a.png)
 
 
 ## 作品名: 
@@ -57,5 +57,8 @@
 
 <h2>・関学情報画面</h2>
 
+![Simulator Screen Shot - iPhone 12 Pro Max - 2021-09-04 at 10 05 58](https://user-images.githubusercontent.com/75286616/132077448-754ba27e-0a0f-48fd-bf81-6256ad9c4b6c.png)
+![Simulator Screen Shot - iPhone 12 Pro Max - 2021-09-04 at 10 04 42](https://user-images.githubusercontent.com/75286616/132077447-f869eaaf-d553-4932-b7b3-71b0fd1ad876.png)
+![Simulator Screen Shot - iPhone 12 Pro Max - 2021-09-04 at 10 06 06](https://user-images.githubusercontent.com/75286616/132077449-7e493823-2e81-40b7-a143-a57cb9eb3040.png)
 
 関学情報画面では、関西学院大学に関する情報をお届けします。
