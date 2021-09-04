@@ -9,7 +9,7 @@
 しゅわしゅわ
 
 ## 内容: 
-関学生のためのアプリ！！ 学生生活を送っている中で、少し疑問に思うことが多々あります。例えば、「学食どれ食べたら、いいんだろ、、、」、「この課題よくわからないな、、、」、「好きな人ができたどうしよう！！」などの真剣なことから、くだらないことまで色々あると思います！その時に私たちが開発した「しゅわしゅわ」を使えば、解決します!!!!
+  関学生のためのアプリ！！ 学生生活を送っている中で、少し疑問に思うことが多々あります。例えば、「学食どれ食べたら、いいんだろ、、、」、「この課題よくわからないな、、、」、「好きな人ができたどうしよう！！」などの真剣なことから、くだらないことまで色々あると思います！その時に私たちが開発した「しゅわしゅわ」を使えば、解決します!!!!
 
 ## 使用技術: 
 ・Fornt-end:flutter(Dart),Ruby
@@ -41,6 +41,13 @@
 
 質問フォームでは、ジャンルと質問の内容を記述します。
 
+<h2>・Q&A</h2>
+
+![Simulator Screen Shot - iPhone 12 Pro Max - 2021-09-04 at 10 27 04](https://user-images.githubusercontent.com/75286616/132078055-f0cbed10-eff9-40c1-9795-38bc5ddf314d.png)
+![Simulator Screen Shot - iPhone 12 Pro Max - 2021-09-04 at 10 28 11](https://user-images.githubusercontent.com/75286616/132078057-f6f9a940-ce64-4655-b162-8e4bba495a13.png)
+
+Q&Aページでは、回答できるだけでなく、保存ボタンを押すことで、マイページに保存できます。回答には、ユーザーがいいねをつけることができます。
+
 <h2>・マイページ</h2>
 
 ![IMG_1674](https://user-images.githubusercontent.com/75286616/132076607-a67e0641-75ae-4c6e-8f1c-8692a24a449c.PNG)
@@ -61,4 +68,4 @@
 ![Simulator Screen Shot - iPhone 12 Pro Max - 2021-09-04 at 10 04 42](https://user-images.githubusercontent.com/75286616/132077447-f869eaaf-d553-4932-b7b3-71b0fd1ad876.png)
 ![Simulator Screen Shot - iPhone 12 Pro Max - 2021-09-04 at 10 06 06](https://user-images.githubusercontent.com/75286616/132077449-7e493823-2e81-40b7-a143-a57cb9eb3040.png)
 
-関学情報画面では、関西学院大学に関する情報をお届けします。
+関学情報画面では、関西学院大学に関する情報をお届けします。関学内の空き教室を探すことができます！
