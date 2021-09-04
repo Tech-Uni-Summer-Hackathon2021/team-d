@@ -1,7 +1,7 @@
 # Tech.Uni SummerHack 2021 
 
 ![Tech.Uni SummerHack](https://user-images.githubusercontent.com/63713624/126744501-639e7f32-0ed9-48ff-91e1-2fdee17d7830.jpg)
-![背景](https://user-images.githubusercontent.com/75286616/132076962-bfb9d621-19bf-4b72-913b-7baf849aeb6a.png)
+![背景](https://user-images.githubusercontent.com/75286616/132077018-a2885a56-fc3c-4bbd-a5f8-f15b21a32f8d.png)
 
 
 
