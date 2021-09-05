@@ -10,7 +10,9 @@ import '../favoriteQ.dart';
 import '../myQuestions.dart';
 import '../settingView.dart';
 
+
 class AuthScreen extends StatefulWidget {
+
   const AuthScreen( {Key key}) : super(key: key);
 
   static MaterialPageRoute get route => MaterialPageRoute(
@@ -31,14 +33,13 @@ class _AuthScreenState extends State<AuthScreen> {
   void registeUser() async {
     final User user = await FirebaseAuth.instance.currentUser;
     final String uid = user.uid.toString();
-    await FirebaseAuth.instance.signInAnonymously().then((result) => {
-      print("User id is ${result.user.uid}"),
-      //ページ遷移
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => ProfileSetView(uid)),
-      )
-    });
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ProfileSetView(uid)),
+    );
+
+
   }
 //プロフィール
   @override

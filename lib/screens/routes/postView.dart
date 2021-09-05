@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../content.dart';
 import '../form_questions.dart';
 
+
 class PostView extends StatefulWidget {
   @override
   _PostViewState createState() => _PostViewState();
@@ -153,7 +154,6 @@ class _PostViewState extends State<PostView> {
         child:FloatingActionButton (
 
         onPressed: () async{
-
           var preferences = await SharedPreferences.getInstance();
           FirebaseFirestore.instance.collection("user").doc(preferences.getString("start")).get().then((value) {
             String user_name=value.data()['name'];

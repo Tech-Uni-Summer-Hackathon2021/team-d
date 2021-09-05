@@ -16,7 +16,7 @@ import 'screens/profileSetting.dart';
 
 Future firebaseAddData() async {
 //追加
-  FirebaseAuth.instance.signInAnonymously();
+  await FirebaseAuth.instance.signInAnonymously();
   final User user = await FirebaseAuth.instance.currentUser;
   final String uid = user.uid.toString();
   //ページ遷移
@@ -46,7 +46,6 @@ Future firebaseAddData() async {
     Future _setPreferences() async {
       // SharedPreferencesに値を設定
       preferences.setString("start", documentId);
-
     }
     _setPreferences();
   }
@@ -54,10 +53,10 @@ Future firebaseAddData() async {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await Firebase.initializeApp();
-  runApp(MyApp());
+  Firebase.initializeApp();
   firebaseAddData();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

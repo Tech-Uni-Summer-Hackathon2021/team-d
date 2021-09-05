@@ -24,11 +24,7 @@ final _firestore = FirebaseFirestore.instance;
 Future _getPreferences() async {
   var preferences = await SharedPreferences.getInstance();
 }
-Future deletePreferences() async {
-  //削除用-リリース前には消す
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.remove('test_string_key');
-}
+
 class ProfileSetView extends StatefulWidget {
   ProfileSetView(this.uid) ;
   final String uid;
