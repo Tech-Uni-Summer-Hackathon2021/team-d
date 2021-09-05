@@ -28,7 +28,13 @@ class AboutView extends StatelessWidget {
            leading: Icon(Icons.chat_outlined),
            // ignore: deprecated_member_use
            title: FlatButton(
-             child:Text('利用規約'),
+             child:Text(
+               '利用規約',
+               style:TextStyle(
+                 fontWeight: FontWeight.bold,
+                 fontSize: 20,
+                 color: Colors.blue),
+                 ),
               onPressed: (){_launchURL();
               },
           ),
@@ -40,7 +46,7 @@ class AboutView extends StatelessWidget {
   }
 }
 _launchURL() async {
-    const url = "http://monkey-food-delivery.com/%e3%81%97%e3%82%85%e3%82%8f%e3%81%97%e3%82%85%e3%82%8f%e3%80%80%e5%88%a9%e7%94%a8%e8%a6%8f%e7%b4%84/?preview_id=112&preview_nonce=e2d5db2eb9&_thumbnail_id=-1&preview=true";
+    const url = "http://monkey-food-delivery.com/%e3%81%97%e3%82%85%e3%82%8f%e3%81%97%e3%82%85%e3%82%8f%e3%80%80%e5%88%a9%e7%94%a8%e8%a6%8f%e7%b4%84/";
     if (await canLaunch(url)) {
       await launch(url);
     } else {
