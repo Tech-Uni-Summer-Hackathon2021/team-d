@@ -9,9 +9,9 @@ import '../main.dart';
 class ContentPage extends StatefulWidget {
   @override
 //main.dartから画面遷移された時の処理
-  ContentPage(this.content, this.id, this.days);
+  ContentPage(this.content,this.documentId, this.days);
   final String content;
-  final int id;
+  final String documentId;
   final String days;
   _ContentPagePageState createState() => _ContentPagePageState();
 
@@ -59,7 +59,7 @@ class _ContentPagePageState extends State<ContentPage> {
           _firestore.collection("favorite").add(
             {
               "uid":uid,
-              "id":widget.id,
+              "id":widget.documentId,
             },
           );
           }
@@ -121,7 +121,7 @@ class _ContentPagePageState extends State<ContentPage> {
                       var docRef= await _firestore.collection("replies").add(
                         {
                           "reply": reply_content,
-                          "reply_id": widget.id,
+                          "reply_id": widget.documentId,
                           "reply_days":date,
                           "reply_count":0
                         },
@@ -156,7 +156,7 @@ class _ContentPagePageState extends State<ContentPage> {
           children: [
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance.collection("forms").where(
-                  'id', isEqualTo:widget.id).snapshots(),
+                  'documentID', isEqualTo:widget.documentId).snapshots(),
               builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
@@ -207,7 +207,7 @@ class _ContentPagePageState extends State<ContentPage> {
             Flexible(
               child: StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance.collection("replies").where(
-                    'reply_id', isEqualTo: widget.id).snapshots(),
+                    'reply_id', isEqualTo: widget.documentId).snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {

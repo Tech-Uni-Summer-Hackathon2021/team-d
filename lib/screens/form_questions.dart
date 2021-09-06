@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import '../main.dart';
+import 'content.dart';
 //質問投稿のぺージ
 class PostPage extends StatefulWidget {
   @override
@@ -23,30 +24,6 @@ class _PostPagePageState extends State<PostPage> {
   String questions_title;
   String questions_content;
   //質問にidを付与するためのforms_id
-  int count=0;
-  //countする
-  void _incrementCounter(){
-    setState(() {
-      count++;
-      _setCounterValue();
-    });
-  }
-  void initState() {
-    super.initState();
-    _getCounterValue();
-  }
-
-  void _getCounterValue() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      count = prefs.getInt('count');
-    });
-  }
-
-  void _setCounterValue() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setInt('count', count);
-  }
 
   Future<void> stopFiveSeconds() async {
     int _counter = 0;
@@ -165,43 +142,54 @@ class _PostPagePageState extends State<PostPage> {
                 else if(questions_content.length>=10){
                   final User user = await FirebaseAuth.instance.currentUser;
                   final String uid = user.uid.toString();
-                  stopFiveSeconds();
-                  _incrementCounter();
                   showDialog(
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        title: Text('投稿'),
-                        content: Text('投稿が完了しました！'),
+                        title: Text('確認'),
+                        content: Text('質問を投稿しますか？'),
                         actions: <Widget>[
                           FlatButton(
-                              child: Text("確認"),
+                              child: Text("いいえ"),
                               onPressed: (){
+                                Navigator.pop(context);
+                              }
+                          ),
+                          FlatButton(
+                              child: Text("投稿"),
+                              onPressed: (){
+                                void getTodayDate() async {
+                                  initializeDateFormatting('ja');
+                                  var format = new DateFormat.yMMMd('ja');
+                                  var date = format.format(new DateTime.now());
 
+                                  var docRef = await _firestore.collection("forms").add(
+                                    {
+                                      "title": questions_title,
+                                      "content": questions_content,
+                                      "days":date,
+                                      "uid":uid,
+                                      "user_name":widget.user_name,
+                                      "user_image":widget.defaultImage,
+                                      "user_major":widget.major,
+                                    },
+                                  );
+                                  var documentId = docRef.id;
+                                  _firestore.collection("forms").doc(documentId).update(
+                                    {
+                                      "documentID": documentId
+                                    },
+                                  );
+                                }
+                                getTodayDate();
+                                Navigator.popUntil(context, (route) => route.isFirst);
+                                // stopFiveSeconds();
                               }
                           ),
                         ],
                       );
                     },
                   );
-                  void getTodayDate() async {
-                    initializeDateFormatting('ja');
-                    var format = new DateFormat.yMMMd('ja');
-                    var date = format.format(new DateTime.now());
-                    _firestore.collection("forms").add(
-                      {
-                        "title": questions_title,
-                        "content": questions_content,
-                        "id": count,
-                        "days":date,
-                        "uid":uid,
-                        "user_name":widget.user_name,
-                        "user_image":widget.defaultImage,
-                        "user_major":widget.major
-                      },
-                    );
-                  }
-                  getTodayDate();
                 }
                 else if(questions_content.length<10){
                   showDialog(

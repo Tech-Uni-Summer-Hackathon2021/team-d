@@ -10,7 +10,7 @@ import 'content.dart';
 
 class favoriteQ extends StatefulWidget {
   favoriteQ(this.ids);
-  final List<int> ids;
+  final List<String> ids;
   @override
   _favoriteQState createState() => _favoriteQState();
 
@@ -34,7 +34,7 @@ print(widget.ids);
               Flexible(
                 child:StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance.collection("forms").where(
-                      'id', whereIn:widget.ids).snapshots(),
+                      'documentID', whereIn:widget.ids).snapshots(),
                   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Center(child: CircularProgressIndicator());
@@ -56,7 +56,7 @@ print(widget.ids);
                                 Navigator.push(
                                   //画面遷移
                                   context,
-                                  MaterialPageRoute(builder: (context) => ContentPage(document.data()['content'],document.data()['id'],document.data()['days'])),
+                                  MaterialPageRoute(builder: (context) => ContentPage(document.data()['content'],document.data()['documentID'],document.data()['days'])),
                                 );
                               },
                             )
