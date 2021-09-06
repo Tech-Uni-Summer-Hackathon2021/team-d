@@ -332,7 +332,7 @@ class _AuthScreenState extends State<AuthScreen> {
                         final userRef = FirebaseFirestore.instance.collection(
                             'favorite').where('uid', isEqualTo: uid);
                         userRef.get().then((snapshot) {
-                          final List <int> ids = [];
+                          final List <String> ids = [];
                           snapshot.docs.forEach((doc) {
                             ids.add(doc.data()["id"]);
                           });

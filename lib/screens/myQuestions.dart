@@ -32,7 +32,7 @@ class _myQuestionsState extends State<myQuestions> {
 
                 child:StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance.collection("forms").where(
-                      'uid', isEqualTo:uid).orderBy('id', descending: true).snapshots(),
+                      'uid', isEqualTo:uid).snapshots(),
                   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Center(child: CircularProgressIndicator());
@@ -51,7 +51,7 @@ class _myQuestionsState extends State<myQuestions> {
                                 Navigator.push(
                                   //画面遷移
                                   context,
-                                  MaterialPageRoute(builder: (context) => ContentPage(document.data()['content'],document.data()['id'],document.data()['days'])),
+                                  MaterialPageRoute(builder: (context) => ContentPage(document.data()['content'],document.data()['documentID'],document.data()['days'])),
                                 );
                               },
                             )
