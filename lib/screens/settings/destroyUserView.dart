@@ -37,9 +37,11 @@ class DestroyUserView extends StatelessWidget {
                         FlatButton(
                             child: Text("はい"),
                             onPressed: () async{
-                              await FirebaseAuth.instance.currentUser.delete();
+                              var preferences = await SharedPreferences.getInstance();
+                              FirebaseFirestore.instance.collection('user').doc(preferences.getString("start")).delete();
                               final SharedPreferences prefs = await SharedPreferences.getInstance();
                               prefs.remove('start');
+                              await FirebaseAuth.instance.currentUser.delete();
                               showDialog(
                                 context: context,
                                 builder: (context) {
