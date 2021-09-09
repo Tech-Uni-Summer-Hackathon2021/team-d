@@ -135,8 +135,6 @@ class _ContentPagePageState extends State<ContentPage> {
                       );
                     }
                     getTodayDate();
-
-
                   }
                   //ここに処理
                 } ),
@@ -167,7 +165,7 @@ class _ContentPagePageState extends State<ContentPage> {
                      clipBehavior: Clip.antiAlias,
                       child: Column(
                         children: [
-                          Container(
+                       Container(
                             margin:EdgeInsets.only(top:10),
                           child:ListTile(
                             leading: CircleAvatar(
@@ -177,9 +175,10 @@ class _ContentPagePageState extends State<ContentPage> {
                       ),
                             title: Text(document.data()['user_name'],style: TextStyle(color: Colors.black,fontSize: 18)),
                           ),
+
                           ),
                           Container(
-                            margin:EdgeInsets.only(top:10,bottom:10,left:70),
+                            margin:EdgeInsets.only(top:10,bottom:10,left:86),
                             width: double.infinity,
                             child:  Text(widget.content,
                               style: TextStyle(color: Colors.black,fontSize: 20),textAlign: TextAlign.left,),
@@ -192,7 +191,6 @@ class _ContentPagePageState extends State<ContentPage> {
                 );
               },
             ),
-
             //質問の下にある回答の処理
             Container(
               width: double.infinity,
@@ -267,7 +265,7 @@ class _ContentPagePageState extends State<ContentPage> {
                     enabled: true,
                     controller: _textEditingControllerReply,
                     style: new TextStyle(
-                      fontSize: 20.0,
+                      fontSize: 19.0,
                       color: Colors.black,
                     ),
                     onFieldSubmitted: (value) {

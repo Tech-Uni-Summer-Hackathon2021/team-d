@@ -23,61 +23,6 @@ void getName() async{
 }
 
 class _PostViewState extends State<PostView> {
-  TextEditingController _search = TextEditingController();
-  String _selectedGenre = "授業";
-  String _initial = "選択";
-  void _onSelectedItemChanged_genre(int index) {
-    setState(() {
-      _selectedGenre = genreList[index];
-    });
-  }
-
-  void picker_genre() {
-    Widget _pickerGenre(String str) {
-      return Text(
-        str,
-        style: const TextStyle(fontSize: 32),
-      );
-    }
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return Container(
-          height: MediaQuery.of(context).size.height / 2,
-          child: Column(
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  CupertinoButton(
-                    child: Text("戻る"),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                  CupertinoButton(
-                    child: Text("決定"),
-                    onPressed: () {
-                      Navigator.pop(context);
-                      setState(() {
-                        _search.text = _selectedGenre;
-                      });
-                    },
-                  ),
-                ],
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height / 3,
-                child: CupertinoPicker(
-                  itemExtent: 40,
-                  children: genreList.map(_pickerGenre).toList(),
-                  onSelectedItemChanged: _onSelectedItemChanged_genre,
-                ),
-              )
-            ],
-          ),
-        );
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,11 +41,9 @@ class _PostViewState extends State<PostView> {
         ),
         child:GestureDetector(
         child:TextField(
-          controller: _search,
           readOnly: true,
           onTap: () {
             // onChangedは入力されている文字が変更するたびに呼ばれます
-            picker_genre();
           },
           decoration: new InputDecoration(
             prefixIcon: new Icon(Icons.search, color: Colors.grey),
@@ -112,8 +55,7 @@ class _PostViewState extends State<PostView> {
 
         Flexible(
       child:StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection("forms").where(
-    'title', isEqualTo:_selectedGenre).snapshots(),
+        stream: FirebaseFirestore.instance.collection("forms").snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());

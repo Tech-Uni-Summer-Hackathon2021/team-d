@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sawa/screens/form_questions.dart';
+import 'package:sawa/screens/routes/category.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/routes/postView.dart';
 import 'screens/routes/userView.dart';
@@ -115,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    var routes =[PostView(), InfoView(), AuthScreen()];
+    var routes =[PostView(), categoryFile(),InfoView(), AuthScreen()];
     return Scaffold (
 //appBarは上のタイトルが表示されているものです
       backgroundColor: Color(0xFF57d8d6),
@@ -137,16 +138,20 @@ class _MyHomePageState extends State<MyHomePage> {
 
       body: routes[_selectedIndex],
 
+
       bottomNavigationBar: BottomNavigationBar(
 
-        //selectedItemColor: Color(0xFF57d8d6),
-        //選択された方の色の設定
         //下のボタン
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.article),
             title: Text('投稿'),
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.folder),
+            title: Text('カテゴリ'),
+          ),
+
           BottomNavigationBarItem(
             icon: Icon(Icons.assignment_outlined),
             title: Text('情報'),
@@ -157,6 +162,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
         currentIndex: _selectedIndex,
+        type: BottomNavigationBarType.fixed,
         onTap: _onItemTapped,
       ),
 
