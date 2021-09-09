@@ -123,7 +123,7 @@ class _ContentPagePageState extends State<ContentPage> {
                           "reply": reply_content,
                           "reply_id": widget.documentId,
                           "reply_days":date,
-                          "reply_count":0
+                          "reply_count":FieldValue.arrayUnion([""])
                         },
 
                       );
@@ -225,26 +225,25 @@ class _ContentPagePageState extends State<ContentPage> {
                             Row(
                             children:[
                               Text("　"+document.data()['reply_days'],style: TextStyle(color: Colors.grey,fontSize: 15)),
-
                               Container(
                               margin:EdgeInsets.only(left:200),
                             child:IconButton(
                             icon: const Icon(Icons.star),
+                                color: Colors.red,
                                 onPressed: () async{
                                     // データを更新
-                                 count=1+document.data()["reply_count"];
                                       _firestore.collection("replies")
                                           .doc(document.data()["reply_docId"])
                                           .update(
                                         {
-                                          "reply_count": count
+                                          "reply_count": FieldValue.arrayUnion([uid]),
                                         },
                                       );
                                     }
-
                             ),
                             ),
-                              Text(document.data()["reply_count"].toString())
+                              //いいね数表示
+                              Text((document.data()["reply_count"].length-1).toString()),
                           ],
                         ),
                             ]
