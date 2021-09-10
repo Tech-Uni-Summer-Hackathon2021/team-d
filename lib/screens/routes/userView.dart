@@ -161,7 +161,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                             (document.data()['major']),
                                             style: TextStyle(
                                               fontSize: 15.0,
-                                            ),
+                                            )
                                           );
                                         }).toList(),
                                       );

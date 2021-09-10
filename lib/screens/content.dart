@@ -105,7 +105,7 @@ class _ContentPagePageState extends State<ContentPage> {
                           FlatButton(
                             child: Text("確認"),
                               onPressed: (){
-                                Navigator.popUntil(context, (route) => route.isFirst);
+                                Navigator.pop(context);
                               }
                           ),
                         ],
@@ -123,9 +123,8 @@ class _ContentPagePageState extends State<ContentPage> {
                           "reply": reply_content,
                           "reply_id": widget.documentId,
                           "reply_days":date,
-                          "reply_count":0
+                          "reply_count":FieldValue.arrayUnion([""])
                         },
-
                       );
                       var documentId = docRef.id;
                       _firestore.collection("replies").doc(documentId).update(
@@ -173,17 +172,21 @@ class _ContentPagePageState extends State<ContentPage> {
                         backgroundImage: NetworkImage(document.data()['user_image']),
                         backgroundColor: Colors.white,
                       ),
-                            title: Text(document.data()['user_name'],style: TextStyle(color: Colors.black,fontSize: 18)),
+                            title: Text(document.data()['user_name'],style: TextStyle(color: Colors.black,fontSize: 17)),
                           ),
-
                           ),
                           Container(
                             margin:EdgeInsets.only(top:10,bottom:10,left:86),
                             width: double.infinity,
                             child:  Text(widget.content,
-                              style: TextStyle(color: Colors.black,fontSize: 20),textAlign: TextAlign.left,),
+                              style: TextStyle(color: Colors.black,fontSize: 19),textAlign: TextAlign.left,),
                           ),
-
+                          Container(
+                            margin:EdgeInsets.only(top:15,bottom:8,left:8),
+                            width: double.infinity,
+                            child:  Text(document.data()['days'],
+                              style: TextStyle(color: Colors.grey,fontSize: 14),textAlign: TextAlign.left,),
+                          ),
                         ],
                       ),
                     );
@@ -225,26 +228,25 @@ class _ContentPagePageState extends State<ContentPage> {
                             Row(
                             children:[
                               Text("　"+document.data()['reply_days'],style: TextStyle(color: Colors.grey,fontSize: 15)),
-
                               Container(
                               margin:EdgeInsets.only(left:200),
                             child:IconButton(
                             icon: const Icon(Icons.star),
+                                color: Colors.red,
                                 onPressed: () async{
                                     // データを更新
-                                 count=1+document.data()["reply_count"];
                                       _firestore.collection("replies")
                                           .doc(document.data()["reply_docId"])
                                           .update(
                                         {
-                                          "reply_count": count
+                                          "reply_count": FieldValue.arrayUnion([uid]),
                                         },
                                       );
                                     }
-
                             ),
                             ),
-                              Text(document.data()["reply_count"].toString())
+                              //いいね数表示
+                              Text((document.data()["reply_count"].length-1).toString()),
                           ],
                         ),
                             ]
