@@ -105,7 +105,7 @@ class _ContentPagePageState extends State<ContentPage> {
                           FlatButton(
                             child: Text("確認"),
                               onPressed: (){
-                                Navigator.popUntil(context, (route) => route.isFirst);
+                                Navigator.pop(context);
                               }
                           ),
                         ],
@@ -125,7 +125,6 @@ class _ContentPagePageState extends State<ContentPage> {
                           "reply_days":date,
                           "reply_count":FieldValue.arrayUnion([""])
                         },
-
                       );
                       var documentId = docRef.id;
                       _firestore.collection("replies").doc(documentId).update(
@@ -173,17 +172,21 @@ class _ContentPagePageState extends State<ContentPage> {
                         backgroundImage: NetworkImage(document.data()['user_image']),
                         backgroundColor: Colors.white,
                       ),
-                            title: Text(document.data()['user_name'],style: TextStyle(color: Colors.black,fontSize: 18)),
+                            title: Text(document.data()['user_name'],style: TextStyle(color: Colors.black,fontSize: 17)),
                           ),
-
                           ),
                           Container(
                             margin:EdgeInsets.only(top:10,bottom:10,left:86),
                             width: double.infinity,
                             child:  Text(widget.content,
-                              style: TextStyle(color: Colors.black,fontSize: 20),textAlign: TextAlign.left,),
+                              style: TextStyle(color: Colors.black,fontSize: 19),textAlign: TextAlign.left,),
                           ),
-
+                          Container(
+                            margin:EdgeInsets.only(top:15,bottom:8,left:8),
+                            width: double.infinity,
+                            child:  Text(document.data()['days'],
+                              style: TextStyle(color: Colors.grey,fontSize: 14),textAlign: TextAlign.left,),
+                          ),
                         ],
                       ),
                     );
